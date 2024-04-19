@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React from 'react';
 import { HeroParallax } from "@/components/ui/hero-parallax";
 
 export function ParallaxSection() {
@@ -8,9 +8,9 @@ export function ParallaxSection() {
 export const products = [
   {
     title: "Agriculture Hall",
-    link: "https://vishrut.tech/images",
+    link: "/../assets/images/parallax-section/agriculture-hall",
     thumbnail:
-      "/../assets/images/parallax-section/agriculture-hall",
+      "/../assets/images/parallax-section/agriculture-hall.jpg",
   },
   {
     title: "Agriculture Hall",
