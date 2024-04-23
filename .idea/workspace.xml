@@ -5,15 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f0e840d4-83f6-435a-bb9c-bc838d1d4f72" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/ui/SiteLoad.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/ui/floating-navbar.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/photo-section.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/photo-section.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/SiteLoad.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/SiteLoad.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,29 +48,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Node.js.App.jsx.executor": "Debug",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "javascript.nodejs.core.library.configured.version": "20.11.1",
-    "javascript.nodejs.core.library.typings.version": "20.11.28",
-    "last_opened_file_path": "/Users/vishrutagrawal/repos/personal-portfolio/src/assets/images/parallax-section",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "npm.run.executor": "Run",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "settings.editor.splitter.proportion": "0.24872579",
-    "ts.external.directory.path": "/Users/vishrutagrawal/repos/personal-portfolio/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Node.js.App.jsx.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;20.11.1&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;20.11.28&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/vishrutagrawal/repos/personal-portfolio/src/assets/images/parallax-section&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.run.executor&quot;: &quot;Run&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.splitter.proportion&quot;: &quot;0.24872579&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/vishrutagrawal/repos/personal-portfolio/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/assets/images/parallax-section" />
@@ -112,7 +105,8 @@
       <workItem from="1712898749131" duration="3349000" />
       <workItem from="1713244309311" duration="1380000" />
       <workItem from="1713491306070" duration="10476000" />
-      <workItem from="1713843837432" duration="4000000" />
+      <workItem from="1713843837432" duration="7332000" />
+      <workItem from="1713898120097" duration="372000" />
     </task>
     <task id="LOCAL-00001" summary="switched to tsx">
       <option name="closed" value="true" />
@@ -130,16 +124,83 @@
       <option name="project" value="LOCAL" />
       <updated>1713505858877</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added jetbrains settings">
+      <option name="closed" value="true" />
+      <created>1713859603939</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1713859603939</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Added jetbrains settings">
+      <option name="closed" value="true" />
+      <created>1713859609414</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1713859609414</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Working on adding photo section component&#10;Still not fully functional">
+      <option name="closed" value="true" />
+      <created>1713859657366</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1713859657366</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Installed GSAP">
+      <option name="closed" value="true" />
+      <created>1713859667017</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1713859667017</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Created simple gsap timeline for text appearing&#10;Still a WIP. Need to figure out progress bar as well as &#10;change the way text shows up since it's a bit buggy">
+      <option name="closed" value="true" />
+      <created>1713859719576</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1713859719576</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Switched over to Next.JS and also using GSAP" />
     <MESSAGE value="switched to tsx" />
     <MESSAGE value="Added photo section" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added photo section" />
+    <MESSAGE value="Added jetbrains settings" />
+    <MESSAGE value="Working on adding photo section component&#10;Still not fully functional" />
+    <MESSAGE value="Installed GSAP" />
+    <MESSAGE value="Created simple gsap timeline for text appearing&#10;Still a WIP. Need to figure out progress bar as well as &#10;change the way text shows up since it's a bit buggy" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created simple gsap timeline for text appearing&#10;Still a WIP. Need to figure out progress bar as well as &#10;change the way text shows up since it's a bit buggy" />
   </component>
 </project>
