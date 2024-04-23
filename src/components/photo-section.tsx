@@ -8,7 +8,7 @@ export function ParallaxSection() {
 export const products = [
   {
     title: "Agriculture Hall",
-    link: "/../assets/images/parallax-section/agriculture-hall",
+    link: "https://vishrut.tech/imagse",
     thumbnail:
       "/../assets/images/parallax-section/agriculture-hall.jpg",
   },
@@ -16,7 +16,7 @@ export const products = [
     title: "Agriculture Hall",
     link: "https://vishrut.tech/images",
     thumbnail:
-      "/../assets/images/parallax-section/agriculture-hall",
+      "/../assets/images/parallax-section/agriculture-hall.jpg",
   },
   {
     title: "Agriculture Hall",
