@@ -4,15 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f0e840d4-83f6-435a-bb9c-bc838d1d4f72" name="Changes" comment="switched to tsx">
-      <change afterPath="$PROJECT_DIR$/src/assets/images/parallax-section/agriculture-hall.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/photo-section.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/ui/hero-parallax.tsx" afterDir="false" />
+    <list default="true" id="f0e840d4-83f6-435a-bb9c-bc838d1d4f72" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/SiteLoad.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/floating-navbar.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postcss.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/postcss.config.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/globals.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tailwind.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/photo-section.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/photo-section.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,10 +57,12 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Node.js.App.jsx.executor": "Debug",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "dev",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
     "javascript.nodejs.core.library.configured.version": "20.11.1",
     "javascript.nodejs.core.library.typings.version": "20.11.28",
     "last_opened_file_path": "/Users/vishrutagrawal/repos/personal-portfolio/src/assets/images/parallax-section",
@@ -70,6 +73,7 @@
     "nodejs_package_manager_path": "npm",
     "npm.run.executor": "Run",
     "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.splitter.proportion": "0.24872579",
     "ts.external.directory.path": "/Users/vishrutagrawal/repos/personal-portfolio/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
@@ -107,7 +111,8 @@
       <workItem from="1712880984711" duration="47000" />
       <workItem from="1712898749131" duration="3349000" />
       <workItem from="1713244309311" duration="1380000" />
-      <workItem from="1713491306070" duration="5467000" />
+      <workItem from="1713491306070" duration="10476000" />
+      <workItem from="1713843837432" duration="4000000" />
     </task>
     <task id="LOCAL-00001" summary="switched to tsx">
       <option name="closed" value="true" />
@@ -117,7 +122,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713500930065</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added photo section">
+      <option name="closed" value="true" />
+      <created>1713505858877</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1713505858877</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -126,6 +139,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Switched over to Next.JS and also using GSAP" />
     <MESSAGE value="switched to tsx" />
-    <option name="LAST_COMMIT_MESSAGE" value="switched to tsx" />
+    <MESSAGE value="Added photo section" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added photo section" />
   </component>
 </project>
