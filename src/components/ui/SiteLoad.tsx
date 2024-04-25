@@ -20,13 +20,12 @@ export default function SiteLoad() {
       .to('#textToAnimate', {duration:2.04, delay:0, text:'npm i framer-motion clsx tailwind-merge @gsap/react', ease:'none'})
       .to('#textToAnimate', {duration:0, delay:1, text:'I', ease:'none'})
       .to("#textToAnimate", {duration:0.92, delay:0, text:'Initialization Completed Successfully', ease:'none'})
-
   })
 
   return(
     <>
       <div className='flex flex-col w-screen h-screen justify-center items-center relative'>
-        <div id="progressBar" className="inset-x-20 bg-white w-1/2 h-1"></div>
+        {/*<div id="progressBar" className="inset-x-20 bg-white w-1/2 h-1"></div>*/}
         <div className="pt-4">
           <p className="text-xl" id="textToAnimate"></p>
         </div>

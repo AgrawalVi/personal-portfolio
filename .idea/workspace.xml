@@ -5,7 +5,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f0e840d4-83f6-435a-bb9c-bc838d1d4f72" name="Changes" comment="Fixing visual bugs, added progress bar which needs work">
+      <change afterPath="$PROJECT_DIR$/src/app/ui/education-section.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/ui/experience-section.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/ui/navbar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/ui/photo-section.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/ui/projects-section.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/ui/skills-section.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/next.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vercel.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/photography/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/photography/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/parallax-section/agriculture-hall.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/agriculture-hall.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/parallax-section/azeem-golf.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/azeem-golf.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/parallax-section/bull-run-aspen.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/bull-run-aspen.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/parallax-section/bull-run-snowboard.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/bull-run-snowboard.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/parallax-section/engineering-hall.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/engineering-hall.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/parallax-section/father.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/father.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/parallax-section/gold-temple.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/kinkaku-ji.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/parallax-section/milwaukee-cold-storage.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/milwaukee-cold-storage.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/parallax-section/milwaukee-river-bridge.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/milwaukee-river-bridge.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/parallax-section/pyramid-peak.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/pyramid-peak.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/parallax-section/snowy-car.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/snowy-car.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/parallax-section/udaivillas.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/udaivillas.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/parallax-section/white-temple.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/ninnaji-shiroshoin.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/photo-section.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/SiteLoad.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/SiteLoad.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/hero-parallax.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/hero-parallax.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,6 +114,10 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/assets/images/parallax-section" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/app/ui" />
+      <recent name="$PROJECT_DIR$/public" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="run" type="js.build_tools.npm" nameIsGenerated="true">
@@ -120,6 +150,8 @@
       <workItem from="1713491306070" duration="10476000" />
       <workItem from="1713843837432" duration="7332000" />
       <workItem from="1713898120097" duration="1932000" />
+      <workItem from="1713928657514" duration="6364000" />
+      <workItem from="1713970970329" duration="2159000" />
     </task>
     <task id="LOCAL-00001" summary="switched to tsx">
       <option name="closed" value="true" />
