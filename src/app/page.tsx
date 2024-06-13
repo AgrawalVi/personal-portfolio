@@ -1,14 +1,15 @@
 "use client"
 import React from "react"
-import { SparklesCore } from "@/components/ui/sparkles";
-import { ParallaxSection } from "@/app/ui/photo-section";
-import { useScroll } from "framer-motion";
-import SiteLoad from "@/components/ui/SiteLoad";
+import { SparklesCore } from "@/components/ui/sparkles"
+import { ParallaxSection } from "@/components/photo-section"
+import { useScroll } from "framer-motion"
+import SiteLoad from "@/components/ui/SiteLoad"
+import { Navbar } from "@/components/navbar"
 
 export default function Home() {
-
   return (
     <>
+      {/*<Navbar></Navbar>*/}
       {/*<SiteLoad></SiteLoad>*/}
       <div className="h-[30rem] lg:h-[40rem] w-full bg-darkgray flex flex-col items-center justify-center overflow-hidden rounded-md flex-col">
         <h1 className="text-3xl md:text-7xl lg:text-9xl font-bold text-center text-white relative z-20">
@@ -16,14 +17,10 @@ export default function Home() {
         </h1>
         <div className="w-[20rem] h-20 lg:w-[40rem] lg:h-40 relative">
           {/* Gradients */}
-          <div
-            className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-[2px] w-3/4 blur-sm"/>
-          <div
-            className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-px w-3/4"/>
-          <div
-            className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-[5px] w-1/4 blur-sm"/>
-          <div
-            className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-px w-1/4"/>
+          <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-[2px] w-3/4 blur-sm" />
+          <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-px w-3/4" />
+          <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-[5px] w-1/4 blur-sm" />
+          <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-px w-1/4" />
 
           {/* Core component */}
           <SparklesCore
@@ -36,12 +33,14 @@ export default function Home() {
           />
 
           {/* Radial Gradient to prevent sharp edges */}
-          <div id='gradientToPreventEdges'
-            className="absolute inset-0 w-full h-full bg-darkgray [mask-image:radial-gradient(175px_100px_at_top,transparent_20%,white)] lg:[mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"></div>
+          <div
+            id="gradientToPreventEdges"
+            className="absolute inset-0 w-full h-full bg-darkgray [mask-image:radial-gradient(175px_100px_at_top,transparent_20%,white)] lg:[mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"
+          ></div>
         </div>
       </div>
 
       <ParallaxSection></ParallaxSection>
     </>
-  );
+  )
 }
