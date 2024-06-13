@@ -1,10 +1,10 @@
 "use client"
 import React from "react"
-import { SparklesCore } from "@/components/ui/sparkles"
+import { SparklesCore } from "@/components/aceternity/sparkles"
 import { ParallaxSection } from "@/components/photo-section"
 import { useScroll } from "framer-motion"
-import SiteLoad from "@/components/ui/SiteLoad"
-import { Navbar } from "@/components/navbar"
+import SiteLoad from "@/components/general/site-load"
+import { Navbar } from "@/components/general/navbar"
 
 export default function Home() {
   return (
