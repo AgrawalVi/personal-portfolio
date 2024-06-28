@@ -4,12 +4,14 @@ import { useScroll } from "framer-motion"
 import SiteLoad from "@/components/general/site-load"
 import Hero from "@/components/general/hero"
 import ProjectSection from "@/components/projects-section"
+import Footer from "@/components/general/footer"
 
 export default function Home() {
   return (
     <main className="relative bg-black-100 flex justify-center items-center flex-col overflow-hidden mx-auto sm:px-10 px-5">
       <Hero />
       <ProjectSection />
+      <Footer />
     </main>
   )
 }
