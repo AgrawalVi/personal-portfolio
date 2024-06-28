@@ -133,6 +133,12 @@ export const PersonalPortfolioTechnologies: technologyItem[] = [
     description: "Typesafe JavaScript",
     image: "/logos/typescript-logo.png",
   },
+  {
+    id: 6,
+    name: "MDX",
+    description: "Markdown for React",
+    image: "/logos/mdx-logo.jpeg",
+  },
 ]
 
 export const SweetBeastsCardDescription: string[] = [
