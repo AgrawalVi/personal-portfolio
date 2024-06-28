@@ -56,7 +56,13 @@ export const MenuItem = ({
               <motion.div
                 transition={transitionIn}
                 layoutId="active" // layoutId ensures smooth animation
-                className="overflow-hidden rounded-2xl border border-black/[0.2] bg-white shadow-xl backdrop-blur-sm dark:border-white/[0.2] dark:bg-black"
+                className="overflow-hidden shadow-xl backdrop-blur-sm"
+                style={{
+                  backdropFilter: "blur(16px) saturate(180%)",
+                  backgroundColor: "rgba(17, 25, 40, 0.75)",
+                  borderRadius: "12px",
+                  border: "1px solid rgba(255, 255, 255, 0.125)",
+                }}
               >
                 <motion.div
                   layout // layout ensures smooth animation
@@ -80,7 +86,13 @@ export const MenuItem = ({
             <motion.div
               transition={transitionOut}
               layoutId="active" // layoutId ensures smooth animation
-              className="overflow-hidden rounded-2xl border border-black/[0.2] bg-white shadow-xl backdrop-blur-sm dark:border-white/[0.2] dark:bg-black"
+              className="overflow-hidden shadow-xl backdrop-blur-sm"
+              style={{
+                backdropFilter: "blur(16px) saturate(180%)",
+                backgroundColor: "rgba(17, 25, 40, 0.75)",
+                borderRadius: "12px",
+                border: "1px solid rgba(255, 255, 255, 0.125)",
+              }}
             >
               <motion.div
                 layout // layout ensures smooth animation
@@ -113,7 +125,13 @@ export const Menu = ({
         setLastActive(active)
         setActive(null)
       }}
-      className="relative flex items-center justify-center space-x-4 bg-background px-8 py-6"
+      className="relative flex items-center justify-center space-x-4 px-8 py-6 rounded-lg"
+      style={{
+        backdropFilter: "blur(16px) saturate(180%)",
+        backgroundColor: "rgba(17, 25, 40, 0.75)",
+        borderRadius: "12px",
+        border: "1px solid rgba(255, 255, 255, 0.125)",
+      }}
     >
       {children}
     </nav>
