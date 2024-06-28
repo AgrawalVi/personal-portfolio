@@ -35,7 +35,7 @@ export default function ProjectCardContainer({
   liveLink,
 }: ProjectCardContainerProps) {
   return (
-    <Card className="relative z-[100]">
+    <Card className="relative z-[100] sm:w-[30rem] w-[96]">
       <CardHeader>
         <Image
           src={img}
@@ -48,9 +48,13 @@ export default function ProjectCardContainer({
         <CardDescription>{timeLine}</CardDescription>
       </CardHeader>
       <CardContent>
-        {bulletPoints.map((bulletPoint, index) => (
-          <CardDescription key={index}>{bulletPoint}</CardDescription>
-        ))}
+        <ul className="pl-5">
+          {bulletPoints.map((bulletPoint, index) => (
+            <li className="text-neutral-100 list-disc" key={index}>
+              {bulletPoint}
+            </li>
+          ))}
+        </ul>
       </CardContent>
       <CardFooter className="flex flex-row justify-between">
         <div className="flex">

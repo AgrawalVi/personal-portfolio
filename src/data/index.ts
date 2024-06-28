@@ -134,3 +134,15 @@ export const PersonalPortfolioTechnologies: technologyItem[] = [
     image: "/logos/typescript-logo.png",
   },
 ]
+
+export const SweetBeastsCardDescription: string[] = [
+  "E-Commerce site for SweetBeasts Inc built from scratch",
+]
+
+export const SweetBeastsAdminCardDescription: string[] = [
+  "Admin panel for SweetBeasts Inc built from scratch",
+]
+
+export const PersonalPortfolioCardDescription: string[] = [
+  "The website you're currently on",
+]
