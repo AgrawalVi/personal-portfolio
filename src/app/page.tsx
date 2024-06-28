@@ -9,12 +9,14 @@ import Hero from "@/components/general/hero"
 import { FloatingNav } from "@/components/general/floating-navbar"
 import { HomeIcon } from "lucide-react"
 import Grid from "@/components/general/grid"
+import ProjectSection from "@/components/projects-section"
 
 export default function Home() {
   return (
     <main className="relative bg-black-100 flex justify-center items-center flex-col overflow-hidden mx-auto sm:px-10 px-5">
       <FloatingNav />
       <Hero />
+      <ProjectSection />
       {/* <Grid /> */}
     </main>
   )

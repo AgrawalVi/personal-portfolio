@@ -30,28 +30,28 @@ export function Navbar() {
       >
         <div className="  text-sm grid grid-cols-2 gap-10 p-4">
           <ProductItem
-            title="Algochurn"
-            href="https://algochurn.com"
+            title="SweetBeasts"
+            href="/projects/sweetbeasts"
             src="/photography-section/agriculture-hall.jpg"
-            description="Prepare for tech interviews like never before."
+            description="E-Commerce site for SweetBeasts Inc built from scratch"
           />
           <ProductItem
-            title="Tailwind Master Kit"
-            href="https://tailwindmasterkit.com"
+            title="SweetBeasts Admin"
+            href="/projects/sweetbeasts-admin"
             src="/photography-section/agriculture-hall.jpg"
-            description="hello"
+            description="Admin panel for SweetBeasts Inc built from scratch"
           />
           <ProductItem
-            title="Moonbeam"
-            href="https://gomoonbeam.com"
+            title="Personal Portfolio"
+            href="projects/personal-portfolio"
             src="/photography-section/agriculture-hall.jpg"
-            description="Never write from scratch again. Go from idea to blog in minutes."
+            description="Read about the site you're currently on"
           />
           <ProductItem
-            title="Rogue"
-            href="https://userogue.com"
+            title="View All"
+            href="/projects"
             src="/photography-section/agriculture-hall.jpg"
-            description="Respond to government RFPs, RFIs and RFQs 10x faster using AI"
+            description="View all of my projects"
           />
         </div>
       </MenuItem>
