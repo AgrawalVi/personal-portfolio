@@ -35,7 +35,7 @@ export default function ProjectCardContainer({
   liveLink,
 }: ProjectCardContainerProps) {
   return (
-    <Card className="relative z-[100] sm:w-[30rem] w-[96]">
+    <Card className="relative z-[100] sm:w-[30rem] w-[96] bg-black-100 border-purple/30 border-2 shadow-[0px_0px_20px_1px_#CBACF9] hover:scale-[1.02] transition-all duration-500 spring-in-out">
       <CardHeader>
         <Image
           src={img}
