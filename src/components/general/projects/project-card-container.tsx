@@ -14,6 +14,7 @@ import { technologyItem } from "@/types"
 import { AnimatedTooltip } from "@/components/aceternity/animated-tooltip"
 import { Button } from "@/components/ui/button"
 import { ChevronRight, CircleArrowOutUpRight } from "lucide-react"
+import { LinkPreview } from "@/components/aceternity/link-preview"
 
 interface ProjectCardContainerProps {
   title: string
@@ -60,18 +61,16 @@ export default function ProjectCardContainer({
         <div className="flex">
           <AnimatedTooltip items={technologies} />
         </div>
-        <div className="-mr-6 flex flex-col space-y-0 h-14 justify-center">
+        <div className="-mr-6 flex flex-col space-y-0 h-14 items-center">
           <Link href={link}>
             <Button variant="link" size={"sm"}>
               Read More <ChevronRight className="h-4 w-4" />
             </Button>
           </Link>
           {liveLink && (
-            <Link href={liveLink} target="_blank" rel="noopener noreferrer">
-              <Button variant="link" size={"sm"}>
-                Live Site <CircleArrowOutUpRight className="h-4 w-4 ml-1" />
-              </Button>
-            </Link>
+            <LinkPreview url={liveLink} className="text-sm w-fit flex flex-row">
+              Live Site <CircleArrowOutUpRight className="h-4 w-4 ml-1" />
+            </LinkPreview>
           )}
         </div>
       </CardFooter>
