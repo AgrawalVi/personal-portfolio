@@ -13,6 +13,7 @@ import {
 import { technologyItem } from "@/types"
 import { AnimatedTooltip } from "@/components/aceternity/animated-tooltip"
 import { Button } from "@/components/ui/button"
+import { ChevronRight, CircleArrowOutUpRight } from "lucide-react"
 
 interface ProjectCardContainerProps {
   title: string
@@ -21,6 +22,7 @@ interface ProjectCardContainerProps {
   timeLine: string
   bulletPoints: string[]
   technologies: technologyItem[]
+  liveLink?: string
 }
 
 export default function ProjectCardContainer({
@@ -30,6 +32,7 @@ export default function ProjectCardContainer({
   bulletPoints,
   timeLine,
   technologies,
+  liveLink,
 }: ProjectCardContainerProps) {
   return (
     <Card className="relative z-[100]">
@@ -53,10 +56,19 @@ export default function ProjectCardContainer({
         <div className="flex">
           <AnimatedTooltip items={technologies} />
         </div>
-        <div>
+        <div className="-mr-6 flex flex-col space-y-0 h-14 justify-center">
           <Link href={link}>
-            <Button variant="link">Read More</Button>
+            <Button variant="link" size={"sm"}>
+              Read More <ChevronRight className="h-4 w-4" />
+            </Button>
           </Link>
+          {liveLink && (
+            <Link href={liveLink} target="_blank" rel="noopener noreferrer">
+              <Button variant="link" size={"sm"}>
+                Live Site <CircleArrowOutUpRight className="h-4 w-4 ml-1" />
+              </Button>
+            </Link>
+          )}
         </div>
       </CardFooter>
     </Card>
