@@ -32,7 +32,7 @@ const Hero = () => {
             Welcome to my portfolio. Here, you will my projects, skills, and
             experiences that showcase my journey as a developer.
           </p>
-          <a href="#about">
+          <a href="#about" className="md:mt-10">
             <MagicButton
               icon={<Folders />}
               position="right"
