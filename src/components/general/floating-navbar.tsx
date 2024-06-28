@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import {
   motion,
   AnimatePresence,
@@ -15,6 +15,13 @@ export const FloatingNav = ({ className }: { className?: string }) => {
   const { scrollYProgress } = useScroll()
 
   const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    // wait 2 seconds before showing the floating navbar
+    setTimeout(() => {
+      setVisible(true)
+    }, 2000)
+  }, [])
 
   useMotionValueEvent(scrollYProgress, "change", (current) => {
     // Check if current is not undefined and is a number
