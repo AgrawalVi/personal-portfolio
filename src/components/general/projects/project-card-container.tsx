@@ -61,7 +61,7 @@ export default function ProjectCardContainer({
         <div className="flex">
           <AnimatedTooltip items={technologies} />
         </div>
-        <div className="-mr-6 flex flex-col space-y-0 h-14 items-center">
+        <div className="-mr-6 flex flex-col space-y-0 h-14 items-center justify-center">
           <Link href={link}>
             <Button variant="link" size={"sm"}>
               Read More <ChevronRight className="h-4 w-4" />
