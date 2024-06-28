@@ -15,7 +15,7 @@ export default function ProjectSection() {
         Projects
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-12 mx-auto w-fit">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-12 mx-auto w-fit">
         <ProjectCardContainer
           title="SweetBeasts"
           link="/projects/sweetbeasts"
