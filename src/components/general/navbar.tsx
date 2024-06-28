@@ -49,7 +49,7 @@ export function Navbar() {
           />
           <ProductItem
             title="View All"
-            href="/projects"
+            href="/#projects"
             src="/photography-section/agriculture-hall.jpg"
             description="View all of my projects"
           />
