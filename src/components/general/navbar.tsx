@@ -32,25 +32,25 @@ export function Navbar() {
           <ProductItem
             title="Algochurn"
             href="https://algochurn.com"
-            src="/agriculture-hall.jpg"
+            src="/photography-section/agriculture-hall.jpg"
             description="Prepare for tech interviews like never before."
           />
           <ProductItem
             title="Tailwind Master Kit"
             href="https://tailwindmasterkit.com"
-            src="/agriculture-hall.jpg"
+            src="/photography-section/agriculture-hall.jpg"
             description="hello"
           />
           <ProductItem
             title="Moonbeam"
             href="https://gomoonbeam.com"
-            src="/agriculture-hall.jpg"
+            src="/photography-section/agriculture-hall.jpg"
             description="Never write from scratch again. Go from idea to blog in minutes."
           />
           <ProductItem
             title="Rogue"
             href="https://userogue.com"
-            src="/agriculture-hall.jpg"
+            src="/photography-section/agriculture-hall.jpg"
             description="Respond to government RFPs, RFIs and RFQs 10x faster using AI"
           />
         </div>
