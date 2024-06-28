@@ -52,11 +52,11 @@ export const MenuItem = ({
           transition={transitionIn}
         >
           {active === item && (
-            <div className="absolute left-1/2 top-[calc(100%_+_1.2rem)] -translate-x-1/2 transform pt-4 z-[1000] backdrop-blur-lg backdrop-saturate-150">
+            <div className="absolute left-1/2 top-[calc(100%_+_1.2rem)] -translate-x-1/2 transform pt-4 z-[1000]">
               <motion.div
                 transition={transitionIn}
                 layoutId="active" // layoutId ensures smooth animation
-                className="overflow-hidden shadow-xl backdrop-blur-sm"
+                className="relative overflow-hidden z-[1000] backdrop-blur-lg backdrop-saturate-150"
                 style={{
                   backgroundColor: "rgba(17, 25, 40, 0.75)",
                   borderRadius: "12px",
@@ -81,11 +81,11 @@ export const MenuItem = ({
           transition={transitionOut}
           className="pointer-events-none"
         >
-          <div className="absolute left-1/2 top-[calc(100%_+_1.2rem)] -translate-x-1/2 transform pt-4 z-[1000] backdrop-blur-lg backdrop-saturate-150">
+          <div className="absolute left-1/2 top-[calc(100%_+_1.2rem)] -translate-x-1/2 transform pt-4">
             <motion.div
               transition={transitionOut}
               layoutId="active" // layoutId ensures smooth animation
-              className="overflow-hidden shadow-xl backdrop-blur-sm"
+              className="overflow-hidden relative z-[1000] backdrop-blur-lg backdrop-saturate-150"
               style={{
                 backgroundColor: "rgba(17, 25, 40, 0.75)",
                 borderRadius: "12px",
@@ -123,7 +123,7 @@ export const Menu = ({
         setLastActive(active)
         setActive(null)
       }}
-      className="relative flex items-center justify-center space-x-4 px-8 py-6 rounded-lg z-[1000] backdrop-blur-lg backdrop-saturate-150"
+      className="relative flex items-center justify-center space-x-4 px-8 py-6 z-[1000] backdrop-blur-lg backdrop-saturate-150"
       style={{
         backgroundColor: "rgba(17, 25, 40, 0.75)",
         borderRadius: "12px",
