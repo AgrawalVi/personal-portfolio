@@ -1,9 +1,9 @@
-import React from "react"
-import { Spotlight } from "@/components/aceternity/spotlight"
-import { TextGenerateEffect } from "../aceternity/text-generate-effect"
-import MagicButton from "../aceternity/magic-button"
-import { Folders } from "lucide-react"
-import { motion } from "framer-motion"
+import React from 'react'
+import { Spotlight } from '@/components/aceternity/spotlight'
+import { TextGenerateEffect } from '../aceternity/text-generate-effect'
+import MagicButton from '../aceternity/magic-button'
+import { Folders } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 const Hero = () => {
   return (
@@ -19,8 +19,8 @@ const Hero = () => {
         />
         <Spotlight className="top-28 left-80 h-[80vh] w-[50vh]" fill="blue" />
       </div>
-      <div className="h-screen w-full dark:bg-black-100 bg-white dark:bg-grid-white/[0.025] bg-grid-black/[0.2] flex items-center justify-center absolute top-0 left-0">
-        <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black-100 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
+      <div className="h-screen w-full dark:bg-background bg-background dark:bg-grid-white/[0.025] bg-grid-black/[0.025] flex items-center justify-center absolute top-0 left-0">
+        <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-background bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
       </div>
 
       <div className="flex justify-center relative my-20 z-10 align-middle h-full pb-64 border-b-2 border-neutral-800/50">
@@ -33,7 +33,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{
-              type: "spring",
+              type: 'spring',
               delay: 1.5,
             }}
             className="text-center md:tracking-wider mb-4 text-sm md:text-lg lg:text-2xl"
@@ -45,7 +45,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{
-              type: "spring",
+              type: 'spring',
               delay: 1.5,
             }}
             className="md:mt-10"
