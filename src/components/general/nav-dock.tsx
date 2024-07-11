@@ -102,10 +102,10 @@ export function MenuDock() {
                     href={item.href}
                     className={cn(
                       buttonVariants({ variant: 'ghost', size: 'icon' }),
-                      'size-12 rounded-full'
+                      'size-12 sm:size-[66px] rounded-full'
                     )}
                   >
-                    <item.icon className="size-4" />
+                    <item.icon className="size-4 sm:size-[22px]" />
                   </Link>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -127,10 +127,10 @@ export function MenuDock() {
                     rel="noopener noreferrer"
                     className={cn(
                       buttonVariants({ variant: 'ghost', size: 'icon' }),
-                      'size-12 rounded-full'
+                      'size-12 sm:size-[66px] rounded-full'
                     )}
                   >
-                    <social.icon className="size-4" />
+                    <social.icon className="size-4 sm:size-[22px]" />
                   </Link>
                 </TooltipTrigger>
                 <TooltipContent>
