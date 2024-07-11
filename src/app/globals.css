@@ -89,17 +89,17 @@
 }
 
 h1 {
-  @apply text-4xl md:text-5xl text-center;
+  @apply text-3xl md:text-5xl text-center;
 }
 
 li {
-  @apply leading-10;
+  @apply leading-7 sm:leading-10;
 }
 
 p {
-  @apply leading-10 font-nunito text-start;
+  @apply sm:leading-10  font-nunito text-start  leading-7;
 }
 
 ul {
-  @apply leading-10 space-y-4 font-nunito list-disc pl-8;
+  @apply space-y-4 font-nunito list-disc pl-6 sm:pl-8  leading-7 sm:leading-10;
 }

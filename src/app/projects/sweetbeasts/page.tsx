@@ -9,7 +9,7 @@ import { TracingBeam } from '@/components/aceternity/tracing-beam'
 
 export default function SweetBeastsPage() {
   return (
-    <main className="flex w-full justify-center py-20">
+    <main className="flex w-full justify-center my-20">
       <TracingBeam>
         <div className="max-w-5xl w-full flex flex-col items-center justify-center">
           <ProjectPageTitle
@@ -18,7 +18,7 @@ export default function SweetBeastsPage() {
             githubLink="https://github.com/AgrawalVi/SweetBeasts"
             viewProjectLink="https://sweetbeasts-demo.vishrut.tech"
           />
-          <div className="flex flex-col py-10 w-full">
+          <div className="flex flex-col pt-10 w-full">
             <Image
               src="/photography-section/agriculture-hall.jpg"
               width={2000}
