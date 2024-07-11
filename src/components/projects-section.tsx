@@ -1,12 +1,15 @@
-import ProjectCardContainer from "./general/projects/project-card-container"
+import ProjectCardContainer from './general/projects/project-card-container'
 import {
   PersonalPortfolioTechnologies,
   SweetBeastsAdminTechnologies,
-  SweetBeastsTechnologies,
-  SweetBeastsCardDescription,
   SweetBeastsAdminCardDescription,
   PersonalPortfolioCardDescription,
-} from "@/data"
+} from '@/data'
+
+import {
+  SweetBeastsCardDescription,
+  SweetBeastsTechnologies,
+} from '@/data/projects/sweetbeasts'
 
 export default function ProjectSection() {
   return (

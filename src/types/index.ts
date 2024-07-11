@@ -4,3 +4,9 @@ export type technologyItem = {
   description: string
   image: string
 }
+
+export type projectPageSection = {
+  title: string
+  paragraph: string[]
+  id: string
+}

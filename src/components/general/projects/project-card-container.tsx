@@ -1,5 +1,5 @@
-import Image from "next/image"
-import Link from "next/link"
+import Image from 'next/image'
+import Link from 'next/link'
 
 import {
   Card,
@@ -8,13 +8,13 @@ import {
   CardHeader,
   CardFooter,
   CardTitle,
-} from "@/components/ui/card"
+} from '@/components/ui/card'
 
-import { technologyItem } from "@/types"
-import { AnimatedTooltip } from "@/components/aceternity/animated-tooltip"
-import { Button } from "@/components/ui/button"
-import { ChevronRight, CircleArrowOutUpRight } from "lucide-react"
-import { LinkPreview } from "@/components/aceternity/link-preview"
+import { technologyItem } from '@/types'
+import { AnimatedTooltip } from '@/components/aceternity/animated-tooltip'
+import { Button } from '@/components/ui/button'
+import { ChevronRight, CircleArrowOutUpRight } from 'lucide-react'
+import { LinkPreview } from '@/components/aceternity/link-preview'
 
 interface ProjectCardContainerProps {
   title: string
@@ -63,7 +63,7 @@ export default function ProjectCardContainer({
         </div>
         <div className="-mr-6 flex flex-col space-y-0 h-14 items-center justify-center">
           <Link href={link}>
-            <Button variant="link" size={"sm"}>
+            <Button variant="link" size={'sm'}>
               Read More <ChevronRight className="h-4 w-4" />
             </Button>
           </Link>

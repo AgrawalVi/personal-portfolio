@@ -1,10 +1,17 @@
 import type { Metadata } from 'next'
-import { Josefin_Sans } from 'next/font/google'
+import { Josefin_Sans, Nunito } from 'next/font/google'
 import { ThemeProvider } from '@/components/theme-provider'
 import './globals.css'
-import { FloatingNav } from '@/components/general/floating-navbar'
+import { MenuDock } from '@/components/general/nav-dock'
 
-const josefinSans = Josefin_Sans({ subsets: ['latin'], weight: ['400'] })
+const josefinSans = Josefin_Sans({
+  subsets: ['latin'],
+  variable: '--font-josefin-sans',
+})
+const nunito = Nunito({
+  subsets: ['latin'],
+  variable: '--font-nunito',
+})
 
 export const metadata: Metadata = {
   title: 'Vishrut Agrawal',
@@ -18,15 +25,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={josefinSans.className}>
+      <body className={`${josefinSans.className} ${nunito.variable}`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-          <FloatingNav />
-          {children}
+          <div className="relative">
+            <MenuDock />
+            {children}
+          </div>
         </ThemeProvider>
       </body>
     </html>
