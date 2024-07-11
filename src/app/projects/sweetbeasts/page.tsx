@@ -9,7 +9,7 @@ import { TracingBeam } from '@/components/aceternity/tracing-beam'
 
 export default function SweetBeastsPage() {
   return (
-    <main className="flex w-full justify-center my-20">
+    <main className="flex w-full justify-center">
       <TracingBeam>
         <div className="max-w-5xl w-full flex flex-col items-center justify-center">
           <ProjectPageTitle
@@ -291,9 +291,9 @@ export default function SweetBeastsPage() {
               <ProjectPageSection title="The Current State" id="current-state">
                 <p>
                   Right now, the website is ready for launch, but we are waiting
-                  for first shipment of plushies to arrive. As soon as these
+                  for the first shipment of plushies to arrive. As soon as these
                   arrive (hopefully in the next few weeks), we will be launching
-                  the site to the public. My Todo list:
+                  the site to the public. Just like with every project, there's always work to be done. Here's my current TODO list:
                 </p>
                 <ul>
                   <li>Implement Customer Reviews (in progress)</li>
