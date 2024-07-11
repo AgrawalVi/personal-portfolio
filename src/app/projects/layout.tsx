@@ -5,5 +5,5 @@ export default function projectsLayout({
 }: {
   children: React.ReactNode
 }) {
-  return <div className="h-full w-full px-10 py-10 pb-16">{children}</div>
+  return <div className="h-full w-full px-10 pb-16">{children}</div>
 }

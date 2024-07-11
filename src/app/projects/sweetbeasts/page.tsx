@@ -8,7 +8,7 @@ import ProjectPageSection from '@/components/general/projects/project-page-secti
 
 export default function SweetBeastsPage() {
   return (
-    <main className="flex w-full justify-center ">
+    <main className="flex w-full justify-center my-10">
       <div className="max-w-5xl w-full flex flex-col items-center justify-center">
         <ProjectPageTitle
           name="SweetBeasts"
