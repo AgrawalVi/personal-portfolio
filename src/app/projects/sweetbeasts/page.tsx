@@ -252,7 +252,7 @@ export default function SweetBeastsPage() {
                     scalability and easy management
                   </li>
                   <li>
-                    <strong>Deployment:</strong> {""}
+                    <strong>Deployment and Analytics:</strong> {""}
                     <LinkPreview
                       className="underline underline-offset-4"
                       url="https://vercel.com/"
@@ -298,6 +298,7 @@ export default function SweetBeastsPage() {
                 </p>
                 <ul>
                   <li>Implement Customer Reviews (in progress)</li>
+                  <li>Switch analytics to Posthog</li>
                   <li>Polish UI - mainly in the content pages</li>
                   <li>Add more products as they are developed</li>
                 </ul>
