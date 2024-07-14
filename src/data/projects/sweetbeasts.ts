@@ -21,33 +21,21 @@ export const SweetBeastsTechnologies: technologyItem[] = [
   },
   {
     id: 4,
-    name: 'Framer Motion',
-    description: 'Animation Library',
-    image: '/logos/framer-logo.png',
-  },
-  {
-    id: 5,
     name: 'Prisma',
     description: 'Database ORM',
     image: '/logos/prisma-logo.svg',
   },
   {
-    id: 6,
-    name: 'PostgreSQL',
-    description: 'Database',
-    image: '/logos/postgres-logo.png',
-  },
-  {
-    id: 7,
+    id: 5,
     name: 'Vercel',
     description: 'Cloud Hosting',
     image: '/logos/vercel-logo.png',
   },
   {
-    id: 8,
-    name: 'TypeScript',
-    description: 'Typesafe JavaScript',
-    image: '/logos/typescript-logo.png',
+    id: 6,
+    name: 'And more...',
+    description: '',
+    image: '/logos/plus-icon.png',
   },
 ]
 
