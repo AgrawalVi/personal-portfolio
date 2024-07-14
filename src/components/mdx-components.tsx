@@ -1,7 +1,21 @@
-import type { MDXComponents } from 'mdx/types'
+import Image from 'next/image'
+import * as runtime from 'react/jsx-runtime'
+import { LinkPreview } from './aceternity/link-preview'
 
-export function useMDXComponents(components: MDXComponents): MDXComponents {
-  return {
-    ...components,
-  }
+const useMDXComponent = (code: string) => {
+  const fn = new Function(code)
+  return fn({ ...runtime }).default
+}
+
+const components = {
+  Image,
+}
+
+interface MDXProps {
+  code: string
+}
+
+export function MDXContent({ code }: MDXProps) {
+  const Component = useMDXComponent(code)
+  return <Component components={components} />
 }
