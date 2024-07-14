@@ -13,8 +13,8 @@ import {
 
 export default function ProjectSection() {
   return (
-    <main id="projects" className="z-10 relative pt-10 bg-background w-full">
-      <div className="text-center text-[40px] md:text-5xl lg:text-6xl mb-10 text-purple">
+    <main id="projects" className="z-10 relative py-10 bg-background w-full">
+      <div className="text-center text-[40px] md:text-5xl mb-10 lg:text-6xl text-purple">
         Projects
       </div>
 

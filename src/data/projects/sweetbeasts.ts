@@ -27,12 +27,6 @@ export const SweetBeastsTechnologies: technologyItem[] = [
   },
   {
     id: 5,
-    name: 'Vercel',
-    description: 'Cloud Hosting',
-    image: '/logos/vercel-logo.png',
-  },
-  {
-    id: 6,
     name: 'And more...',
     description: '',
     image: '/logos/plus-icon.png',
@@ -40,7 +34,7 @@ export const SweetBeastsTechnologies: technologyItem[] = [
 ]
 
 export const SweetBeastsCardDescription: string[] = [
-  'Custom e-commerce platform for SweetBeasts',
+  'Custom e-commerce platform for SweetBeasts ',
 ]
 
 export const SweetBeastsSectionPageSection: projectPageSection[] = [

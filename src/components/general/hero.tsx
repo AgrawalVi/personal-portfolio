@@ -1,7 +1,9 @@
+'use client'
+
 import React from 'react'
 import { Spotlight } from '@/components/aceternity/spotlight'
 import { TextGenerateEffect } from '../aceternity/text-generate-effect'
-import MagicButton from '../aceternity/magic-button'
+import MagicButton from '@/components/aceternity/magic-button'
 import { Folders } from 'lucide-react'
 import { motion } from 'framer-motion'
 

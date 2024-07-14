@@ -3,6 +3,7 @@ import { Josefin_Sans, Nunito } from 'next/font/google'
 import { ThemeProvider } from '@/components/theme-provider'
 import './globals.css'
 import { MenuDock } from '@/components/general/nav-dock'
+import Footer from '@/components/general/footer'
 
 const josefinSans = Josefin_Sans({
   subsets: ['latin'],
@@ -34,7 +35,8 @@ export default function RootLayout({
         >
           <div className="relative">
             <MenuDock />
-            {children}
+            <main className="pb-20">{children}</main>
+            <Footer />
           </div>
         </ThemeProvider>
       </body>

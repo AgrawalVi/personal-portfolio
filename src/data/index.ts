@@ -21,18 +21,12 @@ export const SweetBeastsAdminTechnologies: technologyItem[] = [
   },
   {
     id: 4,
-    name: 'Vercel',
-    description: 'Cloud Hosting',
-    image: '/logos/vercel-logo.png',
-  },
-  {
-    id: 5,
     name: 'Stripe',
     description: 'Payment Gateway',
     image: '/logos/stripe-logo.png',
   },
   {
-    id: 6,
+    id: 5,
     name: 'And more...',
     description: '',
     image: '/logos/plus-icon.png',
