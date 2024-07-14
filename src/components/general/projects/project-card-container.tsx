@@ -51,7 +51,7 @@ export default function ProjectCardContainer({
       <CardContent>
         <ul className="pl-5">
           {bulletPoints.map((bulletPoint, index) => (
-            <li className="text-neutral-100 list-disc" key={index}>
+            <li className="text-neutral-100 list-disc leading-7" key={index}>
               {bulletPoint}
             </li>
           ))}

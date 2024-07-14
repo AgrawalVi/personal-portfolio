@@ -1,20 +1,21 @@
 import ProjectPageContainer from '@/components/general/projects/project-page-content-container'
 import ProjectPageTitle from '@/components/general/projects/project-page-title'
+import Link from 'next/link'
 import Image from 'next/image'
+import { TriangleAlert } from 'lucide-react'
 import { LinkPreview } from '@/components/aceternity/link-preview'
 import ProjectPageSection from '@/components/general/projects/project-page-section'
 import { TracingBeam } from '@/components/aceternity/tracing-beam'
 
-export default function SweetBeastsPage() {
+export default function SweetBeastsAdminPage() {
   return (
     <main className="flex w-full justify-center pt-5 sm:pt-10">
       <TracingBeam>
         <div className="max-w-5xl w-full flex flex-col items-center justify-center">
           <ProjectPageTitle
-            name="SweetBeasts"
+            name="SweetBeasts Admin"
             dateText="May 2023 - Present"
-            githubLink="https://github.com/AgrawalVi/SweetBeasts"
-            viewProjectLink="https://sweetbeasts-demo.vishrut.tech"
+            githubLink="https://github.com/AgrawalVi/sweetbeasts-admin"
           />
           <div className="flex flex-col pt-10 w-full">
             <Image
@@ -27,98 +28,51 @@ export default function SweetBeastsPage() {
               <ProjectPageSection title="Summary" id="summary">
                 <p>
                   I lead a team of three in developing and testing a custom
-                  e-commerce platform for SweetBeasts Inc, a company that I
+                  e-commerce admin panel for SweetBeasts Inc, a company that I
                   co-founded. As CTO and COO, I oversee all technical and
-                  operational aspects. Currently. The project also includes an
-                  advanced admin panel, detailed{' '}
+                  operational aspects. You can learn more about the storefront{' '}
                   <LinkPreview
-                    url="/projects/sweetbeasts-admin"
+                    url="/projects/sweetbeasts"
                     className="underline underline-offset-4"
                   >
                     here.
+                  </LinkPreview>{' '}
+                  Due to the nature of the project, there is no public access to
+                  the admin panel (but the code is available on{' '}
+                  <LinkPreview
+                    className="underline underline-offset-4"
+                    url="https://github.com/AgrawalVi/sweetbeasts-admin"
+                  >
+                    GitHub
                   </LinkPreview>
+                  ).
                 </p>
-              </ProjectPageSection>
-
-              <ProjectPageSection title="Demo Site" id="demo-site">
-                <div>
-                  <p>
-                    We are preparing for the official launch; currently, a{' '}
-                    <LinkPreview
-                      url="https://sweetbeasts.shop"
-                      className="underline underline-offset-4"
-                    >
-                      placeholder site
-                    </LinkPreview>{' '}
-                    is live. But, you can explore our fully functional demo{' '}
-                    <LinkPreview
-                      url="https://sweetbeasts-demo.vishrut.tech"
-                      className="underline underline-offset-4"
-                    >
-                      here
-                    </LinkPreview>
-                    , which operates in Stripe's test mode.
-                  </p>
-                </div>
-                <p className="text-center">
-                  Test card Number: 4242 4242 4242 4242
-                </p>
-                <p className="text-center">
-                  Any expiration date and CVV combo will work.
-                </p>
-              </ProjectPageSection>
-
-              <ProjectPageSection title="Why build custom?" id="why">
-                <p>
-                  Opting to create a custom e-commerce platform instead of using
-                  solutions like Shopify was driven by a desire to:
-                </p>
-                <ul>
-                  <li>
-                    Deeply understand and master the fundamentals of full-stack
-                    web development
-                  </li>
-                  <li>
-                    Develop a highly customizable and distinctive online
-                    presence.
-                  </li>
-                  <li>
-                    Design a clean, simple, and feature-rich user experience,
-                    avoiding the clutter typical of many e-commerce sites.
-                  </li>
-                </ul>
               </ProjectPageSection>
 
               <ProjectPageSection title="Key Features" id="key-features">
                 <p>
-                  I'm very proud of what I've built so far, and while there's
-                  still a lot of room for improvement, I believe that the
-                  storefront is built on a solid foundation using the latest
-                  technologies and best practices.
+                  While there's still work to be done for the admin panel, I'm
+                  proud of what we've built so far. The platform is built on a
+                  solid foundation which will be easy to maintain and scale in
+                  the near future.
                 </p>
                 <ul>
                   <li>
-                    All data fetches except for cart (which uses React Query)
-                    are made using Next.js server components, and all mutations
-                    are handled via server actions. This leads to a snappy user
-                    experience while keeping the platform secure.
+                    Role based authentication and authorization for all users
+                    via two factor authentication and email verification, which
+                    was custom built using Auth.js.
                   </li>
                   <li>
-                    Remote and local cart tracking for both guests and
-                    registered users, while also handling local cart merges and
-                    deletion upon login, logout, and checkout.
+                    A robust CMS for product creation and editing using Next.js
+                    server actions and instant client-side updates after actions
+                    are completed.
                   </li>
                   <li>
-                    Complete Stripe integration for payment, order, and customer
-                    management via the Stripe Payments and webhooks.
-                  </li>
-                  <li>
-                    A modern, playful, and responsive UI that is pleasant on the
-                    eyes while being easy to navigate.
+                    A dashboard for viewing performance and metrics, as well as
+                    a customer service portal for customer support.
                   </li>
                 </ul>
               </ProjectPageSection>
-
               <ProjectPageSection title="The Tech Stack" id="tech-stack">
                 <div className="text-3xl sm:text-4xl">Programming Language</div>
                 <ul className="list-disc  font-nunito pl-8">
@@ -170,35 +124,12 @@ export default function SweetBeastsPage() {
                   <li>
                     <LinkPreview
                       className="underline underline-offset-4"
-                      url="https://framer.com/motion/"
-                    >
-                      Framer Motion
-                    </LinkPreview>{' '}
-                    - Enables powerful animations in React applications
-                  </li>
-                  <li>
-                    <strong>UI Libraries:</strong> {''}
-                    <LinkPreview
-                      className="underline underline-offset-4"
                       url="https://ui.shadcn.com/"
                     >
                       shadcn/ui
-                    </LinkPreview>
-                    ,{' '}
-                    <LinkPreview
-                      className="underline underline-offset-4"
-                      url="https://ui.aceternity.com/"
-                    >
-                      AceternityUI
-                    </LinkPreview>
-                    , and{' '}
-                    <LinkPreview
-                      className="underline underline-offset-4"
-                      url="https://magicui.design/"
-                    >
-                      MagicUI
                     </LinkPreview>{' '}
-                    enhance our user experience
+                    - A collection of accessible and fully customizable React
+                    components designed with TailwindCSS.
                   </li>
                 </ul>
 
@@ -306,29 +237,67 @@ export default function SweetBeastsPage() {
 
               <ProjectPageSection title="Takeaways" id="takeaways">
                 <p>
-                  Embarking on this project, I underestimated the complexity
-                  involved in creating an e-commerce platform. From database
-                  management and user authentication to integrating a robust
-                  payment system, the growth in my technical skills and
-                  confidence has been substantial. Now, as we approach launch, I
-                  appreciate the depth of knowledge and practical experience
-                  I've gained.
+                  My primary learnings from developing the admin panel centered
+                  on security and authorization. Using Auth.js, I successfully
+                  implemented a robust authentication system that is both
+                  user-friendly and secure. A notable challenge was enforcing
+                  two-factor authentication as well as role based authorization
+                  for all users - a hurdle that proved invaluable for my
+                  understanding of advanced security measures. For future
+                  projects, I might opt for a hosted authentication solution
+                  like {''}
+                  <LinkPreview
+                    url="https://clerk.com"
+                    className="underline underline-offset-4"
+                  >
+                    Clerk
+                  </LinkPreview>{' '}
+                  to streamline processes, but this experience was instrumental
+                  in grounding me in the fundamentals of authentication.
+                  Additionally, the CMS's database schema was crafted to be both
+                  intuitive and scalable, preparing it for anticipated future
+                  expansions. I implemented key features such as real time
+                  product creation and editing, order management, and a customer
+                  service portal.
                 </p>
               </ProjectPageSection>
 
               <ProjectPageSection title="The Current State" id="current-state">
                 <p>
-                  Right now, the website is ready for launch, but we are waiting
-                  for the first shipment of plushies to arrive. As soon as these
-                  arrive (hopefully in the next few weeks), we will be launching
-                  the site to the public. Just like with every project, there's
-                  always work to be done. Here's my current TODO list:
+                  Compared to the state of the storefront, the admin panel is
+                  definitely where my attention needs to go. I am confident that
+                  I will be able to get these tasks done in a timely manner, as
+                  I am much more efficient when working in the backend. Right
+                  now, this is what's on my punch list:
                 </p>
                 <ul>
-                  <li>Implement Customer Reviews (in progress)</li>
-                  <li>Switch analytics to Posthog</li>
-                  <li>Polish UI - mainly in the content pages</li>
-                  <li>Add more products as they are developed</li>
+                  <li>
+                    Tying in a shipping API - planning on using{' '}
+                    <LinkPreview
+                      url="https://www.shippo.com/"
+                      className="underline underline-offset-4"
+                    >
+                      Shippo
+                    </LinkPreview>
+                  </li>
+                  <li>Making order management more robust</li>
+                  <li>
+                    Adding charts to the dashboard to view performance and
+                    metrics
+                  </li>
+                  <li>
+                    File upload system - planning on using{' '}
+                    <LinkPreview
+                      url="https://uploadthing.com/"
+                      className="underline underline-offset-4"
+                    >
+                      Upload Thing
+                    </LinkPreview>
+                  </li>
+                  <li>
+                    Transitioning all hard-coded text in the storefront to the
+                    admin panel (e.g. Mission Statement, About Us, etc.)
+                  </li>
                 </ul>
               </ProjectPageSection>
             </ProjectPageContainer>

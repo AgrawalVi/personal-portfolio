@@ -73,9 +73,9 @@ export const PersonalPortfolioTechnologies: technologyItem[] = [
 ]
 
 export const SweetBeastsAdminCardDescription: string[] = [
-  'Admin panel for SweetBeasts Inc built from scratch',
+  'Custom admin panel for SweetBeasts Inc',
 ]
 
 export const PersonalPortfolioCardDescription: string[] = [
-  "The website you're currently on",
+  "You've already seen this",
 ]

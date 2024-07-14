@@ -40,7 +40,7 @@ export const SweetBeastsTechnologies: technologyItem[] = [
 ]
 
 export const SweetBeastsCardDescription: string[] = [
-  'E-Commerce site for SweetBeasts Inc built from scratch',
+  'Custom e-commerce platform for SweetBeasts',
 ]
 
 export const SweetBeastsSectionPageSection: projectPageSection[] = [
