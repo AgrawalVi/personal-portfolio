@@ -89,7 +89,7 @@
 }
 
 h1 {
-  @apply text-3xl md:text-5xl text-center;
+  @apply text-3xl md:text-5xl;
 }
 
 li {
