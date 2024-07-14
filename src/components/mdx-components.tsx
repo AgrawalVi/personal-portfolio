@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import * as runtime from 'react/jsx-runtime'
-import { LinkPreview } from './aceternity/link-preview'
+import { Callout } from './blog/post/callout'
 
 const useMDXComponent = (code: string) => {
   const fn = new Function(code)
@@ -9,6 +9,7 @@ const useMDXComponent = (code: string) => {
 
 const components = {
   Image,
+  Callout,
 }
 
 interface MDXProps {
