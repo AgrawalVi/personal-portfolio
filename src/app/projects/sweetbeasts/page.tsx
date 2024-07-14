@@ -1,15 +1,15 @@
-import ProjectPageContainer from '@/components/general/projects/project-page-content-container'
-import ProjectPageTitle from '@/components/general/projects/project-page-title'
-import Link from 'next/link'
-import Image from 'next/image'
-import { TriangleAlert } from 'lucide-react'
-import { LinkPreview } from '@/components/aceternity/link-preview'
-import ProjectPageSection from '@/components/general/projects/project-page-section'
-import { TracingBeam } from '@/components/aceternity/tracing-beam'
+import ProjectPageContainer from "@/components/general/projects/project-page-content-container"
+import ProjectPageTitle from "@/components/general/projects/project-page-title"
+import Link from "next/link"
+import Image from "next/image"
+import { TriangleAlert } from "lucide-react"
+import { LinkPreview } from "@/components/aceternity/link-preview"
+import ProjectPageSection from "@/components/general/projects/project-page-section"
+import { TracingBeam } from "@/components/aceternity/tracing-beam"
 
 export default function SweetBeastsPage() {
   return (
-    <main className="flex w-full justify-center">
+    <main className="flex w-full justify-center pt-5 sm:pt-10">
       <TracingBeam>
         <div className="max-w-5xl w-full flex flex-col items-center justify-center">
           <ProjectPageTitle
@@ -32,7 +32,7 @@ export default function SweetBeastsPage() {
                   e-commerce platform for SweetBeasts Inc, a company that I
                   co-founded. As CTO and COO, I oversee all technical and
                   operational aspects. Currently. The project also includes an
-                  advanced admin panel, detailed{' '}
+                  advanced admin panel, detailed{" "}
                   <LinkPreview
                     url="/projects/sweetbeasts-admin"
                     className="underline underline-offset-4"
@@ -45,14 +45,14 @@ export default function SweetBeastsPage() {
               <ProjectPageSection title="Demo Site" id="demo-site">
                 <div>
                   <p>
-                    We are preparing for the official launch; currently, a{' '}
+                    We are preparing for the official launch; currently, a{" "}
                     <LinkPreview
                       url="https://sweetbeasts.shop"
                       className="underline underline-offset-4"
                     >
                       placeholder site
-                    </LinkPreview>{' '}
-                    is live. Explore our fully functional demo{' '}
+                    </LinkPreview>{" "}
+                    is live. Explore our fully functional demo{" "}
                     <LinkPreview
                       url="https://sweetbeasts-demo.vishrut.tech"
                       className="underline underline-offset-4"
@@ -100,7 +100,7 @@ export default function SweetBeastsPage() {
                       className="underline underline-offset-4"
                     >
                       TypeScript
-                    </LinkPreview>{' '}
+                    </LinkPreview>{" "}
                     - Ensures type safety, which enhances the developer
                     experience and application reliability
                   </li>
@@ -116,7 +116,7 @@ export default function SweetBeastsPage() {
                       url="https://nextjs.org/"
                     >
                       Next.js
-                    </LinkPreview>{' '}
+                    </LinkPreview>{" "}
                     - A full-stack React framework for building server-side
                     rendered applications
                   </li>
@@ -126,7 +126,7 @@ export default function SweetBeastsPage() {
                       url="https://react.dev/"
                     >
                       React
-                    </LinkPreview>{' '}
+                    </LinkPreview>{" "}
                     - A library for building dynamic user interfaces
                   </li>
                   <li>
@@ -135,7 +135,7 @@ export default function SweetBeastsPage() {
                       url="https://tailwindcss.com/"
                     >
                       Tailwind CSS
-                    </LinkPreview>{' '}
+                    </LinkPreview>{" "}
                     - Known for its ease of customization and utility-first
                     approach
                   </li>
@@ -145,31 +145,31 @@ export default function SweetBeastsPage() {
                       url="https://framer.com/motion/"
                     >
                       Framer Motion
-                    </LinkPreview>{' '}
+                    </LinkPreview>{" "}
                     - Enables powerful animations in React applications
                   </li>
                   <li>
-                    <strong>UI Libraries:</strong> {''}
+                    <strong>UI Libraries:</strong> {""}
                     <LinkPreview
                       className="underline underline-offset-4"
                       url="https://ui.shadcn.com/"
                     >
                       shadcn/ui
                     </LinkPreview>
-                    ,{' '}
+                    ,{" "}
                     <LinkPreview
                       className="underline underline-offset-4"
                       url="https://ui.aceternity.com/"
                     >
                       AceternityUI
                     </LinkPreview>
-                    , and{' '}
+                    , and{" "}
                     <LinkPreview
                       className="underline underline-offset-4"
                       url="https://magicui.design/"
                     >
                       MagicUI
-                    </LinkPreview>{' '}
+                    </LinkPreview>{" "}
                     enhance our user experience
                   </li>
                 </ul>
@@ -182,7 +182,7 @@ export default function SweetBeastsPage() {
                       url="https://www.postgresql.org/"
                     >
                       PostgreSQL
-                    </LinkPreview>{' '}
+                    </LinkPreview>{" "}
                     - Celebrated for its reliability, scalability, and
                     flexibility
                   </li>
@@ -192,7 +192,7 @@ export default function SweetBeastsPage() {
                       url="https://prisma.io/"
                     >
                       Prisma
-                    </LinkPreview>{' '}
+                    </LinkPreview>{" "}
                     - Simplifies database operations, making them more reliable
                     and maintainable with an ORM
                   </li>
@@ -203,35 +203,35 @@ export default function SweetBeastsPage() {
                 </div>
                 <ul>
                   <li>
-                    <strong>Authentication:</strong> {''}
+                    <strong>Authentication:</strong> {""}
                     <LinkPreview
                       className="underline underline-offset-4"
                       url="https://authjs.dev/"
                     >
                       Auth.js
-                    </LinkPreview>{' '}
+                    </LinkPreview>{" "}
                     - provides an open-source, customizable and self-hosted
                     authentication solution
                   </li>
                   <li>
-                    <strong>Payment Gateway:</strong> {''}
+                    <strong>Payment Gateway:</strong> {""}
                     <LinkPreview
                       className="underline underline-offset-4"
                       url="https://stripe.com/"
                     >
                       Stripe
-                    </LinkPreview>{' '}
+                    </LinkPreview>{" "}
                     - Securely processes online payments
                   </li>
                   <li>
-                    <strong>Email Client:</strong> {''}
+                    <strong>Email Client:</strong> {""}
                     <LinkPreview
                       className="underline underline-offset-4"
                       url="https://resend.com/"
                     >
                       Resend
-                    </LinkPreview>{' '}
-                    - When paired with{' '}
+                    </LinkPreview>{" "}
+                    - When paired with{" "}
                     <LinkPreview
                       className="underline underline-offset-4"
                       url="https://react.email/"
@@ -241,35 +241,35 @@ export default function SweetBeastsPage() {
                     , simplifies designing and sending emails
                   </li>
                   <li>
-                    <strong>Server:</strong> {''}
+                    <strong>Server:</strong> {""}
                     <LinkPreview
                       className="underline underline-offset-4"
                       url="https://neon.tech/"
                     >
                       Neon
-                    </LinkPreview>{' '}
+                    </LinkPreview>{" "}
                     - Offers a serverless platform for PostgreSQL, ensuring
                     scalability and easy management
                   </li>
                   <li>
-                    <strong>Deployment:</strong> {''}
+                    <strong>Deployment and Analytics:</strong> {""}
                     <LinkPreview
                       className="underline underline-offset-4"
                       url="https://vercel.com/"
                     >
                       Vercel
-                    </LinkPreview>{' '}
+                    </LinkPreview>{" "}
                     - Known for its seamless integration with GitHub, hosts and
                     deploys our application
                   </li>
                   <li>
-                    <strong>Version Control:</strong> {''}
+                    <strong>Version Control:</strong> {""}
                     <LinkPreview
                       className="underline underline-offset-4"
                       url="https://github.com/"
                     >
                       GitHub
-                    </LinkPreview>{' '}
+                    </LinkPreview>{" "}
                     - Facilitates version control and integration with our
                     development process
                   </li>
@@ -293,10 +293,12 @@ export default function SweetBeastsPage() {
                   Right now, the website is ready for launch, but we are waiting
                   for the first shipment of plushies to arrive. As soon as these
                   arrive (hopefully in the next few weeks), we will be launching
-                  the site to the public. Just like with every project, there's always work to be done. Here's my current TODO list:
+                  the site to the public. Just like with every project, there's
+                  always work to be done. Here's my current TODO list:
                 </p>
                 <ul>
                   <li>Implement Customer Reviews (in progress)</li>
+                  <li>Switch analytics to Posthog</li>
                   <li>Polish UI - mainly in the content pages</li>
                   <li>Add more products as they are developed</li>
                 </ul>

@@ -1,14 +1,14 @@
-'use client'
+"use client"
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from "react"
 import {
   motion,
   useTransform,
   useScroll,
   useVelocity,
   useSpring,
-} from 'framer-motion'
-import { cn } from '@/lib/utils'
+} from "framer-motion"
+import { cn } from "@/lib/utils"
 
 export const TracingBeam = ({
   children,
@@ -20,17 +20,21 @@ export const TracingBeam = ({
   const ref = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ['start start', 'end start'],
+    offset: ["start start", "end start"],
   })
 
   const contentRef = useRef<HTMLDivElement>(null)
   const [svgHeight, setSvgHeight] = useState(0)
+
+  // TODO: Need to optimize this to change svg height when the content height and width change
 
   useEffect(() => {
     if (contentRef.current) {
       setSvgHeight(contentRef.current.offsetHeight)
     }
   }, [])
+
+  //TODO: Need to optimize this as well to change the useTransform values based on screen size.
 
   const y1 = useSpring(
     useTransform(scrollYProgress, [0, 0.8], [50, svgHeight]),
@@ -50,7 +54,7 @@ export const TracingBeam = ({
   return (
     <motion.div
       ref={ref}
-      className={cn('relative w-full max-w-4xl mx-auto h-full', className)}
+      className={cn("relative w-full max-w-4xl mx-auto h-full", className)}
     >
       <div className="absolute hidden min-[370px]:block min-[370px]:-left-[4.5rem] min-[1150px]:-left-32 xl:-left-40 2xl:-left-64 top-3">
         <motion.div
@@ -61,8 +65,8 @@ export const TracingBeam = ({
           animate={{
             boxShadow:
               scrollYProgress.get() > 0
-                ? 'none'
-                : 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
+                ? "none"
+                : "rgba(0, 0, 0, 0.24) 0px 3px 8px",
           }}
           className="ml-[27px] h-4 w-4 rounded-full border border-netural-200 shadow-sm flex items-center justify-center"
         >
@@ -73,9 +77,9 @@ export const TracingBeam = ({
             }}
             animate={{
               backgroundColor:
-                scrollYProgress.get() > 0 ? 'white' : 'var(--emerald-500)',
+                scrollYProgress.get() > 0 ? "white" : "var(--emerald-500)",
               borderColor:
-                scrollYProgress.get() > 0 ? 'white' : 'var(--emerald-600)',
+                scrollYProgress.get() > 0 ? "white" : "var(--emerald-600)",
             }}
             className="h-2 w-2  rounded-full border border-neutral-300 bg-white"
           />
