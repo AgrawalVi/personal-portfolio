@@ -2,14 +2,14 @@
 
 import React from 'react'
 import { Spotlight } from '@/components/aceternity/spotlight'
-import { TextGenerateEffect } from '../aceternity/text-generate-effect'
+import { TextGenerateEffect } from '../../aceternity/text-generate-effect'
 import MagicButton from '@/components/aceternity/magic-button'
 import { Folders } from 'lucide-react'
 import { motion } from 'framer-motion'
 
 const Hero = () => {
   return (
-    <div className="pb-20 pt-36 h-screen w-screen">
+    <div className="pb-20 pt-36 h-dvh w-full">
       <div>
         <Spotlight
           className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen"
@@ -21,7 +21,7 @@ const Hero = () => {
         />
         <Spotlight className="top-28 left-80 h-[80vh] w-[50vh]" fill="blue" />
       </div>
-      <div className="h-screen w-full dark:bg-background bg-background dark:bg-grid-white/[0.025] bg-grid-black/[0.025] flex items-center justify-center absolute top-0 left-0">
+      <div className="h-dvh w-full dark:bg-background bg-background dark:bg-grid-white/[0.025] bg-grid-black/[0.025] flex items-center justify-center absolute top-0 left-0">
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-background bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
       </div>
 

@@ -1,4 +1,4 @@
-import ProjectCardContainer from './general/projects/project-card-container'
+import ProjectCardContainer from '../projects/project-card-container'
 import {
   PersonalPortfolioTechnologies,
   SweetBeastsAdminTechnologies,

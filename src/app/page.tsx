@@ -1,6 +1,6 @@
 import React from 'react'
-import Hero from '@/components/general/hero'
-import ProjectSection from '@/components/projects-section'
+import Hero from '@/components/general/home/hero'
+import ProjectSection from '@/components/general/home/projects-section'
 
 export default function Home() {
   return (
