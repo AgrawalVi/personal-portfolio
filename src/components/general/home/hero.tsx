@@ -9,24 +9,24 @@ import { motion } from 'framer-motion'
 
 const Hero = () => {
   return (
-    <div className="pb-20 pt-36 h-dvh w-full">
+    <div className="h-dvh w-full pb-20 pt-36">
       <div>
         <Spotlight
-          className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen"
+          className="-left-10 -top-40 h-screen md:-left-32 md:-top-20"
           fill="white"
         />
         <Spotlight
-          className="top-10 left-full h-[80vh] w-[50vh]"
+          className="left-full top-10 h-[80vh] w-[50vh]"
           fill="purple"
         />
-        <Spotlight className="top-28 left-80 h-[80vh] w-[50vh]" fill="blue" />
+        <Spotlight className="left-80 top-28 h-[80vh] w-[50vh]" fill="blue" />
       </div>
-      <div className="h-dvh w-full dark:bg-background bg-background dark:bg-grid-white/[0.025] bg-grid-black/[0.025] flex items-center justify-center absolute top-0 left-0">
-        <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-background bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
+      <div className="absolute left-0 top-0 flex h-dvh w-full items-center justify-center bg-background bg-grid-black/[0.025] dark:bg-background dark:bg-grid-white/[0.025]">
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-background"></div>
       </div>
 
-      <div className="flex justify-center relative my-20 z-10 align-middle h-full pb-64 border-b-2 border-neutral-800/50">
-        <div className="max-w-[89vw] md:max-w-2xl lg:max-w-[60vw] flex flex-col items-center justify-center">
+      <div className="relative z-10 my-20 flex h-full justify-center border-b-2 border-neutral-800/50 pb-64 align-middle">
+        <div className="flex max-w-[89vw] flex-col items-center justify-center md:max-w-2xl lg:max-w-[60vw]">
           <TextGenerateEffect
             className="text-center text-[40px] md:text-5xl lg:text-6xl"
             words="Hi, I'm Vishrut, a student based in Madison, Wisconsin"
@@ -38,7 +38,7 @@ const Hero = () => {
               type: 'spring',
               delay: 1.5,
             }}
-            className="text-center md:tracking-wider mb-4 text-sm md:text-lg lg:text-2xl"
+            className="mb-4 text-center text-sm md:text-lg md:tracking-wider lg:text-2xl"
           >
             Welcome to my portfolio. Here, you will my projects, skills, and
             experiences that showcase my journey as a developer.

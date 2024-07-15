@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 
 export default function projectsLayout({
   children,
@@ -6,6 +6,6 @@ export default function projectsLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="h-full w-full px-8 min-[370px]:px-16 pb-40">{children}</div>
+    <div className="h-full w-full px-8 pb-40 min-[370px]:px-16">{children}</div>
   )
 }

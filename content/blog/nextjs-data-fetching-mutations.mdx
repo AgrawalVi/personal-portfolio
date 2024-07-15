@@ -5,22 +5,22 @@ date: 2024-07-14
 published: true
 ---
 
-
 ## Prerequisites
 
 This article assumes you are comfortable with React and are familiar with Next.js and the basics of the App Router.
 
 ## What's different about Next.js?
 
-It's first important to understand what Next.js offers compared to other frameworks. Next.js offers 
+It's first important to understand what Next.js offers compared to other frameworks. Next.js offers
 many cutting edge features that are brand new and confusing to many developers, including me. These features include:
 
 - Server Components - data fetching
 - Server Actions - data mutations
 
 <Callout type="warning">
-Server Components were introduced in Next.js version 13, and Server Actions were introduced in 
-version 14. Based on the version of Next.js you are using, certain features may not be available.
+  Server Components were introduced in Next.js version 13, and Server Actions
+  were introduced in version 14. Based on the version of Next.js you are using,
+  certain features may not be available.
 </Callout>
 
 ## Data Fetching
@@ -29,6 +29,7 @@ version 14. Based on the version of Next.js you are using, certain features may 
 
 Server Components are React components that are exclusively run on the server. Server Components
 bring many benefits to the table, including:
+
 - **Data Fetching and Performance** - Data fetching can be done in a server component, which makes data fetching more efficient and reduces the number of operations that the client needs to perform
 - **Security** - All sensitive data is exposed to the server, which makes it harder for an attacker to exploit your application
 - **Developer Experience** - Server Components make data fetching and rendering much easier to manage for a developer, which will be seen later in the article
@@ -60,14 +61,15 @@ export default async function Page() {
   )
 }
 ```
-All you have to do is mark the function as 'async' and then make any database calls. 
-And because of Next.js's built in caching, the page will be saved until the cache is invalidated, 
+
+All you have to do is mark the function as 'async' and then make any database calls.
+And because of Next.js's built in caching, the page will be saved until the cache is invalidated,
 reducing duplicate data fetches.
 
 <Callout>
-`fetchData` is a direct database call, and because it is a server component, no database secrets are exposed to the client.
+  `fetchData` is a direct database call, and because it is a server component,
+  no database secrets are exposed to the client.
 </Callout>
-
 
 Another example of a data fetching function is shown below, and it is made of snippets from the [SweetBeasts Source Code](https://github.com/AgrawalVi/sweetbeasts)
 
@@ -101,10 +103,11 @@ export default async function OrderPageContent() {
   )
 }
 ```
-With this example, we are using a React Suspense boundary to show a skeleton (OrderPageSkeleton) while the data is being 
+
+With this example, we are using a React Suspense boundary to show a skeleton (OrderPageSkeleton) while the data is being
 fetched. This improves the user experience as the page instantly loads with a loading state to indicate that data is being fetched.
 
-These examples are just a small taste of what you can do with server components. When you need to fetch data in a client component, 
+These examples are just a small taste of what you can do with server components. When you need to fetch data in a client component,
 a simple approach is to fetch the data in a server component and pass it as a prop to a client component. An example of this is shown below:
 
 ```js showLineNumbers {8}
@@ -132,6 +135,7 @@ export default function ClientComponent( {initialData}: { initialData: any }) {
   )
 }
 ```
+
 This approach is useful for when you need to fetch data in a client component, as it is very
 straightforward with only a few lines of code.
 
@@ -144,12 +148,13 @@ in future projects as they are a great way to improve the developer and user exp
 
 Server Actions are much more straightforward than server components. Server Actions are POST endpoints
 generated at build time. Compared to a normal API route, they are much easier to use and heavily
-increase the developer experience by adding end to end type safety. Server Actions can be defined with 
+increase the developer experience by adding end to end type safety. Server Actions can be defined with
 a `'Use Server'` directive at the top of the file. This will tell
 Next.js to create a POST endpoint for any function exported from the file.
 
 <Callout type="danger">
-  Since all server actions are converted to POST endpoints, they will be accessibly publicly, so be 
-  sure to secure them with any authorization as you would for any other API route. For more information, watch [this video](https://www.youtube.com/watch?v=fdKcbyEK66M)
+  Since all server actions are converted to POST endpoints, they will be
+  accessibly publicly, so be sure to secure them with any authorization as you
+  would for any other API route. For more information, watch [this
+  video](https://www.youtube.com/watch?v=fdKcbyEK66M)
 </Callout>
-

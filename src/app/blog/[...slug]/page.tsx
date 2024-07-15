@@ -36,12 +36,12 @@ export default async function postPage({ params }: PostPageProps) {
 
   return (
     <main>
-      <article className="container py-6 max-w-5xl mx-auto pt-10 sm:pt-20">
+      <article className="container mx-auto max-w-5xl py-6 pt-10 sm:pt-20">
         <TracingBeam>
           <div className="mb-12 w-full border-b">
-            <h1 className="text-center mb-0">{post.title}</h1>
-            <p className="text-center opacity-80 pb-5">{post.description}</p>
-            <div className="flex justify-between opacity-80 text-sm pb-1">
+            <h1 className="mb-0 text-center">{post.title}</h1>
+            <p className="pb-5 text-center opacity-80">{post.description}</p>
+            <div className="flex justify-between pb-1 text-sm opacity-80">
               <p>Written by Vishrut Agrawal</p>
               <p>{formatDate(post.date)}</p>
             </div>

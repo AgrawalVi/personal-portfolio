@@ -99,7 +99,7 @@ const DATA = {
 export function MenuDock() {
   return (
     <div
-      className="fixed z-[10000] bottom-10"
+      className="fixed bottom-10 z-[10000]"
       style={{ left: '50%', transform: 'translateX(-50%)' }}
     >
       <Dock direction="middle">
@@ -112,7 +112,7 @@ export function MenuDock() {
                     href={item.href}
                     className={cn(
                       buttonVariants({ variant: 'ghost', size: 'icon' }),
-                      'size-12 sm:size-[66px] rounded-full'
+                      'size-12 rounded-full sm:size-[66px]',
                     )}
                   >
                     <item.icon className="size-4 sm:size-[22px]" />
@@ -137,7 +137,7 @@ export function MenuDock() {
                     rel="noopener noreferrer"
                     className={cn(
                       buttonVariants({ variant: 'ghost', size: 'icon' }),
-                      'size-12 sm:size-[66px] rounded-full'
+                      'size-12 rounded-full sm:size-[66px]',
                     )}
                   >
                     <social.icon className="size-4 sm:size-[22px]" />

@@ -80,7 +80,7 @@
 
 @layer base {
   * {
-    @apply border-border !scroll-smooth;
+    @apply !scroll-smooth border-border;
   }
   body {
     @apply bg-background text-foreground;
@@ -92,7 +92,7 @@
 
 @layer utilities {
   .heading {
-    @apply font-bold text-4xl md:text-5xl text-center;
+    @apply text-center text-4xl font-bold md:text-5xl;
   }
 
   .black-gradient {
@@ -109,9 +109,9 @@ li {
 }
 
 p {
-  @apply sm:leading-10  font-nunito text-start  leading-7;
+  @apply text-start font-nunito leading-7 sm:leading-10;
 }
 
 ul {
-  @apply space-y-4 font-nunito list-disc pl-6 sm:pl-8  leading-7 sm:leading-10;
+  @apply list-disc space-y-4 pl-6 font-nunito leading-7 sm:pl-8 sm:leading-10;
 }

@@ -112,7 +112,7 @@ export const LinkPreview = ({
         </HoverCardPrimitive.Trigger>
 
         <HoverCardPrimitive.Content
-          className="[transform-origin:var(--radix-hover-card-content-transform-origin)] z-[500] relative"
+          className="relative z-[500] [transform-origin:var(--radix-hover-card-content-transform-origin)]"
           side="top"
           align="center"
           sideOffset={10}
@@ -132,7 +132,7 @@ export const LinkPreview = ({
                   },
                 }}
                 exit={{ opacity: 0, y: 20, scale: 0.6 }}
-                className="shadow-xl rounded-xl z-[500] relative"
+                className="relative z-[500] rounded-xl shadow-xl"
                 style={{
                   x: translateX,
                 }}
@@ -140,7 +140,7 @@ export const LinkPreview = ({
                 {
                   <Link
                     href={url}
-                    className="block p-1 bg-white border-transparent shadow rounded-xl hover:border-neutral-200 dark:hover:border-neutral-800 z-[500] relative"
+                    className="relative z-[500] block rounded-xl border-transparent bg-white p-1 shadow hover:border-neutral-200 dark:hover:border-neutral-800"
                     style={{ fontSize: 0 }}
                     target={isExternal ? '_blank' : undefined}
                     rel={isExternal ? 'noopener noreferrer' : undefined}
@@ -152,7 +152,7 @@ export const LinkPreview = ({
                       quality={quality}
                       layout={layout}
                       priority={true}
-                      className="rounded-lg z-[500] relative"
+                      className="relative z-[500] rounded-lg"
                       alt="preview image"
                     />
                   </Link>

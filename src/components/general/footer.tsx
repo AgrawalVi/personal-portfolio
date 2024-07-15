@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <div className="sm:h-20 flex justify-center sm:justify-end text-xs sm:text-base border-t border-border/50 text-muted-foreground p-3 sm:p-5 items-end sm:items-center sm:px-20">
+    <div className="flex items-end justify-center border-t border-border/50 p-3 text-xs text-muted-foreground sm:h-20 sm:items-center sm:justify-end sm:p-5 sm:px-20 sm:text-base">
       <div>©2024 Vishrut Agrawal</div>
     </div>
   )

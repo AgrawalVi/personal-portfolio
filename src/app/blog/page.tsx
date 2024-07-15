@@ -7,8 +7,8 @@ export default async function BlogPage() {
   const displayPosts = sortedPosts
 
   return (
-    <main className="flex w-full justify-center items-center flex-col pt-5 sm:pt-10">
-      <div className="max-w-5xl w-full flex flex-col items-center justify-center">
+    <main className="flex w-full flex-col items-center justify-center pt-5 sm:pt-10">
+      <div className="flex w-full max-w-5xl flex-col items-center justify-center">
         <h1 className="w-full text-center text-5xl sm:text-7xl">Blog</h1>
         {displayPosts.length > 0 ? (
           <ul className="list-none">

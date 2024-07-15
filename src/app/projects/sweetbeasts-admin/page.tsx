@@ -11,13 +11,13 @@ export default function SweetBeastsAdminPage() {
   return (
     <main className="flex w-full justify-center pt-5 sm:pt-10">
       <TracingBeam>
-        <div className="max-w-5xl w-full flex flex-col items-center justify-center">
+        <div className="flex w-full max-w-5xl flex-col items-center justify-center">
           <ProjectPageTitle
             name="SweetBeasts Admin"
             dateText="May 2023 - Present"
             githubLink="https://github.com/AgrawalVi/sweetbeasts-admin"
           />
-          <div className="flex flex-col pt-10 w-full">
+          <div className="flex w-full flex-col pt-10">
             <Image
               src="/photography-section/agriculture-hall.jpg"
               width={2000}
@@ -75,7 +75,7 @@ export default function SweetBeastsAdminPage() {
               </ProjectPageSection>
               <ProjectPageSection title="The Tech Stack" id="tech-stack">
                 <div className="text-3xl sm:text-4xl">Programming Language</div>
-                <ul className="list-disc  font-nunito pl-8">
+                <ul className="list-disc pl-8 font-nunito">
                   <li>
                     <LinkPreview
                       url="https://typescriptlang.org/"
@@ -91,7 +91,7 @@ export default function SweetBeastsAdminPage() {
                 <div className="text-3xl sm:text-4xl">
                   Major Frameworks and Libraries
                 </div>
-                <ul className="list-disc  font-nunito pl-8">
+                <ul className="list-disc pl-8 font-nunito">
                   <li>
                     <LinkPreview
                       className="underline underline-offset-4"

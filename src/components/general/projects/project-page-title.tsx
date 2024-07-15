@@ -19,8 +19,8 @@ export default function ProjectPageTitle({
   return (
     <div>
       <h1 className="w-full text-center text-5xl sm:text-7xl">{name}</h1>
-      <div className="flex flex-row justify-between w-full align-middle">
-        <p className="text-start text-base sm:text-2xl text-muted-foreground font-nunito flex flex-col justify-center">
+      <div className="flex w-full flex-row justify-between align-middle">
+        <p className="flex flex-col justify-center text-start font-nunito text-base text-muted-foreground sm:text-2xl">
           {dateText}
         </p>
         <div className="flex flex-row space-x-2">

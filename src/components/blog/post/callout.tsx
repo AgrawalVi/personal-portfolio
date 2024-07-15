@@ -14,13 +14,13 @@ export function Callout({
   return (
     <div
       className={cn(
-        'my-6 rounded-md border border-l-4 px-4 w-full dark:max-w-none flex items-center',
+        'my-6 flex w-full items-center rounded-md border border-l-4 px-4 dark:max-w-none',
         {
           'border-destructive bg-destructive/10 text-destructive-foreground':
             type === 'danger',
           'border-warning bg-warning/10 text-warning-foreground':
             type === 'warning',
-        }
+        },
       )}
       {...props}
     >

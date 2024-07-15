@@ -1,10 +1,10 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { Moon, Sun } from "lucide-react"
-import { useTheme } from "next-themes"
+import * as React from 'react'
+import { Moon, Sun } from 'lucide-react'
+import { useTheme } from 'next-themes'
 
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button'
 
 export function ModeToggle({ className }: { className?: string }) {
   const { theme, setTheme } = useTheme()
@@ -20,7 +20,7 @@ export function ModeToggle({ className }: { className?: string }) {
         variant="outline"
         size="icon"
         className={className}
-        onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
       >
         {isMounted && (
           <>

@@ -13,12 +13,12 @@ import {
 
 export default function ProjectSection() {
   return (
-    <main id="projects" className="z-10 relative py-10 bg-background w-full">
-      <div className="text-center text-[40px] md:text-5xl mb-10 lg:text-6xl text-purple">
+    <main id="projects" className="relative z-10 w-full bg-background py-10">
+      <div className="mb-10 text-center text-[40px] text-purple md:text-5xl lg:text-6xl">
         Projects
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-12 mx-auto w-fit">
+      <div className="mx-auto grid w-fit grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12 xl:grid-cols-3">
         <ProjectCardContainer
           title="SweetBeasts"
           link="/projects/sweetbeasts"

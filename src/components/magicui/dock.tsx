@@ -18,7 +18,7 @@ const DEFAULT_MAGNIFICATION = 60
 const DEFAULT_DISTANCE = 140
 
 const dockVariants = cva(
-  'h-[58px] sm:h-[80px] sm:px-4 flex min-[370px]:px-2 p-2 sm:gap-6 rounded-2xl border bg-background/50 backdrop-blur-lg backdrop-saturate-150'
+  'h-[58px] sm:h-[80px] sm:px-4 flex min-[370px]:px-2 p-2 sm:gap-6 rounded-2xl border bg-background/50 backdrop-blur-lg backdrop-saturate-150',
 )
 
 const Dock = React.forwardRef<HTMLDivElement, DockProps>(
@@ -31,7 +31,7 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
       direction = 'bottom',
       ...props
     },
-    ref
+    ref,
   ) => {
     const [visible, setVisible] = useState(false)
     const [width, setWidth] = useState<number>(500)
@@ -78,7 +78,7 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
               'items-center': direction === 'middle',
               'items-end': direction === 'bottom',
             },
-            'hover-none'
+            'hover-none',
           )}
         >
           {renderChildren()}
@@ -113,7 +113,7 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
         {renderChildren()}
       </motion.div>
     )
-  }
+  },
 )
 
 Dock.displayName = 'Dock'
@@ -148,7 +148,7 @@ const DockIcon = ({
   let widthSync = useTransform(
     distanceCalc,
     [-distance, 0, distance],
-    [40, magnification, 40]
+    [40, magnification, 40],
   )
 
   let width = useSpring(widthSync, {
@@ -163,7 +163,7 @@ const DockIcon = ({
       style={{ width }}
       className={cn(
         'flex aspect-square cursor-pointer items-center justify-center rounded-full',
-        className
+        className,
       )}
       {...props}
     >

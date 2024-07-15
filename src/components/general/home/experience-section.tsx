@@ -7,8 +7,8 @@ import ExperienceCardContainer from '../experience/experience-card-container'
 
 export default function ProjectSection() {
   return (
-    <main id="experience" className="z-10 relative py-10 bg-background w-full">
-      <div className="text-center text-[40px] md:text-5xl mb-10 lg:text-6xl text-purple">
+    <main id="experience" className="relative z-10 w-full bg-background py-10">
+      <div className="mb-10 text-center text-[40px] text-purple md:text-5xl lg:text-6xl">
         Experience
       </div>
 

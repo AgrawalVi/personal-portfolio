@@ -6,10 +6,10 @@ import EducationSection from '@/components/general/home/education-section'
 
 export default function Home() {
   return (
-    <main className="relative bg-background flex justify-center items-center flex-col overflow-hidden mx-auto sm:px-10 px-5">
+    <main className="relative mx-auto flex flex-col items-center justify-center overflow-hidden bg-background px-5 sm:px-10">
       <Hero />
-      <div className="flex flex-col space-y-20 mt-10 divide-y-2 divide-neutral-800/50">
-        <div className="flex flex-col space-y-20 xl:space-y-0 xl:flex-row divide-y-2 divide-neutral-800/50 xl:divide-y-0">
+      <div className="mt-10 flex flex-col space-y-20 divide-y-2 divide-neutral-800/50">
+        <div className="flex flex-col space-y-20 divide-y-2 divide-neutral-800/50 xl:flex-row xl:space-y-0 xl:divide-y-0">
           <EducationSection />
           <ExperienceSection />
         </div>

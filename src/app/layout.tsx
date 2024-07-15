@@ -35,7 +35,7 @@ export default function RootLayout({
         >
           <div className="relative">
             <MenuDock />
-            <div className="min-h-dvh grid grid-rows-[1fr_auto]">
+            <div className="grid min-h-dvh grid-rows-[1fr_auto]">
               <main className="pb-20">{children}</main>
               <Footer />
             </div>
