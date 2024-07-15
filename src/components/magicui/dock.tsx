@@ -34,16 +34,17 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
     ref
   ) => {
     const [visible, setVisible] = useState(false)
-    const [width, setWidth] = useState(window.innerWidth)
-
-    const isTouchDevice =
-      'ontouchstart' in window || navigator.maxTouchPoints > 0
+    const [width, setWidth] = useState<number>(500)
+    const [isTouchDevice, setIsTouchDevice] = useState(false)
 
     useEffect(() => {
       // wait 2 seconds before showing the floating navbar
       setTimeout(() => {
         setVisible(true)
       }, 2000)
+
+      setWidth(window.innerWidth)
+      setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0)
 
       const handleResize = () => {
         setWidth(window.innerWidth)
