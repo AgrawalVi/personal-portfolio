@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils'
+import { TriangleAlert } from 'lucide-react'
 
 interface CalloutProps {
   children?: React.ReactNode
@@ -13,16 +14,17 @@ export function Callout({
   return (
     <div
       className={cn(
-        'my-6 items-start rounded-md border border-l-4 px-4 w-full dark:max-w-none',
+        'my-6 rounded-md border border-l-4 px-4 w-full dark:max-w-none flex items-center',
         {
           'border-destructive bg-destructive/10 text-destructive-foreground':
             type === 'danger',
-          'border-yellow-900 bg-yellow-50 dark:prose': type === 'warning',
+          'border-warning bg-warning/10 text-warning-foreground':
+            type === 'warning',
         }
       )}
       {...props}
     >
-      {children}
+      <div className="py-4">{children}</div>
     </div>
   )
 }
