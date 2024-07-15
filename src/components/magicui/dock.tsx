@@ -18,7 +18,7 @@ const DEFAULT_MAGNIFICATION = 60
 const DEFAULT_DISTANCE = 140
 
 const dockVariants = cva(
-  'h-[58px] sm:h-[80px] sm:px-4 p-2 flex gap-2 sm:gap-6 rounded-2xl border bg-background/50 backdrop-blur-lg backdrop-saturate-150'
+  'h-[58px] sm:h-[80px] sm:px-4 flex min-[370px]:px-2 p-2 sm:gap-6 rounded-2xl border bg-background/50 backdrop-blur-lg backdrop-saturate-150'
 )
 
 const Dock = React.forwardRef<HTMLDivElement, DockProps>(
@@ -34,12 +34,25 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
     ref
   ) => {
     const [visible, setVisible] = useState(false)
+    const [width, setWidth] = useState(window.innerWidth)
+
+    const isTouchDevice =
+      'ontouchstart' in window || navigator.maxTouchPoints > 0
 
     useEffect(() => {
       // wait 2 seconds before showing the floating navbar
       setTimeout(() => {
         setVisible(true)
       }, 2000)
+
+      const handleResize = () => {
+        setWidth(window.innerWidth)
+      }
+      window.addEventListener('resize', handleResize)
+
+      return () => {
+        window.removeEventListener('resize', handleResize)
+      }
     }, [])
 
     const mousex = useMotionValue(Infinity)
@@ -52,6 +65,24 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
           distance: distance,
         })
       })
+    }
+
+    if (width < 400 || isTouchDevice) {
+      return (
+        <div
+          className={cn(
+            dockVariants({ className }),
+            {
+              'items-start': direction === 'top',
+              'items-center': direction === 'middle',
+              'items-end': direction === 'bottom',
+            },
+            'hover-none'
+          )}
+        >
+          {renderChildren()}
+        </div>
+      )
     }
 
     return (

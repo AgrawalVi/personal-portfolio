@@ -1,6 +1,14 @@
 import React from 'react'
 import Link from 'next/link'
-import { CalendarIcon, HomeIcon, MailIcon, PencilIcon } from 'lucide-react'
+import {
+  Briefcase,
+  CalendarIcon,
+  Folders,
+  GraduationCap,
+  HomeIcon,
+  MailIcon,
+  PencilIcon,
+} from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
@@ -12,7 +20,6 @@ import {
   TooltipProvider,
 } from '@/components/ui/tooltip'
 import { Dock, DockIcon } from '@/components/magicui/dock'
-import { ModeToggle } from '@/components/ui/mode-toggle'
 
 export type IconProps = React.HTMLAttributes<SVGElement>
 
@@ -63,6 +70,9 @@ const Icons = {
 const DATA = {
   navbar: [
     { href: '/', icon: HomeIcon, label: 'Home' },
+    { href: '/#education', icon: GraduationCap, label: 'Education' },
+    { href: '/#experience', icon: Briefcase, label: 'Experience' },
+    { href: '/#projects', icon: Folders, label: 'Projects' },
     { href: '/blog', icon: PencilIcon, label: 'Blog' },
   ],
   contact: {
