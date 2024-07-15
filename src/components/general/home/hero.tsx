@@ -52,11 +52,11 @@ const Hero = () => {
             }}
             className="md:mt-10"
           >
-            <a href="/#projects">
+            <a href="/#education">
               <MagicButton
                 icon={<Folders />}
                 position="right"
-                title="Explore My Work"
+                title="Learn More"
               />
             </a>
           </motion.div>

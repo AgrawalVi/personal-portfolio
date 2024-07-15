@@ -23,7 +23,7 @@ export default function ProjectSection() {
           title="SweetBeasts"
           link="/projects/sweetbeasts"
           img="/photography-section/agriculture-hall.jpg"
-          timeLine="May 2023 - Present"
+          timeLine="May 2024 - Present"
           bulletPoints={SweetBeastsCardDescription}
           technologies={SweetBeastsTechnologies}
           liveLink="https://sweetbeasts.shop"
@@ -32,7 +32,7 @@ export default function ProjectSection() {
           title="SweetBeasts Admin"
           link="/projects/sweetbeasts-admin"
           img="/photography-section/agriculture-hall.jpg"
-          timeLine="May 2023 - Present"
+          timeLine="May 2024 - Present"
           bulletPoints={SweetBeastsAdminCardDescription}
           technologies={SweetBeastsAdminTechnologies}
         />
@@ -40,7 +40,7 @@ export default function ProjectSection() {
           title="Personal Portfolio"
           link="/projects/personal-portfolio"
           img="/photography-section/agriculture-hall.jpg"
-          timeLine="June 2023 - Present"
+          timeLine="June 2024 - Present"
           bulletPoints={PersonalPortfolioCardDescription}
           technologies={PersonalPortfolioTechnologies}
         />

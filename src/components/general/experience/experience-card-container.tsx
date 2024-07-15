@@ -17,25 +17,25 @@ import { ChevronRight, CircleArrowOutUpRight } from 'lucide-react'
 import { LinkPreview } from '@/components/aceternity/link-preview'
 import { TypewriterEffect } from '@/components/aceternity/typewriter-effect'
 
-interface ProjectCardContainerProps {
+interface ExperienceCardContainerProps {
   title: string
+  position: string
   link: string
   img: string
   timeLine: string
   bulletPoints: string[]
   technologies: technologyItem[]
-  liveLink?: string
 }
 
-export default function ProjectCardContainer({
+export default function ExperienceCardContainer({
   title,
   link,
+  position,
   img,
   bulletPoints,
   timeLine,
   technologies,
-  liveLink,
-}: ProjectCardContainerProps) {
+}: ExperienceCardContainerProps) {
   return (
     <Card className="relative z-[100] w-full sm:w-[27rem] bg-black-100 border-purple/30 border-2 shadow-[0px_0px_15px_0px_#CBACF9] hover:shadow-[0px_0px_20px_3px_#CBACF9] hover:scale-[1.01] transition-all duration-500 spring-in-out">
       <CardHeader>
@@ -55,6 +55,9 @@ export default function ProjectCardContainer({
             }))}
           />
         </div>
+        <CardDescription className="text-base text-foreground">
+          {position}
+        </CardDescription>
         <CardDescription>{timeLine}</CardDescription>
       </CardHeader>
       <CardContent>
@@ -76,11 +79,6 @@ export default function ProjectCardContainer({
               Read More <ChevronRight className="h-4 w-4" />
             </Button>
           </Link>
-          {liveLink && (
-            <LinkPreview url={liveLink} className="text-sm w-fit flex flex-row">
-              Live Site <CircleArrowOutUpRight className="h-4 w-4 ml-1" />
-            </LinkPreview>
-          )}
         </div>
       </CardFooter>
     </Card>
