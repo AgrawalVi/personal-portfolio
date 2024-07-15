@@ -35,7 +35,7 @@
 }
 
 .subheading-anchor {
-  @apply no-underline hover:underline;
+  @apply no-underline hover:opacity-60 transition-all;
 }
 
 h1 {

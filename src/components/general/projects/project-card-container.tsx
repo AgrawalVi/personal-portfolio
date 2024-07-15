@@ -15,6 +15,7 @@ import { AnimatedTooltip } from '@/components/aceternity/animated-tooltip'
 import { Button } from '@/components/ui/button'
 import { ChevronRight, CircleArrowOutUpRight } from 'lucide-react'
 import { LinkPreview } from '@/components/aceternity/link-preview'
+import { TypewriterEffect } from '@/components/aceternity/typewriter-effect'
 
 interface ProjectCardContainerProps {
   title: string
@@ -36,7 +37,7 @@ export default function ProjectCardContainer({
   liveLink,
 }: ProjectCardContainerProps) {
   return (
-    <Card className="relative z-[100] w-[96] bg-black-100 border-purple/30 border-2 shadow-[0px_0px_15px_0px_#CBACF9] hover:shadow-[0px_0px_20px_3px_#CBACF9] hover:scale-[1.02] transition-all duration-500 spring-in-out">
+    <Card className="relative z-[100] w-full sm:w-[27rem] bg-black-100 border-purple/30 border-2 shadow-[0px_0px_15px_0px_#CBACF9] hover:shadow-[0px_0px_20px_3px_#CBACF9] hover:scale-[1.02] transition-all duration-500 spring-in-out">
       <CardHeader>
         <Image
           src={img}
@@ -45,7 +46,13 @@ export default function ProjectCardContainer({
           alt={`${title} image`}
           className="w-full h-full"
         />
-        <CardTitle className="pt-3">{title}</CardTitle>
+        <TypewriterEffect
+          cursorClassName="translate-y-1 bg-purple"
+          words={title.split(' ').map((word) => ({
+            text: word,
+            className: 'text-xl sm:text-2xl font-normal pt-2',
+          }))}
+        />
         <CardDescription>{timeLine}</CardDescription>
       </CardHeader>
       <CardContent>

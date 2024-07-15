@@ -1,0 +1,155 @@
+---
+title: Data Fetching and Mutations in Next.js
+description: An introduction to data fetching and mutations in Next.js
+date: 2024-07-14
+published: true
+---
+
+
+## Prerequisites
+
+This article assumes you are comfortable with React and are familiar with Next.js and the basics of the App Router.
+
+## What's different about Next.js?
+
+It's first important to understand what Next.js offers compared to other frameworks. Next.js offers 
+many cutting edge features that are brand new and confusing to many developers, including me. These features include:
+
+- Server Components - data fetching
+- Server Actions - data mutations
+
+<Callout type="warning">
+Server Components were introduced in Next.js version 13, and Server Actions were introduced in 
+version 14. Based on the version of Next.js you are using, certain features may not be available.
+</Callout>
+
+## Data Fetching
+
+### What are Server Components?
+
+Server Components are React components that are exclusively run on the server. Server Components
+bring many benefits to the table, including:
+- **Data Fetching and Performance** - Data fetching can be done in a server component, which makes data fetching more efficient and reduces the number of operations that the client needs to perform
+- **Security** - All sensitive data is exposed to the server, which makes it harder for an attacker to exploit your application
+- **Developer Experience** - Server Components make data fetching and rendering much easier to manage for a developer, which will be seen later in the article
+- **SEO** - Since the server sends strictly HTML to the client, search engines can index pages faster and more accurately
+
+By default, all Next.js components are server components. To make a client component, you can add a
+`'Use Client'` directive to the top of the file. This will tell Next.js to render the page or component
+on the client. This is useful for pages that will need to use any client-side functionality, such as:
+
+- React hooks such as `useState` or `useEffect`
+- Calls to `window` or `document` objects, or any other browser APIs
+- Event handlers such as `onClick` or `onChange`
+
+In general, you should only use client components when they are needed, as they easily interweave with server components on a page.
+
+## Data fetching using Server Components
+
+With Server Components, data fetching has never been easier. Here's a quick example of how to fetch data in a server component
+
+```js showLineNumbers /async/ {5}
+// page.tsx
+import { fetchData } from '@/data/example'
+
+export default async function Page() {
+  const data = await fetchData()
+
+  return (
+    // use the data in the page...
+  )
+}
+```
+All you have to do is mark the function as 'async' and then make any database calls. 
+And because of Next.js's built in caching, the page will be saved until the cache is invalidated, 
+reducing duplicate data fetches.
+
+<Callout>
+`fetchData` is a direct database call, and because it is a server component, no database secrets are exposed to the client.
+</Callout>
+
+
+Another example of a data fetching function is shown below, and it is made of snippets from the [SweetBeasts Source Code](https://github.com/AgrawalVi/sweetbeasts)
+
+```js showLineNumbers \async\ \Suspense\ {10-12}
+// account/orders/page.tsx
+import { Suspense } from 'react'
+import OrderPageSkeleton from '@/components/general/orders/order-page-skeleton'
+import OrderPageContent from '@/components/general/orders/order-page-content'
+
+export default function OrderPage() {
+  return (
+    <main>
+      <h1>Your Orders</h1>
+      <Suspense fallback={<OrderPageSkeleton />}>
+        <OrderPageContent />
+      </Suspense>
+    </main>
+  )
+}
+
+// components/general/orders/order-page-content.tsx
+import { getAllOrdersByUser } from '@/data/orders'
+import { currentUser } from '@/lub/auth'
+
+export default async function OrderPageContent() {
+  const user = await currentUser()
+  const orders = await getAllOrdersByUser(user.id)
+
+  return (
+    // render the orders here...
+  )
+}
+```
+With this example, we are using a React Suspense boundary to show a skeleton (OrderPageSkeleton) while the data is being 
+fetched. This improves the user experience as the page instantly loads with a loading state to indicate that data is being fetched.
+
+These examples are just a small taste of what you can do with server components. When you need to fetch data in a client component, 
+a simple approach is to fetch the data in a server component and pass it as a prop to a client component. An example of this is shown below:
+
+```js showLineNumbers {8}
+// server-component.tsx
+import { fetchData } from '@/data/example'
+
+export default async function Page() {
+  const data = await fetchData()
+
+  return (
+    <ClientComponent initialData={data} />
+  )
+}
+
+// client-component.tsx
+'use client'
+
+import { useState } from 'react'
+
+export default function ClientComponent( {initialData}: { initialData: any }) {
+  const [initialData, setInitialData] = useState(initialData)
+
+  return (
+    // use the data in the client component...
+  )
+}
+```
+This approach is useful for when you need to fetch data in a client component, as it is very
+straightforward with only a few lines of code.
+
+Overall, server components are a great way to fetch data in a Next.js application, and it is worth using them
+in future projects as they are a great way to improve the developer and user experience.
+
+## Data Mutations
+
+### Server Actions
+
+Server Actions are much more straightforward than server components. Server Actions are POST endpoints
+generated at build time. Compared to a normal API route, they are much easier to use and heavily
+increase the developer experience by adding end to end type safety. Server Actions can be defined with 
+a `'Use Server'` directive at the top of the file. This will tell
+Next.js to create a POST endpoint for any function exported from the file.
+
+<Callout type="danger">
+  Since all server actions are converted to POST endpoints, they will be accessibly publicly, so be 
+  sure to secure them with any authorization as you would for any other API route. For more information, watch [this video](https://www.youtube.com/watch?v=fdKcbyEK66M)
+</Callout>
+
