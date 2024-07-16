@@ -50,7 +50,7 @@ export const PersonalPortfolioTechnologies: technologyItem[] = [
     id: 3,
     name: 'React',
     description: 'JavaScript Library',
-    image: '/logos/react-logo.svg',
+    image: '/logos/react-logo.jpg',
   },
   {
     id: 4,

@@ -1,7 +1,7 @@
 import {
-  PersonalPortfolioTechnologies,
-  PersonalPortfolioCardDescription,
-} from '@/data'
+  xorbixBulletPoints,
+  xorbixTechnologies,
+} from '@/data/experience/xorbix'
 
 import ExperienceCardContainer from '../experience/experience-card-container'
 
@@ -17,10 +17,10 @@ export default function ProjectSection() {
           title="Xorbix Technologies"
           position="Software Engineering Intern"
           link="/projects/personal-portfolio"
-          img="/photography-section/agriculture-hall.jpg"
-          timeLine="January 2024 - Present | Software Engineering Intern"
-          bulletPoints={PersonalPortfolioCardDescription}
-          technologies={PersonalPortfolioTechnologies}
+          img="/card-images/xorbix-logo.png"
+          timeLine="January 2024 - Present"
+          bulletPoints={xorbixBulletPoints}
+          technologies={xorbixTechnologies}
         />
       </div>
     </main>

@@ -1,9 +1,5 @@
-import {
-  PersonalPortfolioTechnologies,
-  PersonalPortfolioCardDescription,
-} from '@/data'
-
-import ExperienceCardContainer from '../experience/experience-card-container'
+import { madisonBulletPoints } from '@/data/education/madison'
+import EducationCardContainer from '../education/education-card-container'
 
 export default function ProjectSection() {
   return (
@@ -13,14 +9,12 @@ export default function ProjectSection() {
       </div>
 
       <div className="flex justify-center">
-        <ExperienceCardContainer
-          title="University of Wisconsin - Madison"
+        <EducationCardContainer
+          school="University of Wisconsin - Madison"
           position="Software Engineering Intern"
-          link="/projects/personal-portfolio"
-          img="/photography-section/agriculture-hall.jpg"
-          timeLine="January 2024 - Present | Software Engineering Intern"
-          bulletPoints={PersonalPortfolioCardDescription}
-          technologies={PersonalPortfolioTechnologies}
+          timeLine="Expected Graduation: May 2026"
+          img="/card-images/uw-madison.jpg"
+          bulletPoints={madisonBulletPoints}
         />
       </div>
     </main>

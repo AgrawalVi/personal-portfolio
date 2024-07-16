@@ -41,8 +41,8 @@ export default function ExperienceCardContainer({
       <CardHeader>
         <Image
           src={img}
-          width={300}
-          height={200}
+          width={380}
+          height={190}
           alt={`${title} image`}
           className="h-full w-full"
         />
@@ -55,13 +55,11 @@ export default function ExperienceCardContainer({
             }))}
           />
         </div>
-        <CardDescription className="text-base text-foreground">
-          {position}
-        </CardDescription>
+        <CardDescription className="pt-1 text-base">{position}</CardDescription>
         <CardDescription>{timeLine}</CardDescription>
       </CardHeader>
       <CardContent>
-        <ul className="pl-5">
+        <ul className="space-y-1 pl-5">
           {bulletPoints.map((bulletPoint, index) => (
             <li className="list-disc leading-7 text-neutral-100" key={index}>
               {bulletPoint}

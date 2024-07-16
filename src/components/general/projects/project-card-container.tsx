@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button'
 import { ChevronRight, CircleArrowOutUpRight } from 'lucide-react'
 import { LinkPreview } from '@/components/aceternity/link-preview'
 import { TypewriterEffect } from '@/components/aceternity/typewriter-effect'
+import { IconBrandGithub } from '@tabler/icons-react'
 
 interface ProjectCardContainerProps {
   title: string
@@ -25,6 +26,7 @@ interface ProjectCardContainerProps {
   bulletPoints: string[]
   technologies: technologyItem[]
   liveLink?: string
+  githubLink: string
 }
 
 export default function ProjectCardContainer({
@@ -35,6 +37,7 @@ export default function ProjectCardContainer({
   timeLine,
   technologies,
   liveLink,
+  githubLink,
 }: ProjectCardContainerProps) {
   return (
     <Card className="spring-in-out relative z-[100] w-full border-2 border-purple/30 bg-black-100 shadow-[0px_0px_15px_0px_#CBACF9] transition-all duration-500 hover:scale-[1.01] hover:shadow-[0px_0px_20px_3px_#CBACF9] sm:w-[27rem]">
@@ -46,14 +49,25 @@ export default function ProjectCardContainer({
           alt={`${title} image`}
           className="h-full w-full"
         />
-        <div className="h-[1.75rem] sm:h-[2rem]">
-          <TypewriterEffect
-            cursorClassName="translate-y-1 bg-purple"
-            words={title.split(' ').map((word) => ({
-              text: word,
-              className: 'text-xl sm:text-2xl font-normal pt-2',
-            }))}
-          />
+        <div className="flex justify-between">
+          <div className="h-[1.75rem] sm:h-[2rem]">
+            <TypewriterEffect
+              cursorClassName="translate-y-1 bg-purple"
+              words={title.split(' ').map((word) => ({
+                text: word,
+                className: 'text-xl sm:text-2xl font-normal pt-2',
+              }))}
+            />
+          </div>
+          <Link href={githubLink} target="_blank" rel="noopener noreferrer">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-muted-foreground"
+            >
+              <IconBrandGithub className="h-5 w-5" />
+            </Button>
+          </Link>
         </div>
         <CardDescription>{timeLine}</CardDescription>
       </CardHeader>
