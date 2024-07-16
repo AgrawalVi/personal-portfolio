@@ -40,8 +40,8 @@ const Hero = () => {
             }}
             className="mb-4 text-center text-sm md:text-lg md:tracking-wider lg:text-2xl"
           >
-            Welcome to my portfolio. Here, you will my projects, skills, and
-            experiences that showcase my journey as a developer.
+            Thank you for visiting my portfolio. Here, you will find my projects
+            and experiences that showcase my journey as a Software Engineer.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.98 }}
