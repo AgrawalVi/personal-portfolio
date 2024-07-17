@@ -13,9 +13,11 @@ import { cn } from '@/lib/utils'
 export const TracingBeam = ({
   children,
   className,
+  lineClassName,
 }: {
   children: React.ReactNode
   className?: string
+  lineClassName?: string
 }) => {
   const ref = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
@@ -56,7 +58,12 @@ export const TracingBeam = ({
       ref={ref}
       className={cn('relative mx-auto h-full w-full max-w-4xl', className)}
     >
-      <div className="absolute top-3 hidden min-[370px]:-left-[4.5rem] min-[370px]:block min-[1150px]:-left-32 xl:-left-40 2xl:-left-64">
+      <div
+        className={cn(
+          'absolute top-3 hidden min-[370px]:-left-[4.5rem] min-[370px]:block min-[1150px]:-left-32 xl:-left-40 2xl:-left-64',
+          lineClassName,
+        )}
+      >
         <motion.div
           transition={{
             duration: 0.2,
