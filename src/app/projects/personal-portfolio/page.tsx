@@ -5,7 +5,7 @@ import { LinkPreview } from '@/components/aceternity/link-preview'
 import ProjectPageSection from '@/components/general/projects/project-page-section'
 import { TracingBeam } from '@/components/aceternity/tracing-beam'
 
-export default function SweetBeastsPage() {
+export default function ExperiencePage() {
   return (
     <main className="flex w-full justify-center pt-5 sm:pt-10">
       <TracingBeam>
