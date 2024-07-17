@@ -2,6 +2,7 @@ import Image from 'next/image'
 import * as runtime from 'react/jsx-runtime'
 import { Callout } from './blog/post/callout'
 import { cn } from '@/lib/utils'
+import CodeBlock from './blog/post/code-block'
 
 const useMDXComponent = (code: string) => {
   const fn = new Function(code)
@@ -11,6 +12,7 @@ const useMDXComponent = (code: string) => {
 const components = {
   Image,
   Callout,
+  CodeBlock,
   h1: ({ className, ...props }: { className?: string }) => (
     <h1
       className={cn(

@@ -49,6 +49,7 @@ In general, you should only use client components when they are needed, as they 
 
 With Server Components, data fetching has never been easier. Here's a quick example of how to fetch data in a server component
 
+<CodeBlock>
 ```js showLineNumbers /async/ {5}
 // page.tsx
 import { fetchData } from '@/data/example'
@@ -61,6 +62,7 @@ export default async function Page() {
   )
 }
 ```
+</CodeBlock>
 
 All you have to do is mark the function as 'async' and then make any database calls.
 And because of Next.js's built in caching, the page will be saved until the cache is invalidated,
@@ -73,11 +75,12 @@ reducing duplicate data fetches.
 
 Another example of a data fetching function is shown below, and it is made of snippets from the [SweetBeasts Source Code](https://github.com/AgrawalVi/sweetbeasts)
 
+<CodeBlock>
 ```js showLineNumbers \async\ \Suspense\ {10-12}
 // account/orders/page.tsx
 import { Suspense } from 'react'
-import OrderPageSkeleton from '@/components/general/orders/order-page-skeleton'
-import OrderPageContent from '@/components/general/orders/order-page-content'
+import OrderPageSkeleton from '@/...'
+import OrderPageContent from '@/...'
 
 export default function OrderPage() {
   return (
@@ -103,6 +106,7 @@ export default async function OrderPageContent() {
   )
 }
 ```
+</CodeBlock>
 
 With this example, we are using a React Suspense boundary to show a skeleton (OrderPageSkeleton) while the data is being
 fetched. This improves the user experience as the page instantly loads with a loading state to indicate that data is being fetched.
@@ -110,6 +114,7 @@ fetched. This improves the user experience as the page instantly loads with a lo
 These examples are just a small taste of what you can do with server components. When you need to fetch data in a client component,
 a simple approach is to fetch the data in a server component and pass it as a prop to a client component. An example of this is shown below:
 
+<CodeBlock>
 ```js showLineNumbers {8}
 // server-component.tsx
 import { fetchData } from '@/data/example'
@@ -135,6 +140,7 @@ export default function ClientComponent( {initialData}: { initialData: any }) {
   )
 }
 ```
+</CodeBlock>
 
 This approach is useful for when you need to fetch data in a client component, as it is very
 straightforward with only a few lines of code.
@@ -166,6 +172,7 @@ You can also place the `'Use Server'` directive at the top of a function to crea
 ### Server Components
 - In a server component, you can import the server action as you would, or you can define a server action in the same file and call it via a form's action prop.
 
+<CodeBlock>
 ```js showLineNumbers {5,10}
 // server-component.tsx
 
@@ -183,6 +190,8 @@ export default function Form() {
 }
 
 ```
+</CodeBlock>
+
 <Callout>
 The way that I defined a server action above is only possible in server components. Using a 
 server action in a client component will require an export from a file.
@@ -193,9 +202,10 @@ server action in a client component will require an export from a file.
 Server Actions are a perfect way to create mutations in Next.js applications. Here's an example of 
 a simple mutation using a server action in a TODO list app:
 
+<CodeBlock>
 ```js showLineNumbers {6, 10, 15-17, 30}
 // page.tsx
-import { db } from '@/data/prisma' // using Prisma for this example, but works with any ORM or direct query
+import { db } from '@/data/prisma' // can use any ORM or direct query
 import { addTodo } from '@/actions/add-todo'
 
 export default async function TodoPage() {
@@ -226,6 +236,7 @@ export default async function addTodo(message: string) {
   revalidatePath('/todos')
 }
 ```
+</CodeBlock>
 
 There's a lot going on here, so let's break it down step by step, starting with the page:
 
