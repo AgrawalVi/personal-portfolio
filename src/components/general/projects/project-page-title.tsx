@@ -6,7 +6,7 @@ import { IconBrandGithub } from '@tabler/icons-react'
 interface ProjectPageTitleProps {
   name: string
   dateText: string
-  githubLink: string
+  githubLink?: string
   viewProjectLink?: string
 }
 
@@ -24,15 +24,17 @@ export default function ProjectPageTitle({
           {dateText}
         </p>
         <div className="flex flex-row space-x-2">
-          <Link href={githubLink} target="_blank" rel="noopener noreferrer">
-            <Button
-              variant="outline"
-              size="icon"
-              className="text-muted-foreground"
-            >
-              <IconBrandGithub className="h-5 w-5" />
-            </Button>
-          </Link>
+          {githubLink && (
+            <Link href={githubLink} target="_blank" rel="noopener noreferrer">
+              <Button
+                variant="outline"
+                size="icon"
+                className="text-muted-foreground"
+              >
+                <IconBrandGithub className="h-5 w-5" />
+              </Button>
+            </Link>
+          )}
           {viewProjectLink && (
             <Link
               href={viewProjectLink}

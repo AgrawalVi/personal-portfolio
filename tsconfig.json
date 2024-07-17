@@ -27,7 +27,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/projects/sweetbeasts/page.tsx"
+    "src/app/(experience-projects)/projects/sweetbeasts/page.tsx"
   ],
   "exclude": ["node_modules"]
 }

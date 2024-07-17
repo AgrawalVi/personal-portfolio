@@ -16,7 +16,7 @@ export default function ProjectSection() {
         <ExperienceCardContainer
           title="Xorbix Technologies"
           position="Software Engineering Intern"
-          link="/projects/personal-portfolio"
+          link="/experience/xorbix"
           img="/card-images/xorbix-logo.png"
           timeLine="January 2024 - Present"
           bulletPoints={xorbixBulletPoints}
