@@ -28,8 +28,8 @@ export default function SweetBeastsPage() {
                   I wanted to build a simple personal portfolio site to showcase
                   my work. I'm not a designer, and I consider all my UI work to
                   be mediocre at best so I wanted this to be more content
-                  driven. I am working on a blog and photography section, which
-                  will be available soon.{' '}
+                  driven. I am working on a photography section, which will be
+                  available soon.{' '}
                 </p>
               </ProjectPageSection>
 
@@ -91,6 +91,15 @@ export default function SweetBeastsPage() {
                     - Enables powerful animations in React applications
                   </li>
                   <li>
+                    <LinkPreview
+                      className="underline underline-offset-4"
+                      url="https://velite.js.org/"
+                    >
+                      Velite
+                    </LinkPreview>{' '}
+                    - MDX static site generator - used for blog
+                  </li>
+                  <li>
                     <strong>UI Libraries:</strong> {''}
                     <LinkPreview
                       className="underline underline-offset-4"
@@ -147,8 +156,9 @@ export default function SweetBeastsPage() {
 
               <ProjectPageSection title="Takeaways" id="takeaways">
                 <p>
-                  I need to spend some more time on this project and use MDX so
-                  I don't have to write paragraphs of text in HTML.
+                  I enjoyed reflecting on all the work I have done so far while
+                  making all the write-ups for this project, and I look forward
+                  to writing more about my experiences in the future.
                 </p>
               </ProjectPageSection>
 
@@ -159,16 +169,15 @@ export default function SweetBeastsPage() {
                 </p>
                 <ul>
                   <li>
-                    Blog - I am very excited about this as I have a lot of posts
-                    I want to write. If you're seeing this right now, my first
-                    post will be up within the next few days.
-                  </li>
-                  <li>
                     Add a photography section - one of my favorite hobbies is
                     photography and I have some ideas floating around for a
                     unique and interactive section to showcase my photos on the
                     website. I've been playing with a few concepts and I cannot
                     wait to share the final product
+                  </li>
+                  <li>
+                    Add an email list - Should be an easy task, but it isn't a
+                    priority for me right now.
                   </li>
                 </ul>
               </ProjectPageSection>
