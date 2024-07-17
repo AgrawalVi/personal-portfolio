@@ -149,8 +149,8 @@ in future projects as they are a great way to improve the developer and user exp
 Server Actions are much more straightforward than server components. Server Actions are POST endpoints
 generated at build time. Compared to a normal API route, they are much easier to use and heavily
 increase the developer experience by adding end to end type safety. Server Actions can be defined with
-a `'Use Server'` directive at the top of the file. This will tell
-Next.js to create a POST endpoint for any function exported from the file.
+a `'Use Server'` directive at the top of a file, which will create a server action for any function exported from the file.
+You can also place the `'Use Server'` directive at the top of a function to create a server action for that function.
 
 <Callout type="danger">
   Since all server actions are converted to POST endpoints, they will be
@@ -158,3 +158,95 @@ Next.js to create a POST endpoint for any function exported from the file.
   would for any other API route. For more information, watch [this
   video](https://www.youtube.com/watch?v=fdKcbyEK66M)
 </Callout>
+
+## Using Server Actions
+### Client Components
+- In a client component, you can import the server action as you would any other function and call it directly. It's that simple.
+
+### Server Components
+- In a server component, you can import the server action as you would, or you can define a server action in the same file and call it via a form's action prop.
+
+```js showLineNumbers {5,10}
+// server-component.tsx
+
+export default function Form() {
+  const handleSubmit = async (form: FormData) => {
+    'use server'
+    // handle the form submission
+  }
+
+  return (
+    <form action={handleSubmit}>
+    {/* form fields */}
+    </form>
+  )
+}
+
+```
+<Callout>
+The way that I defined a server action above is only possible in server components. Using a 
+server action in a client component will require an export from a file.
+</Callout>
+
+## Mutations with Server Actions
+
+Server Actions are a perfect way to create mutations in Next.js applications. Here's an example of 
+a simple mutation using a server action in a TODO list app:
+
+```js showLineNumbers {6, 10, 15-17, 30}
+// page.tsx
+import { db } from '@/data/prisma' // using Prisma for this example, but works with any ORM or direct query
+import { addTodo } from '@/actions/add-todo'
+
+export default async function TodoPage() {
+  const todos = await db.todo.findMany()
+
+  return (
+    <main>
+      <form action={addTodoServerAction}>
+        <input type="text" />
+        <button type="submit">Add Todo</button>
+      </form>
+      <ul>
+        {todos.map((todo) => (
+          <li>{todo.message}</div>
+        ))}
+      </ul>
+    </main>
+  )
+}
+
+// add-todo.ts
+'use server'
+
+import { db } from '@/data/prisma'
+
+export default async function addTodo(message: string) {
+  await db.todo.create({ data: message })
+  revalidatePath('/todos')
+}
+```
+
+There's a lot going on here, so let's break it down step by step, starting with the page:
+
+1. We have an input field and a button to add a new todo, as well as a list of existing todos. (very simple app so we're not able to mark them as completed)
+2. When the user submits the form, the addTodo server action is called, which creates a new todo in the database, and then calls the `revalidatePath` function
+3. `revalidatePath` tells Next.js to revalidate the cache, and Next.js will automatically update the page with the new todo without having to reload the page
+
+All in all, serve actions are a great way to mutate data in your application, and they can be used in both client and server components.
+The DX improvement that they provide is huge, and they're a great way to add end to end type safety to your application.
+
+## Conclusion and more resources
+
+When I started building Next.js applications, I was pretty lost on how these new features worked and what best practices were, but after countless hours of digging
+into the documentation and experimenting with different approaches, I've come to the conclusion that server components and server actions are the way to go. Nothing 
+in this article is a secret or earth shattering information, but I believe that it compiles a few things that me and many developers struggled to understand at first.
+
+If you want to learn more about server components and server actions, I will link you to the pages in the Next.js docs. 
+- [Server Components](https://nextjs.org/docs/app/building-your-application/rendering/server-components)
+- [Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations)
+
+I hope you find this article helpful and that it helps you to better understand how to use server components and server actions in your Next.js applications, for any feedback,
+questions or comments, please reach out. My contact info is just a few pixels down the page.
+
+Thanks for reading!
