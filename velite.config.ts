@@ -2,6 +2,7 @@ import { defineConfig, defineCollection, s } from 'velite'
 import rehypeSlug from 'rehype-slug'
 import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import { time } from 'console'
 
 const computedFields = <T extends { slug: string }>(data: T) => ({
   ...data,
@@ -19,6 +20,7 @@ const posts = defineCollection({
       date: s.isodate(),
       published: s.boolean().default(true),
       body: s.mdx(),
+      timeText: s.string(),
     })
     .transform(computedFields),
 })

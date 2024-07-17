@@ -8,6 +8,7 @@ interface BlogCardProps {
   published: string
   link: string
   imageHref: string
+  timeText: string
 }
 
 export function BlogCard({
@@ -16,6 +17,7 @@ export function BlogCard({
   published,
   link,
   imageHref,
+  timeText,
 }: BlogCardProps) {
   return (
     <Link href={link}>
@@ -38,7 +40,7 @@ export function BlogCard({
               <p className="relative z-10 text-base font-normal text-gray-50">
                 Vishrut Agrawal
               </p>
-              <p className="text-sm text-gray-400">2 min read</p>
+              <p className="text-sm text-gray-400">{timeText}</p>
             </div>
           </div>
           <div className="text content">

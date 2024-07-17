@@ -11,7 +11,7 @@ export default async function BlogPage() {
         <h1 className="w-full pb-10 text-center text-5xl sm:text-7xl">Blog</h1>
         <ul className="flex w-full list-none justify-center pl-0">
           {displayPosts.map((post) => {
-            const { slug, title, date, description } = post
+            const { slug, title, date, description, timeText } = post
             return (
               <li key={slug}>
                 <BlogCard
@@ -20,6 +20,7 @@ export default async function BlogPage() {
                   imageHref={'/blog/post-1.png'}
                   published={date}
                   link={slug}
+                  timeText={timeText}
                 />
               </li>
             )

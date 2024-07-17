@@ -28,6 +28,18 @@ export async function generateStaticParams(): Promise<
   }))
 }
 
+export async function generateMetadata({ params }: PostPageProps) {
+  const post = await getPostFromParams(params)
+  if (!post || !post.published) {
+    notFound()
+  }
+
+  return {
+    title: post.title,
+    description: post.description,
+  }
+}
+
 export default async function postPage({ params }: PostPageProps) {
   const post = await getPostFromParams(params)
   if (!post || !post.published) {
