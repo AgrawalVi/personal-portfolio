@@ -4,6 +4,7 @@ import { ThemeProvider } from '@/components/theme-provider'
 import './globals.css'
 import { MenuDock } from '@/components/general/nav-dock'
 import Footer from '@/components/general/footer'
+import { Analytics } from '@vercel/analytics/react'
 
 const josefinSans = Josefin_Sans({
   subsets: ['latin'],
@@ -39,6 +40,7 @@ export default function RootLayout({
               <main className="pb-20">{children}</main>
               <Footer />
             </div>
+            <Analytics />
           </div>
         </ThemeProvider>
       </body>
