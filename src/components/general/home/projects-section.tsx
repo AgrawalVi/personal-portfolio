@@ -22,7 +22,7 @@ export default function ProjectSection() {
         <ProjectCardContainer
           title="SweetBeasts"
           link="/projects/sweetbeasts"
-          img="/photography-section/agriculture-hall.jpg"
+          img="/card-images/sweetbeasts.png"
           timeLine="May 2024 - Present"
           bulletPoints={SweetBeastsCardDescription}
           technologies={SweetBeastsTechnologies}
@@ -32,7 +32,7 @@ export default function ProjectSection() {
         <ProjectCardContainer
           title="SweetBeasts Admin"
           link="/projects/sweetbeasts-admin"
-          img="/photography-section/agriculture-hall.jpg"
+          img="/card-images/sweetbeasts-admin.png"
           timeLine="May 2024 - Present"
           bulletPoints={SweetBeastsAdminCardDescription}
           technologies={SweetBeastsAdminTechnologies}
@@ -41,7 +41,7 @@ export default function ProjectSection() {
         <ProjectCardContainer
           title="Personal Portfolio"
           link="/projects/personal-portfolio"
-          img="/photography-section/agriculture-hall.jpg"
+          img="/card-images/sweetbeasts-admin.png"
           timeLine="June 2024 - Present"
           bulletPoints={PersonalPortfolioCardDescription}
           technologies={PersonalPortfolioTechnologies}
