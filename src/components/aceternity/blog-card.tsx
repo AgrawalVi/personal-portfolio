@@ -24,10 +24,10 @@ export function BlogCard({
       <div className="group/card w-full max-w-xs">
         <div
           className={cn(
-            'card backgroundImage relative mx-auto flex h-96 max-w-sm cursor-pointer flex-col justify-between overflow-hidden rounded-md bg-gradient-to-br from-neutral-800 to-violet-900 p-4 shadow-xl',
+            'card backgroundImage relative mx-auto flex h-96 max-w-sm cursor-pointer flex-col justify-between overflow-hidden rounded-md bg-gradient-to-br from-secondary/50 to-accent/50 p-4 shadow-xl',
           )}
         >
-          <div className="absolute left-0 top-0 h-full w-full opacity-60 transition duration-300 group-hover/card:bg-black"></div>
+          <div className="absolute left-0 top-0 h-full w-full opacity-60 transition duration-300 group-hover/card:bg-secondary"></div>
           <div className="z-10 flex flex-row items-center space-x-4">
             <Image
               height="100"
