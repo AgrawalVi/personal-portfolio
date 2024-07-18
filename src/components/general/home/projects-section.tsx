@@ -41,7 +41,7 @@ export default function ProjectSection() {
         <ProjectCardContainer
           title="Personal Portfolio"
           link="/projects/personal-portfolio"
-          img="/card-images/sweetbeasts-admin.png"
+          img="/card-images/personal-portfolio.png"
           timeLine="June 2024 - Present"
           bulletPoints={PersonalPortfolioCardDescription}
           technologies={PersonalPortfolioTechnologies}

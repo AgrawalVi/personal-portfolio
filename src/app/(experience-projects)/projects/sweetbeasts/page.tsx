@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { LinkPreview } from '@/components/aceternity/link-preview'
 import ProjectPageSection from '@/components/general/projects/project-page-section'
 import { TracingBeam } from '@/components/aceternity/tracing-beam'
+import ImageCarousel from '@/components/general/projects/image-carousel'
 
 export default function SweetBeastsPage() {
   return (
@@ -17,11 +18,13 @@ export default function SweetBeastsPage() {
             viewProjectLink="https://sweetbeasts-demo.vishrut.tech"
           />
           <div className="flex w-full flex-col pt-10">
-            <Image
-              src="/photography-section/agriculture-hall.jpg"
-              width={2000}
-              height={500}
-              alt="agriculture hall"
+            <ImageCarousel
+              images={[
+                '/projects/sweetbeasts/product-page.png',
+                '/projects/sweetbeasts/cart.png',
+                '/projects/sweetbeasts/guest-order.png',
+                '/projects/sweetbeasts/account-page.png',
+              ]}
             />
             <ProjectPageContainer>
               <ProjectPageSection title="Summary" id="summary">

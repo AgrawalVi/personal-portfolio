@@ -16,12 +16,6 @@ export default function ExperiencePage() {
             githubLink="https://github.com/AgrawalVi/personal-portfolio"
           />
           <div className="flex w-full flex-col pt-10">
-            <Image
-              src="/photography-section/agriculture-hall.jpg"
-              width={2000}
-              height={500}
-              alt="agriculture hall"
-            />
             <ProjectPageContainer>
               <ProjectPageSection title="Summary" id="summary">
                 <p>
