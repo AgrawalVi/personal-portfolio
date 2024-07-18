@@ -14,7 +14,7 @@ export default function SweetBeastsPage() {
           <ProjectPageTitle
             name="SweetBeasts"
             dateText="May 2023 - Present"
-            githubLink="https://github.com/AgrawalVi/SweetBeasts"
+            githubLink="https://github.com/AgrawalVi/SweetBeasts/tree/testing"
             viewProjectLink="https://sweetbeasts-demo.vishrut.tech"
           />
           <div className="flex w-full flex-col pt-10">

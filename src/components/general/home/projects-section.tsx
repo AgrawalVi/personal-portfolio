@@ -26,8 +26,8 @@ export default function ProjectSection() {
           timeLine="May 2024 - Present"
           bulletPoints={SweetBeastsCardDescription}
           technologies={SweetBeastsTechnologies}
-          liveLink="https://sweetbeasts.shop"
-          githubLink="https://github.com/AgrawalVi/SweetBeasts"
+          liveLink="https://sweetbeasts-demo.vishrut.tech"
+          githubLink="https://github.com/AgrawalVi/SweetBeasts/tree/testing"
         />
         <ProjectCardContainer
           title="SweetBeasts Admin"
