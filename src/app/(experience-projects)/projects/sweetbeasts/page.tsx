@@ -20,10 +20,10 @@ export default function SweetBeastsPage() {
           <div className="flex w-full flex-col pt-10">
             <ImageCarousel
               images={[
+                '/projects/sweetbeasts/account-page.png',
                 '/projects/sweetbeasts/product-page.png',
                 '/projects/sweetbeasts/cart.png',
                 '/projects/sweetbeasts/guest-order.png',
-                '/projects/sweetbeasts/account-page.png',
               ]}
             />
             <ProjectPageContainer>
