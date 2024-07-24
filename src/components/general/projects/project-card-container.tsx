@@ -40,15 +40,8 @@ export default function ProjectCardContainer({
   githubLink,
 }: ProjectCardContainerProps) {
   return (
-    <Card className="spring-in-out relative z-[100] w-full border-2 border-purple/30 bg-black-100 shadow-[0px_0px_15px_0px_#CBACF9] transition-all duration-500 hover:scale-[1.01] hover:shadow-[0px_0px_20px_3px_#CBACF9] sm:w-[25rem]">
+    <Card className="relative z-[100] flex w-full flex-col border-2 border-purple/30 bg-black-100 shadow-[0px_0px_15px_0px_#CBACF9] transition-all duration-500 ease-in-out hover:scale-[1.01] hover:shadow-[0px_0px_20px_3px_#CBACF9] sm:w-[25rem]">
       <CardHeader>
-        <Image
-          src={img}
-          width={300}
-          height={200}
-          alt={`${title} image`}
-          className="h-full w-full"
-        />
         <div className="flex justify-between">
           <div className="h-[1.75rem] sm:h-[2rem]">
             <TypewriterEffect
@@ -71,7 +64,7 @@ export default function ProjectCardContainer({
         </div>
         <CardDescription>{timeLine}</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex-grow">
         <ul className="pl-5">
           {bulletPoints.map((bulletPoint, index) => (
             <li className="list-disc leading-7 text-neutral-100" key={index}>
@@ -84,17 +77,17 @@ export default function ProjectCardContainer({
         <div className="flex">
           <AnimatedTooltip items={technologies} />
         </div>
-        <div className="-mr-6 flex h-14 flex-col items-center justify-center space-y-0">
-          <Link href={link}>
-            <Button variant="link" size={'sm'}>
-              Read More <ChevronRight className="h-4 w-4" />
-            </Button>
-          </Link>
+        <div className="-mr-6 flex h-14 flex-col items-center justify-end space-y-0">
           {liveLink && (
             <LinkPreview url={liveLink} className="flex w-fit flex-row text-sm">
               Live Site <CircleArrowOutUpRight className="ml-1 h-4 w-4" />
             </LinkPreview>
           )}
+          <Link href={link}>
+            <Button variant="link" size={'sm'}>
+              Read More <ChevronRight className="h-4 w-4" />
+            </Button>
+          </Link>
         </div>
       </CardFooter>
     </Card>
