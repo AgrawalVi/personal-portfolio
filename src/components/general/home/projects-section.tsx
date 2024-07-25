@@ -27,7 +27,7 @@ export default function ProjectSection() {
           timeLine="July 2024 - Present"
           bulletPoints={ponovoBulletPoints}
           technologies={ponovoTechnologies}
-          liveLink="https://https://ponovo.app"
+          liveLink="https://ponovo.app"
           githubLink="https://github.com/AgrawalVi/ponovo"
         />
         <ProjectCardContainer
