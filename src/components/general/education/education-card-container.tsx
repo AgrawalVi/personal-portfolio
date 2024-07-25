@@ -40,7 +40,7 @@ export default function EducationCardContainer({
           width={300}
           height={200}
           alt={`${school} image`}
-          className="h-full w-full rounded-sm"
+          className="mb-2 h-full w-full rounded-sm"
         />
         <CardTitle className="text-xl sm:text-2xl">{school}</CardTitle>
         <CardDescription className="text-base text-foreground">
