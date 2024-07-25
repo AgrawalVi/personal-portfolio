@@ -5,6 +5,7 @@ import { LinkPreview } from '@/components/aceternity/link-preview'
 import ProjectPageSection from '@/components/general/projects/project-page-section'
 import { TracingBeam } from '@/components/aceternity/tracing-beam'
 import ImageCarousel from '@/components/general/projects/image-carousel'
+import { Callout } from '@/components/blog/post/callout'
 
 export default function SweetBeastsPage() {
   return (
@@ -29,11 +30,11 @@ export default function SweetBeastsPage() {
             <ProjectPageContainer>
               <ProjectPageSection title="Summary" id="summary">
                 <p>
-                  I lead a team of three in developing and testing a custom
-                  e-commerce platform for SweetBeasts Inc, a company that I
-                  co-founded. As CTO and COO, I oversee all technical and
-                  operational aspects. Currently. The project also includes an
-                  advanced admin panel, detailed{' '}
+                  As the CTO and COO of SweetBeasts Inc., a company I
+                  co-founded, I lead a team of three in developing and testing a
+                  bespoke e-commerce platform. My responsibilities span all
+                  technical and operational aspects of the project, which
+                  features an advanced admin panel detailed{' '}
                   <LinkPreview
                     url="/projects/sweetbeasts-admin"
                     className="underline underline-offset-4"
@@ -46,7 +47,8 @@ export default function SweetBeastsPage() {
               <ProjectPageSection title="Demo Site" id="demo-site">
                 <div>
                   <p>
-                    We are preparing for the official launch; currently, a{' '}
+                    Our official launch is on the horizon, but in the meantime,
+                    a{' '}
                     <LinkPreview
                       url="https://sweetbeasts.shop"
                       className="underline underline-offset-4"
@@ -69,55 +71,59 @@ export default function SweetBeastsPage() {
                 <p className="text-center">
                   Any expiration date and CVV combo will work.
                 </p>
+                <Callout type="warning">
+                  Currently there is a bug after checking out. When redirected
+                  back to the site from stripe, refresh the page and you will
+                  see the order confirmation page. This is being investigated
+                  and a solution will be released soon.
+                </Callout>
               </ProjectPageSection>
 
               <ProjectPageSection title="Why build custom?" id="why">
                 <p>
-                  Opting to create a custom e-commerce platform instead of using
-                  solutions like Shopify was driven by a desire to:
+                  We chose to create our custom e-commerce platform for several
+                  reasons:
                 </p>
                 <ul>
                   <li>
-                    Deeply understand and master the fundamentals of full-stack
-                    web development
+                    To gain a deep understanding of full-stack web development
+                    fundamentals.
                   </li>
                   <li>
-                    Develop a highly customizable and distinctive online
+                    To craft a highly customizable and distinctive online
                     presence.
                   </li>
                   <li>
-                    Design a clean, simple, and feature-rich user experience,
-                    avoiding the clutter typical of many e-commerce sites.
+                    To design a clean, simple, and feature-rich user experience,
+                    steering clear of the typical clutter found on many
+                    e-commerce sites.
                   </li>
                 </ul>
               </ProjectPageSection>
 
               <ProjectPageSection title="Key Features" id="key-features">
                 <p>
-                  I'm very proud of what I've built so far, and while there's
-                  still a lot of room for improvement, I believe that the
-                  storefront is built on a solid foundation using the latest
-                  technologies and best practices.
+                  I am immensely proud of what we've built—a solid foundation
+                  using the latest technologies and best practices:
                 </p>
                 <ul>
                   <li>
-                    All data fetches except for cart (which uses React Query)
-                    are made using Next.js server components, and all mutations
-                    are handled via server actions. This leads to a snappy user
-                    experience while keeping the platform secure.
+                    All data fetching, except for cart management which uses
+                    React Query, is performed using Next.js server components,
+                    enhancing security and user experience.
                   </li>
                   <li>
-                    Remote and local cart tracking for both guests and
-                    registered users, while also handling local cart merges and
+                    Efficient handling of both remote and local cart tracking
+                    for guests and registered users, including cart merging and
                     deletion upon login, logout, and checkout.
                   </li>
                   <li>
-                    Complete Stripe integration for payment, order, and customer
-                    management via the Stripe Payments and webhooks.
+                    Complete Stripe integration for secure payment, order, and
+                    customer management via Stripe Payments and webhooks.
                   </li>
                   <li>
-                    A modern, playful, and responsive UI that is pleasant on the
-                    eyes while being easy to navigate.
+                    A modern, playful, and responsive UI that's visually
+                    appealing and easy to navigate.
                   </li>
                 </ul>
               </ProjectPageSection>
@@ -309,23 +315,20 @@ export default function SweetBeastsPage() {
 
               <ProjectPageSection title="Takeaways" id="takeaways">
                 <p>
-                  Embarking on this project, I underestimated the complexity
-                  involved in creating an e-commerce platform. From database
-                  management and user authentication to integrating a robust
-                  payment system, the growth in my technical skills and
-                  confidence has been substantial. Now, as we approach launch, I
-                  appreciate the depth of knowledge and practical experience
-                  I've gained.
+                  Creating this platform revealed the complexity of e-commerce
+                  systems, from database management to payment integration. The
+                  journey significantly boosted my technical skills and
+                  confidence. As we near the launch, my appreciation deepens for
+                  the comprehensive experience gained.
                 </p>
               </ProjectPageSection>
 
               <ProjectPageSection title="The Current State" id="current-state">
                 <p>
-                  Right now, the website is ready for launch, but we are waiting
-                  for the first shipment of plushies to arrive. As soon as these
-                  arrive (hopefully in the next few weeks), we will be launching
-                  the site to the public. Just like with every project, there's
-                  always work to be done. Here's my current TODO list:
+                  The website is primed for launch, pending the arrival of our
+                  first plushie shipment. We expect to go live within the next
+                  few weeks. Despite nearing completion, continual improvement
+                  remains a focus:
                 </p>
                 <ul>
                   <li>Implement Customer Reviews (in progress)</li>

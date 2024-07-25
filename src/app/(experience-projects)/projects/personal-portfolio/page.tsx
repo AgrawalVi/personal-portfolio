@@ -19,11 +19,12 @@ export default function PersonalPortfolioPage() {
             <ProjectPageContainer>
               <ProjectPageSection title="Summary" id="summary">
                 <p>
-                  I wanted to build a simple personal portfolio site to showcase
-                  my work. I'm not a designer, and I consider all my UI work to
-                  be mediocre at best so I wanted this to be more content
-                  driven. I am working on a photography section, which will be
-                  available soon.{' '}
+                  I embarked on creating a simple personal portfolio site to
+                  showcase my work. As someone who doesn't specialize in design,
+                  I aimed for a content-driven approach, acknowledging that my
+                  UI skills are average at best. A highlight still in
+                  development is a photography section that reflects one of my
+                  favorite hobbies.
                 </p>
               </ProjectPageSection>
 
@@ -150,28 +151,29 @@ export default function PersonalPortfolioPage() {
 
               <ProjectPageSection title="Takeaways" id="takeaways">
                 <p>
-                  I enjoyed reflecting on all the work I have done so far while
-                  making all the write-ups for this project, and I look forward
-                  to writing more about my experiences in the future.
+                  Compiling this portfolio has been a rewarding experience.
+                  Reflecting on my past projects and documenting them has not
+                  only allowed me to appreciate my growth but also ignited my
+                  enthusiasm for sharing more about my journey in the future.
                 </p>
               </ProjectPageSection>
 
               <ProjectPageSection title="The Current State" id="current-state">
                 <p>
-                  You are seeing the current state right now, but this is what I
-                  am working on right now.
+                  What you see now represents the current version of my
+                  portfolio, but exciting developments are underway:
                 </p>
                 <ul>
                   <li>
-                    Add a photography section - one of my favorite hobbies is
-                    photography and I have some ideas floating around for a
-                    unique and interactive section to showcase my photos on the
-                    website. I've been playing with a few concepts and I cannot
-                    wait to share the final product
+                    <strong>Photography Section:</strong> I am developing a
+                    unique and interactive section to display my photography.
+                    This project is particularly close to my heart, and I am
+                    eager to unveil the creative concepts I've been exploring.
                   </li>
                   <li>
-                    Add an email list - Should be an easy task, but it isn't a
-                    priority for me right now.
+                    <strong>Email List:</strong> Adding an email subscription
+                    feature is on my agenda. Although it's a straightforward
+                    addition, it's not my top priority at the moment.
                   </li>
                 </ul>
               </ProjectPageSection>

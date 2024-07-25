@@ -29,49 +29,55 @@ export default function SweetBeastsAdminPage() {
             <ProjectPageContainer>
               <ProjectPageSection title="Summary" id="summary">
                 <p>
-                  I lead a team of three in developing and testing a custom
-                  e-commerce admin panel for SweetBeasts Inc, a company that I
-                  co-founded. As CTO and COO, I oversee all technical and
-                  operational aspects. You can learn more about the storefront{' '}
+                  As the CTO and COO of SweetBeasts Inc., a company I
+                  co-founded, I lead a team of three in the development and
+                  testing of our custom e-commerce admin panel. I oversee all
+                  technical and operational aspects of the platform, ensuring it
+                  aligns with our strategic vision. You can learn about the
+                  storefront{' '}
                   <LinkPreview
                     url="/projects/sweetbeasts"
                     className="underline underline-offset-4"
                   >
                     here.
                   </LinkPreview>{' '}
-                  Due to the nature of the project, there is no public access to
-                  the admin panel (but the code is available on{' '}
+                  While the admin panel is not publicly accessible, the source
+                  code is available on{' '}
                   <LinkPreview
                     className="underline underline-offset-4"
                     url="https://github.com/AgrawalVi/sweetbeasts-admin"
                   >
                     GitHub
-                  </LinkPreview>
-                  ).
+                  </LinkPreview>{' '}
+                  for those interested in our backend architecture.
                 </p>
               </ProjectPageSection>
 
               <ProjectPageSection title="Key Features" id="key-features">
                 <p>
-                  While there's still work to be done for the admin panel, I'm
-                  proud of what we've built so far. The platform is built on a
-                  solid foundation which will be easy to maintain and scale in
-                  the near future.
+                  I take pride in the progress we have made on the admin panel,
+                  which has been built on a solid foundation for the plethora of
+                  features that still need to be added.
                 </p>
                 <ul>
                   <li>
-                    Role based authentication and authorization for all users
-                    via two factor authentication and email verification, which
-                    was custom built using Auth.js.
+                    <strong>
+                      Role-Based Authentication and Authorization:
+                    </strong>{' '}
+                    Implemented using Auth.js, featuring two-factor
+                    authentication and email verification to secure user access.
                   </li>
                   <li>
-                    A robust CMS for product creation and editing using Next.js
-                    server actions and instant client-side updates after actions
-                    are completed.
+                    <strong>Robust CMS:</strong> Utilizes Next.js server actions
+                    for real-time product creation and editing, ensuring instant
+                    updates on the client-side.
                   </li>
                   <li>
-                    A dashboard for viewing performance and metrics, as well as
-                    a customer service portal for customer support.
+                    <strong>
+                      Performance Dashboard and Customer Service Portal:
+                    </strong>{' '}
+                    Tools for monitoring business metrics and providing
+                    efficient customer support.
                   </li>
                 </ul>
               </ProjectPageSection>
@@ -239,66 +245,69 @@ export default function SweetBeastsAdminPage() {
 
               <ProjectPageSection title="Takeaways" id="takeaways">
                 <p>
-                  My primary learnings from developing the admin panel centered
-                  on security and authorization. Using Auth.js, I successfully
-                  implemented a robust authentication system that is both
-                  user-friendly and secure. A notable challenge was enforcing
-                  two-factor authentication as well as role based authorization
-                  for all users - a hurdle that proved invaluable for my
-                  understanding of advanced security measures. For future
-                  projects, I might opt for a hosted authentication solution
-                  like {''}
-                  <LinkPreview
-                    url="https://clerk.com"
-                    className="underline underline-offset-4"
-                  >
-                    Clerk
-                  </LinkPreview>{' '}
-                  to streamline processes, but this experience was instrumental
-                  in grounding me in the fundamentals of authentication.
-                  Additionally, the CMS's database schema was crafted to be both
-                  intuitive and scalable, preparing it for anticipated future
-                  expansions. I implemented key features such as real time
-                  product creation and editing, order management, and a customer
-                  service portal.
+                  Developing the admin panel has been a profound learning
+                  experience, particularly in the areas of security and
+                  authorization:
                 </p>
+                <ul>
+                  <li>
+                    <strong>Security Implementation:</strong> Through Auth.js, I
+                    spearheaded the setup of a robust, user-friendly
+                    authentication system. Enforcing two-factor authentication
+                    and role-based authorization was challenging but highly
+                    educational.
+                  </li>
+                  <li>
+                    <strong>Scalable CMS Design:</strong> The database schema
+                    for the CMS was intentionally designed to be intuitive and
+                    scalable, anticipating future expansions and increased
+                    demand.
+                  </li>
+                </ul>
               </ProjectPageSection>
 
               <ProjectPageSection title="The Current State" id="current-state">
                 <p>
-                  Compared to the state of the storefront, the admin panel is
-                  definitely where my attention needs to go. I am confident that
-                  I will be able to get these tasks done in a timely manner, as
-                  I am much more efficient when working in the backend. Right
-                  now, this is what's on my punch list:
+                  The admin panel is a focal point for further development,
+                  especially compared to the more mature state of the
+                  storefront. My backend expertise boosts my confidence in
+                  accomplishing these upcoming tasks efficiently:
                 </p>
                 <ul>
                   <li>
-                    Tying in a shipping API - planning on using{' '}
+                    <strong>Shipping API Integration:</strong> Plans to
+                    integrate{' '}
                     <LinkPreview
                       url="https://www.shippo.com/"
                       className="underline underline-offset-4"
                     >
                       Shippo
-                    </LinkPreview>
-                  </li>
-                  <li>Making order management more robust</li>
-                  <li>
-                    Adding charts to the dashboard to view performance and
-                    metrics
+                    </LinkPreview>{' '}
+                    for streamlined shipping operations.
                   </li>
                   <li>
-                    File upload system - planning on using{' '}
+                    <strong>Enhanced Order Management:</strong> Improvements to
+                    handle orders more robustly.
+                  </li>
+                  <li>
+                    <strong>Performance Analytics:</strong> Adding charts to the
+                    dashboard for better visibility into performance metrics.
+                  </li>
+                  <li>
+                    File Upload System: Implementing{' '}
                     <LinkPreview
-                      url="https://uploadthing.com/"
+                      url="https://vercel.com/docs/storage/vercel-blob"
                       className="underline underline-offset-4"
                     >
-                      Upload Thing
-                    </LinkPreview>
+                      Vercel Blob
+                    </LinkPreview>{' '}
+                    for managing file uploads.
                   </li>
                   <li>
-                    Transitioning all hard-coded text in the storefront to the
-                    admin panel (e.g. Mission Statement, About Us, etc.)
+                    <strong>Content Centralization:</strong> Moving all
+                    hard-coded text, like the Mission Statement and About Us,
+                    from the storefront to the admin panel for better
+                    manageability.
                   </li>
                 </ul>
               </ProjectPageSection>

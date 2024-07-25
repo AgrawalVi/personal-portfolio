@@ -19,13 +19,12 @@ export default function PonovoPage() {
             <ProjectPageContainer>
               <ProjectPageSection title="Summary" id="summary">
                 <p>
-                  I wanted a solution to track job applications, and I wanted to
-                  make sure that the solution is incredibly seamless and hassle
-                  free. While solutions do exist, I really like what I built due
-                  to the simple yet practical nature of the application. I was
-                  sick of spreadsheets and I am happy with the results. I have a
-                  lot on the way and I am excited to keep developing the
-                  application.
+                  I developed a job application tracking system designed to
+                  replace conventional spreadsheets with a seamless and
+                  hassle-free solution. Though other solutions exist, I prefer
+                  mine for its ease-of-use and practicality. I'm very pleased
+                  with the initial results and am excited about the future
+                  developments planned for the application.
                 </p>
               </ProjectPageSection>
 
@@ -208,11 +207,11 @@ export default function PonovoPage() {
 
               <ProjectPageSection title="Takeaways" id="takeaways">
                 <p>
-                  This project was a very fun project, but the hard part has not
-                  been done yet. I am looking forward to the next steps, which
-                  are file uploads and storage, user preferences, and more. I am
-                  very excited for what I built and I really cannot wait to
-                  start using it and sharing it with others.
+                  This project has been immensely fulfilling to work on,
+                  although there are challenges ahead. I look forward to
+                  implementing upcoming features such as file uploads, user
+                  preferences, and more. I'm thrilled with what I've built and
+                  eager to start using it and sharing it with others.
                 </p>
               </ProjectPageSection>
 
