@@ -14,7 +14,7 @@ export default function ExperiencePage() {
           <div className="flex w-full flex-col pt-10">
             <ExperiencePageTitle
               name="Xorbix Technologies"
-              dateText="January 2023 - Present"
+              dateText="January 2024 - Present"
               position="Software Engineering Intern"
             />
             <ProjectPageContainer>

@@ -4,26 +4,28 @@ import { LinkPreview } from '@/components/aceternity/link-preview'
 import ProjectPageSection from '@/components/general/projects/project-page-section'
 import { TracingBeam } from '@/components/aceternity/tracing-beam'
 
-export default function PersonalPortfolioPage() {
+export default function PonovoPage() {
   return (
     <main className="flex w-full justify-center pt-5 sm:pt-10">
       <TracingBeam>
         <div className="flex w-full max-w-5xl flex-col items-center justify-center">
           <ProjectPageTitle
-            name="Personal Portfolio"
-            dateText="June 2024 - Present"
-            githubLink="https://github.com/AgrawalVi/personal-portfolio"
-            viewProjectLink="https://vishrut.tech"
+            name="Ponovo"
+            dateText="July 2024 - Present"
+            githubLink="https://github.com/AgrawalVi/ponovo"
+            viewProjectLink="https://ponovo.app"
           />
           <div className="flex w-full flex-col pt-10">
             <ProjectPageContainer>
               <ProjectPageSection title="Summary" id="summary">
                 <p>
-                  I wanted to build a simple personal portfolio site to showcase
-                  my work. I'm not a designer, and I consider all my UI work to
-                  be mediocre at best so I wanted this to be more content
-                  driven. I am working on a photography section, which will be
-                  available soon.{' '}
+                  I wanted a solution to track job applications, and I wanted to
+                  make sure that the solution is incredibly seamless and hassle
+                  free. While solutions do exist, I really like what I built due
+                  to the simple yet practical nature of the application. I was
+                  sick of spreadsheets and I am happy with the results. I have a
+                  lot on the way and I am excited to keep developing the
+                  application.
                 </p>
               </ProjectPageSection>
 
@@ -78,28 +80,39 @@ export default function PersonalPortfolioPage() {
                   <li>
                     <LinkPreview
                       className="underline underline-offset-4"
-                      url="https://framer.com/motion/"
+                      url="https://ui.shadcn.com/"
                     >
-                      Framer Motion
+                      shadcn/ui
                     </LinkPreview>{' '}
-                    - Enables powerful animations in React applications
-                  </li>
-                  <li>
+                    - Provided ui components and wrappers for{' '}
                     <LinkPreview
                       className="underline underline-offset-4"
-                      url="https://velite.js.org/"
+                      url="https://recharts.org/en-US/"
                     >
-                      Velite
-                    </LinkPreview>{' '}
-                    - MDX static site generator - used for blog
+                      ReCharts
+                    </LinkPreview>
+                    ,{' '}
+                    <LinkPreview
+                      className="underline underline-offset-4"
+                      url="https://react-hook-form.com/"
+                    >
+                      React Hook Form
+                    </LinkPreview>
+                    , and{' '}
+                    <LinkPreview
+                      className="underline underline-offset-4"
+                      url="https://tanstack.com/table/v8"
+                    >
+                      Tanstack Table
+                    </LinkPreview>
                   </li>
                   <li>
                     <strong>UI Libraries:</strong> {''}
                     <LinkPreview
                       className="underline underline-offset-4"
-                      url="https://ui.shadcn.com/"
+                      url="https://framer.com/motion/"
                     >
-                      shadcn/ui
+                      Framer Motion
                     </LinkPreview>
                     ,{' '}
                     <LinkPreview
@@ -119,10 +132,55 @@ export default function PersonalPortfolioPage() {
                   </li>
                 </ul>
 
+                <div className="text-3xl sm:text-4xl">Database</div>
+                <ul>
+                  <li>
+                    <LinkPreview
+                      className="underline underline-offset-4"
+                      url="https://www.postgresql.org/"
+                    >
+                      PostgreSQL
+                    </LinkPreview>{' '}
+                    - Celebrated for its reliability, scalability, and
+                    flexibility
+                  </li>
+                  <li>
+                    <LinkPreview
+                      className="underline underline-offset-4"
+                      url="https://orm.drizzle.team/"
+                    >
+                      Drizzle
+                    </LinkPreview>{' '}
+                    - Extremely lightweight database ORM for Typescript
+                  </li>
+                </ul>
+
                 <div className="text-3xl sm:text-4xl">
                   DevOps and Infrastructure
                 </div>
                 <ul>
+                  <li>
+                    <strong>Authentication:</strong> {''}
+                    <LinkPreview
+                      className="underline underline-offset-4"
+                      url="https://clerk.com"
+                    >
+                      Clerk
+                    </LinkPreview>{' '}
+                    - Provides a robust and easy to use user authentication
+                    solution
+                  </li>
+                  <li>
+                    <strong>Server:</strong> {''}
+                    <LinkPreview
+                      className="underline underline-offset-4"
+                      url="https://neon.tech"
+                    >
+                      Neon
+                    </LinkPreview>{' '}
+                    - Offers a serverless platform for PostgreSQL, ensuring
+                    scalability and easy management
+                  </li>
                   <li>
                     <strong>Deployment:</strong> {''}
                     <LinkPreview
@@ -150,28 +208,30 @@ export default function PersonalPortfolioPage() {
 
               <ProjectPageSection title="Takeaways" id="takeaways">
                 <p>
-                  I enjoyed reflecting on all the work I have done so far while
-                  making all the write-ups for this project, and I look forward
-                  to writing more about my experiences in the future.
+                  This project was a very fun project, but the hard part has not
+                  been done yet. I am looking forward to the next steps, which
+                  are file uploads and storage, user preferences, and more. I am
+                  very excited for what I built and I really cannot wait to
+                  start using it and sharing it with others.
                 </p>
               </ProjectPageSection>
 
               <ProjectPageSection title="The Current State" id="current-state">
                 <p>
-                  You are seeing the current state right now, but this is what I
-                  am working on right now.
+                  This project is in beta right now. It is stable and everything
+                  works, but there are more features that need to be added
+                  before it's fully baked.
                 </p>
-                <ul>
+                <ul className="text-start">
+                  <li>File Uploads - Planning on using Vercel Blob Storage</li>
+                  <li>User Preferences - In development</li>
                   <li>
-                    Add a photography section - one of my favorite hobbies is
-                    photography and I have some ideas floating around for a
-                    unique and interactive section to showcase my photos on the
-                    website. I've been playing with a few concepts and I cannot
-                    wait to share the final product
-                  </li>
-                  <li>
-                    Add an email list - Should be an easy task, but it isn't a
-                    priority for me right now.
+                    <LinkPreview
+                      className="underline underline-offset-4"
+                      url="https://zealous-tie-73d.notion.site/27faa9398cf64060a1b11f8fee865a07"
+                    >
+                      View more here
+                    </LinkPreview>
                   </li>
                 </ul>
               </ProjectPageSection>

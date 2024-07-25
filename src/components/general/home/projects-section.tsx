@@ -5,6 +5,7 @@ import {
   SweetBeastsAdminCardDescription,
   PersonalPortfolioCardDescription,
 } from '@/data'
+import { ponovoBulletPoints, ponovoTechnologies } from '@/data/projects/ponovo'
 
 import {
   SweetBeastsCardDescription,
@@ -19,6 +20,16 @@ export default function ProjectSection() {
       </div>
 
       <div className="mx-auto grid w-fit grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12 xl:grid-cols-3">
+        <ProjectCardContainer
+          title="Ponovo"
+          link="/projects/ponovo"
+          img="/card-images/ponovo.png"
+          timeLine="July 2024 - Present"
+          bulletPoints={ponovoBulletPoints}
+          technologies={ponovoTechnologies}
+          liveLink="https://https://ponovo.app"
+          githubLink="https://github.com/AgrawalVi/ponovo"
+        />
         <ProjectCardContainer
           title="SweetBeasts"
           link="/projects/sweetbeasts"
@@ -45,6 +56,7 @@ export default function ProjectSection() {
           timeLine="June 2024 - Present"
           bulletPoints={PersonalPortfolioCardDescription}
           technologies={PersonalPortfolioTechnologies}
+          liveLink="https://vishrut.tech"
           githubLink="https://github.com/AgrawalVi/personal-portfolio"
         />
       </div>

@@ -13,7 +13,7 @@ export default function SweetBeastsPage() {
         <div className="flex w-full max-w-5xl flex-col items-center justify-center">
           <ProjectPageTitle
             name="SweetBeasts"
-            dateText="May 2023 - Present"
+            dateText="May 2024 - Present"
             githubLink="https://github.com/AgrawalVi/SweetBeasts/tree/testing"
             viewProjectLink="https://sweetbeasts-demo.vishrut.tech"
           />
