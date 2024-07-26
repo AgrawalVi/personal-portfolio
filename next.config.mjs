@@ -8,6 +8,31 @@ if (!process.env.VELITE_STARTED && (isDev || isBuild)) {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async rewrites() {
+    return [
+      {
+        source: '/ponovo',
+        destination: '/projects/ponovo',
+      },
+      {
+        source: '/sweetbeasts',
+        destination: '/projects/sweetbeasts',
+      },
+      {
+        source: '/sweetbeasts-admin',
+        destination: '/projects/sweetbeasts-admin',
+      },
+    ]
+  },
+  async redirects() {
+    return [
+      {
+        source: '/tanks',
+        destination: 'https://www.youtube.com/watch?v=w69SsBIJABA',
+        permanent: true,
+      },
+    ]
+  },
   images: {
     domains: [
       'api.microlink.io', // Microlink Image Preview
