@@ -66,7 +66,7 @@ export default function SweetBeastsPage() {
                   </p>
                 </div>
                 <p className="text-center">
-                  Test card Number: 4242 4242 4242 4242
+                  Test card number: 4242 4242 4242 4242
                 </p>
                 <p className="text-center">
                   Any expiration date and CVV combo will work.
