@@ -16,7 +16,7 @@ export default function SweetBeastsPage() {
             name="SweetBeasts"
             dateText="May 2024 - Present"
             githubLink="https://github.com/AgrawalVi/SweetBeasts/tree/testing"
-            viewProjectLink="https://sweetbeasts-demo.vishrut.tech"
+            viewProjectLink="https://sweetbeasts.shop"
           />
           <div className="flex w-full flex-col pt-10">
             <ImageCarousel
@@ -42,41 +42,6 @@ export default function SweetBeastsPage() {
                     here.
                   </LinkPreview>
                 </p>
-              </ProjectPageSection>
-
-              <ProjectPageSection title="Demo Site" id="demo-site">
-                <div>
-                  <p>
-                    Our official launch is on the horizon, but in the meantime,
-                    a{' '}
-                    <LinkPreview
-                      url="https://sweetbeasts.shop"
-                      className="underline underline-offset-4"
-                    >
-                      placeholder site
-                    </LinkPreview>{' '}
-                    is live. But, you can explore our fully functional demo{' '}
-                    <LinkPreview
-                      url="https://sweetbeasts-demo.vishrut.tech"
-                      className="underline underline-offset-4"
-                    >
-                      here
-                    </LinkPreview>
-                    , which operates in Stripe's test mode.
-                  </p>
-                </div>
-                <p className="text-center">
-                  Test card number: 4242 4242 4242 4242
-                </p>
-                <p className="text-center">
-                  Any expiration date and CVV combo will work.
-                </p>
-                <Callout type="warning">
-                  Currently there is a bug after checking out. When redirected
-                  back to the site from stripe, refresh the page and you will
-                  see the order confirmation page. This is being investigated
-                  and a solution will be released soon.
-                </Callout>
               </ProjectPageSection>
 
               <ProjectPageSection title="Why build custom?" id="why">
