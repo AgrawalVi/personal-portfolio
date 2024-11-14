@@ -16,7 +16,6 @@ export default function SweetBeastsAdminPage() {
           <ProjectPageTitle
             name="SweetBeasts Admin"
             dateText="May 2024 - Present"
-            githubLink="https://github.com/AgrawalVi/sweetbeasts-admin"
           />
           <div className="flex w-full flex-col pt-10">
             <ImageCarousel

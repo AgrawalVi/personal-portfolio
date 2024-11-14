@@ -26,7 +26,7 @@ interface ProjectCardContainerProps {
   bulletPoints: string[]
   technologies: technologyItem[]
   liveLink?: string
-  githubLink: string
+  githubLink?: string
 }
 
 export default function ProjectCardContainer({
@@ -52,15 +52,17 @@ export default function ProjectCardContainer({
               }))}
             />
           </div>
-          <Link href={githubLink} target="_blank" rel="noopener noreferrer">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-muted-foreground"
-            >
-              <IconBrandGithub className="h-5 w-5" />
-            </Button>
-          </Link>
+          {githubLink && (
+            <Link href={githubLink} target="_blank" rel="noopener noreferrer">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-muted-foreground"
+              >
+                <IconBrandGithub className="h-5 w-5" />
+              </Button>
+            </Link>
+          )}
         </div>
         <CardDescription>{timeLine}</CardDescription>
       </CardHeader>
