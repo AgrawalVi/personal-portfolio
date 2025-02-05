@@ -31,6 +31,11 @@ const nextConfig = {
         destination: 'https://www.youtube.com/watch?v=w69SsBIJABA',
         permanent: true,
       },
+      {
+        source: '/shelfwise',
+        destination: 'https://github.com/agrawalvi/shelfwise',
+        permanent: false,
+      },
     ]
   },
   images: {
