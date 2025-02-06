@@ -23,8 +23,8 @@ interface ExperienceCardContainerProps {
   link: string
   img: string
   timeLine: string
-  bulletPoints: string[]
-  technologies: technologyItem[]
+  bulletPoints?: string[]
+  technologies?: technologyItem[]
 }
 
 export default function ExperienceCardContainer({
@@ -59,18 +59,22 @@ export default function ExperienceCardContainer({
         <CardDescription>{timeLine}</CardDescription>
       </CardHeader>
       <CardContent>
-        <ul className="space-y-1 pl-5">
-          {bulletPoints.map((bulletPoint, index) => (
-            <li className="list-disc leading-7 text-neutral-100" key={index}>
-              {bulletPoint}
-            </li>
-          ))}
-        </ul>
+        {bulletPoints && (
+          <ul className="space-y-1 pl-5">
+            {bulletPoints.map((bulletPoint, index) => (
+              <li className="list-disc leading-7 text-neutral-100" key={index}>
+                {bulletPoint}
+              </li>
+            ))}
+          </ul>
+        )}
       </CardContent>
       <CardFooter className="flex flex-row justify-between">
-        <div className="flex">
-          <AnimatedTooltip items={technologies} />
-        </div>
+        {technologies && (
+          <div className="flex">
+            <AnimatedTooltip items={technologies} />
+          </div>
+        )}
         <div className="-mr-6 flex h-14 flex-col items-center justify-center space-y-0">
           <Link href={link}>
             <Button variant="link" size={'sm'}>
