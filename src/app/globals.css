@@ -113,5 +113,5 @@ p {
 }
 
 ul {
-  @apply list-disc space-y-4 pl-6 font-nunito leading-7 sm:pl-8 sm:leading-10;
+  @apply list-disc space-y-4 pl-6 font-nunito leading-7 sm:pl-8;
 }

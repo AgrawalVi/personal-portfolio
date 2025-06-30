@@ -20,49 +20,55 @@ export default function PageData({
                 id={`#${slugifyString(section.header)}`}
                 key={idx}
               >
-                {section.body.map((item, idx) => (
-                  <div key={idx}>
-                    <div className="sm:text-4x py-4 text-3xl">
-                      {item.sectionName}
-                    </div>
-                    <ul className="pl-8">
-                      {item.items.map((item, idx) => (
-                        <li key={idx}>
-                          {item.boldText && (
-                            <span className="font-bold">{item.boldText} </span>
-                          )}
-                          {item.technologies?.reduce<(string | JSX.Element)[]>(
-                            (acc, tech, index) => {
-                              const parts = acc.flatMap((part) => {
-                                if (typeof part === 'string') {
+                <div className="space-y-4">
+                  {section.body.map((item, idx) => (
+                    <div key={idx}>
+                      <div className="sm:text-4x pb-4 text-3xl">
+                        {item.sectionName}
+                      </div>
+                      <ul className="space-y-4 pl-8">
+                        {item.items.map((item, idx) => (
+                          <li className="leading-normal" key={idx}>
+                            {item.boldText && (
+                              <span className="font-bold">
+                                {item.boldText}{' '}
+                              </span>
+                            )}
+                            {item.technologies?.reduce<
+                              (string | JSX.Element)[]
+                            >(
+                              (acc, tech, index) => {
+                                const parts = acc.flatMap((part) => {
+                                  if (typeof part === 'string') {
+                                    return part
+                                      .split(new RegExp(`(${tech.name})`, 'i'))
+                                      .map((subPart, i) =>
+                                        subPart.toLowerCase() ===
+                                        tech.name.toLowerCase() ? (
+                                          <LinkPreview
+                                            key={`${index}-${i}`}
+                                            url={tech.url}
+                                            className="underline underline-offset-4"
+                                          >
+                                            {subPart}
+                                          </LinkPreview>
+                                        ) : (
+                                          subPart
+                                        ),
+                                      )
+                                  }
                                   return part
-                                    .split(new RegExp(`(${tech.name})`, 'i'))
-                                    .map((subPart, i) =>
-                                      subPart.toLowerCase() ===
-                                      tech.name.toLowerCase() ? (
-                                        <LinkPreview
-                                          key={`${index}-${i}`}
-                                          url={tech.url}
-                                          className="underline underline-offset-4"
-                                        >
-                                          {subPart}
-                                        </LinkPreview>
-                                      ) : (
-                                        subPart
-                                      ),
-                                    )
-                                }
-                                return part
-                              })
-                              return parts
-                            },
-                            [item.text],
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
+                                })
+                                return parts
+                              },
+                              [item.text],
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
               </PageSection>
             )
           default:
@@ -73,26 +79,26 @@ export default function PageData({
                 key={idx}
               >
                 <>
-                  <p>{section.body}</p>
-                  <ul className="text-start">
-                    {section.bullets?.map((bullet, idx) => (
-                      <li key={idx}>{bullet}</li>
-                    ))}
-                  </ul>
+                  {section.body && <p>{section.body}</p>}
+                  {section.bullets && (
+                    <ul className="text-start">
+                      {section.bullets?.map((bullet, idx) => (
+                        <li key={idx}>{bullet}</li>
+                      ))}
+                    </ul>
+                  )}
                   {section.subsections && (
-                    <div>
+                    <div className="space-y-4">
                       {section.subsections.map((subsection, idx) => (
                         <div key={idx}>
-                          <div className="text-3xl sm:text-4xl">
+                          <div className="sm:text-4x pb-4 text-3xl">
                             {subsection.header}
                           </div>
                           {subsection.body && <p>{subsection.body}</p>}
                           {subsection.bullets && (
-                            <ul className="pl-8">
+                            <ul className="space-y-4 pl-8">
                               {subsection.bullets.map((bullet) => (
-                                <li className="leading-normal sm:leading-loose">
-                                  {bullet}
-                                </li>
+                                <li className="leading-normal">{bullet}</li>
                               ))}
                             </ul>
                           )}
