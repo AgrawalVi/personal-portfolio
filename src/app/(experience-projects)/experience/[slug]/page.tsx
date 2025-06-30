@@ -1,5 +1,5 @@
 import ExperiencePageTitle from '@/components/general/experience/experience-page-title'
-import PageData from '@/components/general/projects/page-data'
+import PageData from '@/components/general/page/page-data'
 import { ScrollProgress } from '@/components/magicui/scroll-progress'
 import { experiences } from '@/data/experience'
 import { redirect } from 'next/navigation'

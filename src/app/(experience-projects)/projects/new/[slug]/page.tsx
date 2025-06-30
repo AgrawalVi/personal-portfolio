@@ -1,4 +1,4 @@
-import PageData from '@/components/general/projects/page-data'
+import PageData from '@/components/general/page/page-data'
 import ProjectPageTitle from '@/components/general/projects/project-page-title'
 import { ScrollProgress } from '@/components/magicui/scroll-progress'
 import { projects } from '@/data/projects'

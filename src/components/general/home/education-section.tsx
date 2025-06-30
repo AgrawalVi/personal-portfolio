@@ -11,7 +11,6 @@ export default function ProjectSection() {
       <div className="flex justify-center">
         <EducationCardContainer
           school="University of Wisconsin - Madison"
-          position="Software Engineering Intern"
           timeLine="Expected Graduation: May 2026"
           img="/card-images/uw-madison.jpg"
           bulletPoints={madisonBulletPoints}

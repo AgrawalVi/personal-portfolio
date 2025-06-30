@@ -1,7 +1,7 @@
-import PageContainer from '@/components/general/projects/page-container'
+import PageContainer from '@/components/general/page/page-container'
 import ProjectPageTitle from '@/components/general/projects/project-page-title'
 import { LinkPreview } from '@/components/aceternity/link-preview'
-import PageSection from '@/components/general/projects/page-section'
+import PageSection from '@/components/general/page/page-section'
 
 export default function PonovoPage() {
   return (

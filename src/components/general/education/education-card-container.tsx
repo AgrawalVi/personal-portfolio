@@ -1,25 +1,15 @@
 import Image from 'next/image'
-import Link from 'next/link'
 
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
-  CardFooter,
   CardTitle,
 } from '@/components/ui/card'
 
-import { technologyItem } from '@/types'
-import { AnimatedTooltip } from '@/components/aceternity/animated-tooltip'
-import { Button } from '@/components/ui/button'
-import { ChevronRight, CircleArrowOutUpRight } from 'lucide-react'
-import { LinkPreview } from '@/components/aceternity/link-preview'
-import { TypewriterEffect } from '@/components/aceternity/typewriter-effect'
-
 interface EducationCardContainerProps {
   school: string
-  position: string
   timeLine: string
   img: string
   bulletPoints: string[]
@@ -27,7 +17,6 @@ interface EducationCardContainerProps {
 
 export default function EducationCardContainer({
   school,
-  position,
   bulletPoints,
   timeLine,
   img,
