@@ -1,4 +1,4 @@
-import ExperienceCardContainer from '../experience/experience-card-container'
+import ExperienceCard from '../experience/experience-card'
 import { experiences } from '@/data/experience'
 
 export default function ProjectSection() {
@@ -7,9 +7,9 @@ export default function ProjectSection() {
       <div className="mb-10 text-center text-[40px] text-purple md:text-5xl lg:text-6xl">
         Experience
       </div>
-      <div className="flex flex-wrap justify-center gap-12">
+      <div className="mx-auto flex max-w-screen-lg flex-wrap justify-center gap-12">
         {experiences.map((experience, idx) => (
-          <ExperienceCardContainer data={experience} key={idx} />
+          <ExperienceCard data={experience} key={idx} />
         ))}
       </div>
     </main>

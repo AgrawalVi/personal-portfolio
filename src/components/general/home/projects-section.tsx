@@ -1,4 +1,4 @@
-import ProjectCardContainer from '../projects/project-card-container'
+import ProjectCard from '../projects/project-card'
 import { projects } from '@/data/projects'
 
 import {
@@ -15,7 +15,7 @@ export default function ProjectSection() {
 
       <div className="flex flex-wrap justify-center gap-12">
         {projects.map((project, idx) => (
-          <ProjectCardContainer project={project} key={idx} />
+          <ProjectCard project={project} key={idx} />
         ))}
         {/* <ProjectCardContainer
           title="SweetBeasts"

@@ -16,11 +16,7 @@ import { TypewriterEffect } from '@/components/aceternity/typewriter-effect'
 import { IconBrandGithub } from '@tabler/icons-react'
 import { Project } from '@/types/project'
 
-export default function ProjectCardContainer({
-  project,
-}: {
-  project: Project
-}) {
+export default function ProjectCard({ project }: { project: Project }) {
   return (
     <Card className="relative z-[100] flex w-full flex-col border-2 border-purple/30 bg-black-100 shadow-[0px_0px_15px_0px_#CBACF9] transition-all duration-500 ease-in-out hover:scale-[1.01] hover:shadow-[0px_0px_20px_3px_#CBACF9] sm:w-[25rem]">
       <CardHeader>
