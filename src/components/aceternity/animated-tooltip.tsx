@@ -20,7 +20,7 @@ export const AnimatedTooltip = ({
   }[]
 }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
-  const springConfig = { stiffness: 100, damping: 5 }
+  const springConfig = { stiffness: 75, damping: 25 }
   const x = useMotionValue(0) // going to set this value on mouse move
   // rotate the tooltip
   const rotate = useSpring(

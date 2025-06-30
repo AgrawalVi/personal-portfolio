@@ -1,28 +1,35 @@
 import { TechnologyItem } from '@/types'
 import { ExperienceCardBullets, ExperiencePageData } from '@/types/experience'
 
-export const xorbixBulletPoints: ExperienceCardBullets[] = [
-  'Xorbix is an IT Consulting Company that specializes in application development and maintenance',
-  'Worked on several projects including AI POCs, a Time Tracking Portal, and many more',
+export const sweetbeastsBulletPoints: ExperienceCardBullets[] = [
+  'Co-founded a charitable venture designing and selling fruit-animal plush toys, now employing a team of seven.',
+  'Led development of a custom e-commerce platform with advanced features like remote cart management and partial refunds.',
+  'Built an integrated admin portal for streamlined coupon, affiliate, support, product, and order management.',
+  'Oversee daily operations, including outreach, inventory, and process optimization.',
 ]
 
-export const xorbixTechnologies: TechnologyItem[] = [
+export const sweetBeastsTechnologies: TechnologyItem[] = [
   {
-    name: '.NET',
-    description: 'Developer Platform',
-    image: '/logos/dotnet-logo.svg',
+    name: 'Next.js',
+    description: 'React Framework',
+    image: '/logos/nextjs-logo.jpg',
   },
   {
-    name: 'React.js',
+    name: 'React',
     description: 'JavaScript Library',
     image: '/logos/react-logo.jpg',
   },
   {
-    name: 'Azure',
-    description: 'Cloud Platform',
-    image: '/logos/azure-logo.png',
+    name: 'Prisma',
+    description: 'Database ORM',
+    image: '/logos/prisma-logo.svg',
   },
-  { name: 'OpenAI', description: 'AI APIs', image: '/logos/openai-logo.jpg' },
+  {
+    name: 'Stripe',
+    description: 'Payment Processing',
+    image: '/logos/stripe.png',
+  },
+  { name: 'And more...', description: '', image: '/logos/plus-icon.png' },
 ]
 
 export const xorbixExperiencePageData: ExperiencePageData = {

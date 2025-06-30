@@ -1,11 +1,6 @@
 import ProjectCard from '../projects/project-card'
 import { projects } from '@/data/projects'
 
-import {
-  SweetBeastsCardDescription,
-  SweetBeastsTechnologies,
-} from '@/data/projects/sweetbeasts'
-
 export default function ProjectSection() {
   return (
     <main id="projects" className="relative z-10 w-full bg-background py-10">
@@ -17,23 +12,6 @@ export default function ProjectSection() {
         {projects.map((project, idx) => (
           <ProjectCard project={project} key={idx} />
         ))}
-        {/* <ProjectCardContainer
-          title="SweetBeasts"
-          link="/projects/sweetbeasts"
-          img="/card-images/sweetbeasts.png"
-          timeLine="May 2024 - Present"
-          bulletPoints={SweetBeastsCardDescription}
-          technologies={SweetBeastsTechnologies}
-          liveLink="https://sweetbeasts.shop"
-        />
-        <ProjectCardContainer
-          title="SweetBeasts Admin"
-          link="/projects/sweetbeasts-admin"
-          img="/card-images/sweetbeasts-admin.png"
-          timeLine="May 2024 - Present"
-          bulletPoints={SweetBeastsAdminCardDescription}
-          technologies={SweetBeastsAdminTechnologies}
-        /> */}
       </div>
     </main>
   )

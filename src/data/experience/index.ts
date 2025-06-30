@@ -5,6 +5,7 @@ import {
   xorbixTechnologies,
 } from './xorbix'
 import { amazonBulletPoints } from './amazon'
+import { sweetbeastsBulletPoints, sweetBeastsTechnologies } from './sweetbeasts'
 
 export const experiences: Experience[] = [
   {
@@ -19,7 +20,11 @@ export const experiences: Experience[] = [
     companyName: 'SweetBeasts',
     position: 'Co-Founder, CTO, and COO',
     timeline: 'April 2024 - Present',
-    cardData: { cardBullets: [], cardImageUrl: '' },
+    cardData: {
+      cardBullets: sweetbeastsBulletPoints,
+      technologies: sweetBeastsTechnologies,
+      cardImageUrl: '',
+    },
   },
   {
     slug: 'global-schoolwear',

@@ -51,12 +51,7 @@ export default function ExperienceCard({ data }: { data: Experience }) {
           </ul>
         )}
       </CardContent>
-      <CardFooter className="flex flex-row justify-between">
-        {data.cardData.technologies && (
-          <div className="flex">
-            <AnimatedTooltip items={data.cardData.technologies} />
-          </div>
-        )}
+      <CardFooter className="flex flex-row justify-end">
         {data.pageData && (
           <div className="-mr-6 flex h-14 flex-col items-center justify-center space-y-0">
             <Link href={`/experience/${data.slug}`}>
