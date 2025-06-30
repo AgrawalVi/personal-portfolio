@@ -9,14 +9,7 @@ if (!process.env.VELITE_STARTED && (isDev || isBuild)) {
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async rewrites() {
-    return [
-      { source: '/ponovo', destination: '/projects/ponovo' },
-      { source: '/sweetbeasts', destination: '/projects/sweetbeasts' },
-      {
-        source: '/sweetbeasts-admin',
-        destination: '/projects/sweetbeasts-admin',
-      },
-    ]
+    return [{ source: '/ponovo', destination: '/projects/ponovo' }]
   },
   async redirects() {
     return [
@@ -28,6 +21,16 @@ const nextConfig = {
       {
         source: '/shelfwise',
         destination: 'https://www.youtube.com/watch?v=ljWgrLuKK-s',
+        permanent: false,
+      },
+      {
+        source: '/sweetbeasts',
+        destination: '/experience/sweetbeasts',
+        permanent: false,
+      },
+      {
+        source: '/sweetbeasts-admin',
+        destination: '/experience/sweetbeasts',
         permanent: false,
       },
     ]

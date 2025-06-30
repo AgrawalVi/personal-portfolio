@@ -3,7 +3,10 @@ import { CarouselImage, PageSection, TechnologyItem } from '.'
 export type Project = {
   projectName: string
   slug: string
-  externalLink?: string
+  externalLink?: {
+    link: string
+    text: string
+  }
   timeline: string
   liveLink?: string
   githubLink?: string

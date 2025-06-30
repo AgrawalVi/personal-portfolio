@@ -9,8 +9,8 @@ import {
 } from '@/components/ui/card'
 
 import { AnimatedTooltip } from '@/components/aceternity/animated-tooltip'
-import { Button } from '@/components/ui/button'
-import { ChevronRight, CircleArrowOutUpRight } from 'lucide-react'
+import { Button, buttonVariants } from '@/components/ui/button'
+import { ChevronRight, CircleArrowOutUpRight, ExternalLink } from 'lucide-react'
 import { LinkPreview } from '@/components/aceternity/link-preview'
 import { TypewriterEffect } from '@/components/aceternity/typewriter-effect'
 import { IconBrandGithub } from '@tabler/icons-react'
@@ -65,24 +65,35 @@ export default function ProjectCardContainer({
         <div className="flex">
           <AnimatedTooltip items={project.cardData.technologies} />
         </div>
-        <div className="flex h-14 flex-col items-center justify-end space-y-0">
+        <div className="flex h-14 flex-col items-end justify-end space-y-0">
           {project.liveLink && (
             <LinkPreview
               url={project.liveLink}
               className="flex w-fit flex-row text-sm"
             >
-              Live Site <CircleArrowOutUpRight className="ml-1 h-4 w-4" />
+              <span
+                className={buttonVariants({
+                  variant: 'link',
+                  size: 'sm',
+                  className: 'h-6',
+                })}
+              >
+                Live Site <ExternalLink className="mb-1 ml-1 h-4 w-4" />
+              </span>
             </LinkPreview>
           )}
           {project.externalLink ? (
-            <LinkPreview url={project.externalLink}>
-              Learn More <ChevronRight className="h-4 w-4" />
-            </LinkPreview>
+            <Link href={project.externalLink.link} target="_blank">
+              <Button variant="link" size={'sm'} className="h-6">
+                {project.externalLink.text}{' '}
+                <ExternalLink className="mb-1 ml-1 h-4 w-4" />
+              </Button>
+            </Link>
           ) : (
             project.pageData && (
               <Link href={`/projects/${project.slug}`}>
-                <Button variant="link" size={'sm'}>
-                  Learn More <ChevronRight className="h-4 w-4" />
+                <Button variant="link" size={'sm'} className="h-6">
+                  Learn More <ChevronRight className="mb-1 ml-1 h-4 w-4" />
                 </Button>
               </Link>
             )
