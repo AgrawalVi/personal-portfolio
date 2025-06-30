@@ -1,7 +1,7 @@
-import ProjectPageContainer from '@/components/general/projects/project-page-content-container'
+import PageContainer from '@/components/general/projects/page-container'
 import ProjectPageTitle from '@/components/general/projects/project-page-title'
 import { LinkPreview } from '@/components/aceternity/link-preview'
-import ProjectPageSection from '@/components/general/projects/project-page-section'
+import PageSection from '@/components/general/projects/page-section'
 import { TracingBeam } from '@/components/aceternity/tracing-beam'
 
 export default function PonovoPage() {
@@ -16,8 +16,8 @@ export default function PonovoPage() {
             viewProjectLink="https://ponovo.app"
           />
           <div className="flex w-full flex-col pt-10">
-            <ProjectPageContainer>
-              <ProjectPageSection title="Summary" id="summary">
+            <PageContainer>
+              <PageSection title="Summary" id="summary">
                 <p>
                   I developed a job application tracking system designed to
                   replace conventional spreadsheets with a seamless and
@@ -26,9 +26,9 @@ export default function PonovoPage() {
                   with the initial results and am excited about the future
                   developments planned for the application.
                 </p>
-              </ProjectPageSection>
+              </PageSection>
 
-              <ProjectPageSection title="The Tech Stack" id="tech-stack">
+              <PageSection title="The Tech Stack" id="tech-stack">
                 <div className="text-3xl sm:text-4xl">Programming Language</div>
                 <ul className="list-disc pl-8 font-nunito">
                   <li>
@@ -203,9 +203,9 @@ export default function PonovoPage() {
                     development process
                   </li>
                 </ul>
-              </ProjectPageSection>
+              </PageSection>
 
-              <ProjectPageSection title="Takeaways" id="takeaways">
+              <PageSection title="Takeaways" id="takeaways">
                 <p>
                   This project has been immensely fulfilling to work on,
                   although there are challenges ahead. I look forward to
@@ -213,9 +213,9 @@ export default function PonovoPage() {
                   preferences, and more. I'm thrilled with what I've built and
                   eager to start using it and sharing it with others.
                 </p>
-              </ProjectPageSection>
+              </PageSection>
 
-              <ProjectPageSection title="The Current State" id="current-state">
+              <PageSection title="The Current State" id="current-state">
                 <p>
                   This project is in beta right now. It is stable and everything
                   works, but there are more features that need to be added
@@ -233,8 +233,8 @@ export default function PonovoPage() {
                     </LinkPreview>
                   </li>
                 </ul>
-              </ProjectPageSection>
-            </ProjectPageContainer>
+              </PageSection>
+            </PageContainer>
           </div>
         </div>
       </TracingBeam>

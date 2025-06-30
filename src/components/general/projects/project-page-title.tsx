@@ -7,14 +7,14 @@ interface ProjectPageTitleProps {
   name: string
   dateText: string
   githubLink?: string
-  viewProjectLink?: string
+  liveLink?: string
 }
 
 export default function ProjectPageTitle({
   name,
   dateText,
   githubLink,
-  viewProjectLink,
+  liveLink,
 }: ProjectPageTitleProps) {
   return (
     <div>
@@ -35,12 +35,8 @@ export default function ProjectPageTitle({
               </Button>
             </Link>
           )}
-          {viewProjectLink && (
-            <Link
-              href={viewProjectLink}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+          {liveLink && (
+            <Link href={liveLink} target="_blank" rel="noopener noreferrer">
               <Button
                 variant="outline"
                 size="icon"

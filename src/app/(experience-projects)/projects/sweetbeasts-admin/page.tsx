@@ -1,10 +1,10 @@
-import ProjectPageContainer from '@/components/general/projects/project-page-content-container'
+import PageContainer from '@/components/general/projects/page-container'
 import ProjectPageTitle from '@/components/general/projects/project-page-title'
 import Link from 'next/link'
 import Image from 'next/image'
 import { TriangleAlert } from 'lucide-react'
 import { LinkPreview } from '@/components/aceternity/link-preview'
-import ProjectPageSection from '@/components/general/projects/project-page-section'
+import PageSection from '@/components/general/projects/page-section'
 import { TracingBeam } from '@/components/aceternity/tracing-beam'
 import ImageCarousel from '@/components/general/projects/image-carousel'
 
@@ -25,8 +25,8 @@ export default function SweetBeastsAdminPage() {
                 '/projects/sweetbeasts-admin/two-factor.png',
               ]}
             />
-            <ProjectPageContainer>
-              <ProjectPageSection title="Summary" id="summary">
+            <PageContainer>
+              <PageSection title="Summary" id="summary">
                 <p>
                   As the CTO and COO of SweetBeasts Inc., a company I
                   co-founded, I lead a team of three in the development and
@@ -50,9 +50,9 @@ export default function SweetBeastsAdminPage() {
                   </LinkPreview>{' '}
                   for those interested in our backend architecture.
                 </p>
-              </ProjectPageSection>
+              </PageSection>
 
-              <ProjectPageSection title="Key Features" id="key-features">
+              <PageSection title="Key Features" id="key-features">
                 <p>
                   I take pride in the progress we have made on the admin panel,
                   which has been built on a solid foundation for the plethora of
@@ -79,8 +79,8 @@ export default function SweetBeastsAdminPage() {
                     efficient customer support.
                   </li>
                 </ul>
-              </ProjectPageSection>
-              <ProjectPageSection title="The Tech Stack" id="tech-stack">
+              </PageSection>
+              <PageSection title="The Tech Stack" id="tech-stack">
                 <div className="text-3xl sm:text-4xl">Programming Language</div>
                 <ul className="list-disc pl-8 font-nunito">
                   <li>
@@ -240,9 +240,9 @@ export default function SweetBeastsAdminPage() {
                     development process
                   </li>
                 </ul>
-              </ProjectPageSection>
+              </PageSection>
 
-              <ProjectPageSection title="Takeaways" id="takeaways">
+              <PageSection title="Takeaways" id="takeaways">
                 <p>
                   Developing the admin panel has been a profound learning
                   experience, particularly in the areas of security and
@@ -263,9 +263,9 @@ export default function SweetBeastsAdminPage() {
                     demand.
                   </li>
                 </ul>
-              </ProjectPageSection>
+              </PageSection>
 
-              <ProjectPageSection title="The Current State" id="current-state">
+              <PageSection title="The Current State" id="current-state">
                 <p>
                   The admin panel is a focal point for further development,
                   especially compared to the more mature state of the
@@ -309,8 +309,8 @@ export default function SweetBeastsAdminPage() {
                     manageability.
                   </li>
                 </ul>
-              </ProjectPageSection>
-            </ProjectPageContainer>
+              </PageSection>
+            </PageContainer>
           </div>
         </div>
       </TracingBeam>

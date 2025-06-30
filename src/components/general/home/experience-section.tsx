@@ -1,9 +1,5 @@
-import {
-  xorbixBulletPoints,
-  xorbixTechnologies,
-} from '@/data/experience/xorbix'
-
 import ExperienceCardContainer from '../experience/experience-card-container'
+import { experiences } from '@/data/experience'
 
 export default function ProjectSection() {
   return (
@@ -11,24 +7,10 @@ export default function ProjectSection() {
       <div className="mb-10 text-center text-[40px] text-purple md:text-5xl lg:text-6xl">
         Experience
       </div>
-
-      <div className="flex justify-center">
-        {/* <ExperienceCardContainer
-          title="Amazon"
-          position="Systems Development Engineering Intern"
-          link="/experience/amazon"
-          img="/card-images/amazon-logo.png"
-          timeLine="June 2024 - August 2024"
-        /> */}
-        <ExperienceCardContainer
-          title="Xorbix Technologies"
-          position="Software Engineering Intern"
-          link="/experience/xorbix"
-          img="/card-images/xorbix-logo.png"
-          timeLine="January 2024 - Augusts 2024"
-          bulletPoints={xorbixBulletPoints}
-          technologies={xorbixTechnologies}
-        />
+      <div className="flex flex-wrap justify-center gap-12">
+        {experiences.map((experience, idx) => (
+          <ExperienceCardContainer data={experience} key={idx} />
+        ))}
       </div>
     </main>
   )

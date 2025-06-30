@@ -9,7 +9,7 @@ export default function Home() {
     <main className="relative mx-auto flex flex-col items-center justify-center overflow-hidden bg-background px-5 sm:px-10">
       <Hero />
       <div className="mt-10 flex flex-col space-y-20 divide-y-2 divide-neutral-800/50">
-        <div className="flex flex-col space-y-20 divide-y-2 divide-neutral-800/50 xl:flex-row xl:space-y-0 xl:divide-y-0">
+        <div className="flex flex-col space-y-20 divide-y-2 divide-neutral-800/50">
           <EducationSection />
           <ExperienceSection />
         </div>

@@ -1,7 +1,7 @@
-import ProjectPageContainer from '@/components/general/projects/project-page-content-container'
+import PageContainer from '@/components/general/projects/page-container'
 import ProjectPageTitle from '@/components/general/projects/project-page-title'
 import { LinkPreview } from '@/components/aceternity/link-preview'
-import ProjectPageSection from '@/components/general/projects/project-page-section'
+import PageSection from '@/components/general/projects/page-section'
 import { TracingBeam } from '@/components/aceternity/tracing-beam'
 
 export default function PersonalPortfolioPage() {
@@ -16,8 +16,8 @@ export default function PersonalPortfolioPage() {
             viewProjectLink="https://vishrut.tech"
           />
           <div className="flex w-full flex-col pt-10">
-            <ProjectPageContainer>
-              <ProjectPageSection title="Summary" id="summary">
+            <PageContainer>
+              <PageSection title="Summary" id="summary">
                 <p>
                   I embarked on creating a simple personal portfolio site to
                   showcase my work. As someone who doesn't specialize in design,
@@ -26,9 +26,9 @@ export default function PersonalPortfolioPage() {
                   development is a photography section that reflects one of my
                   favorite hobbies.
                 </p>
-              </ProjectPageSection>
+              </PageSection>
 
-              <ProjectPageSection title="The Tech Stack" id="tech-stack">
+              <PageSection title="The Tech Stack" id="tech-stack">
                 <div className="text-3xl sm:text-4xl">Programming Language</div>
                 <ul className="list-disc pl-8 font-nunito">
                   <li>
@@ -147,18 +147,18 @@ export default function PersonalPortfolioPage() {
                     development process
                   </li>
                 </ul>
-              </ProjectPageSection>
+              </PageSection>
 
-              <ProjectPageSection title="Takeaways" id="takeaways">
+              <PageSection title="Takeaways" id="takeaways">
                 <p>
                   Compiling this portfolio has been a rewarding experience.
                   Reflecting on my past projects and documenting them has not
                   only allowed me to appreciate my growth but also ignited my
                   enthusiasm for sharing more about my journey in the future.
                 </p>
-              </ProjectPageSection>
+              </PageSection>
 
-              <ProjectPageSection title="The Current State" id="current-state">
+              <PageSection title="The Current State" id="current-state">
                 <p>
                   What you see now represents the current version of my
                   portfolio, but exciting developments are underway:
@@ -176,8 +176,8 @@ export default function PersonalPortfolioPage() {
                     addition, it's not my top priority at the moment.
                   </li>
                 </ul>
-              </ProjectPageSection>
-            </ProjectPageContainer>
+              </PageSection>
+            </PageContainer>
           </div>
         </div>
       </TracingBeam>

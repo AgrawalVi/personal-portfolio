@@ -1,8 +1,8 @@
-import ProjectPageContainer from '@/components/general/projects/project-page-content-container'
+import PageContainer from '@/components/general/projects/page-container'
 import ProjectPageTitle from '@/components/general/projects/project-page-title'
 import Image from 'next/image'
 import { LinkPreview } from '@/components/aceternity/link-preview'
-import ProjectPageSection from '@/components/general/projects/project-page-section'
+import PageSection from '@/components/general/projects/page-section'
 import { TracingBeam } from '@/components/aceternity/tracing-beam'
 import ImageCarousel from '@/components/general/projects/image-carousel'
 import { Callout } from '@/components/blog/post/callout'
@@ -26,8 +26,8 @@ export default function SweetBeastsPage() {
                 '/projects/sweetbeasts/guest-order.png',
               ]}
             />
-            <ProjectPageContainer>
-              <ProjectPageSection title="Summary" id="summary">
+            <PageContainer>
+              <PageSection title="Summary" id="summary">
                 <p>
                   As the CTO and COO of SweetBeasts Inc., a company I
                   co-founded, I lead a team of three in developing and testing a
@@ -41,9 +41,9 @@ export default function SweetBeastsPage() {
                     here.
                   </LinkPreview>
                 </p>
-              </ProjectPageSection>
+              </PageSection>
 
-              <ProjectPageSection title="Why build custom?" id="why">
+              <PageSection title="Why build custom?" id="why">
                 <p>
                   We chose to create our custom e-commerce platform for several
                   reasons:
@@ -63,9 +63,9 @@ export default function SweetBeastsPage() {
                     e-commerce sites.
                   </li>
                 </ul>
-              </ProjectPageSection>
+              </PageSection>
 
-              <ProjectPageSection title="Key Features" id="key-features">
+              <PageSection title="Key Features" id="key-features">
                 <p>
                   I am immensely proud of what we've built—a solid foundation
                   using the latest technologies and best practices:
@@ -90,9 +90,9 @@ export default function SweetBeastsPage() {
                     appealing and easy to navigate.
                   </li>
                 </ul>
-              </ProjectPageSection>
+              </PageSection>
 
-              <ProjectPageSection title="The Tech Stack" id="tech-stack">
+              <PageSection title="The Tech Stack" id="tech-stack">
                 <div className="text-3xl sm:text-4xl">Programming Language</div>
                 <ul className="list-disc pl-8 font-nunito">
                   <li>
@@ -275,9 +275,9 @@ export default function SweetBeastsPage() {
                     development process
                   </li>
                 </ul>
-              </ProjectPageSection>
+              </PageSection>
 
-              <ProjectPageSection title="Takeaways" id="takeaways">
+              <PageSection title="Takeaways" id="takeaways">
                 <p>
                   Creating this platform revealed the complexity of e-commerce
                   systems, from database management to payment integration. The
@@ -285,9 +285,9 @@ export default function SweetBeastsPage() {
                   confidence. As we near the launch, my appreciation deepens for
                   the comprehensive experience gained.
                 </p>
-              </ProjectPageSection>
+              </PageSection>
 
-              <ProjectPageSection title="The Current State" id="current-state">
+              <PageSection title="The Current State" id="current-state">
                 <p>
                   The website is primed for launch, pending the arrival of our
                   first plushie shipment. We expect to go live within the next
@@ -300,8 +300,8 @@ export default function SweetBeastsPage() {
                   <li>Polish UI - mainly in the content pages</li>
                   <li>Add more products as they are developed</li>
                 </ul>
-              </ProjectPageSection>
-            </ProjectPageContainer>
+              </PageSection>
+            </PageContainer>
           </div>
         </div>
       </TracingBeam>

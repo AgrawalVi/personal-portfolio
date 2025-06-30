@@ -4,7 +4,7 @@ interface ProjectPageSectionProps {
   children: React.ReactNode
 }
 
-export default function ProjectPageSection({
+export default function PageSection({
   title,
   id,
   children,

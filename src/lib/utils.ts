@@ -22,3 +22,7 @@ export function sortBlogPosts(posts: Post[]) {
     return 0
   })
 }
+
+export const slugifyString = (str: string) => {
+  return str.toLowerCase().split(' ').join('_')
+}

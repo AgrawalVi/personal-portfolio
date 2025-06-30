@@ -10,14 +10,8 @@ if (!process.env.VELITE_STARTED && (isDev || isBuild)) {
 const nextConfig = {
   async rewrites() {
     return [
-      {
-        source: '/ponovo',
-        destination: '/projects/ponovo',
-      },
-      {
-        source: '/sweetbeasts',
-        destination: '/projects/sweetbeasts',
-      },
+      { source: '/ponovo', destination: '/projects/ponovo' },
+      { source: '/sweetbeasts', destination: '/projects/sweetbeasts' },
       {
         source: '/sweetbeasts-admin',
         destination: '/projects/sweetbeasts-admin',
@@ -39,9 +33,7 @@ const nextConfig = {
     ]
   },
   images: {
-    domains: [
-      'api.microlink.io', // Microlink Image Preview
-    ],
+    remotePatterns: [{ protocol: 'https', hostname: 'api.microlink.io' }],
   },
 }
 

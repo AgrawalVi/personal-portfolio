@@ -1,11 +1,5 @@
 import ProjectCardContainer from '../projects/project-card-container'
-import {
-  PersonalPortfolioTechnologies,
-  SweetBeastsAdminTechnologies,
-  SweetBeastsAdminCardDescription,
-  PersonalPortfolioCardDescription,
-} from '@/data'
-import { ponovoBulletPoints, ponovoTechnologies } from '@/data/projects/ponovo'
+import { projects } from '@/data/projects'
 
 import {
   SweetBeastsCardDescription,
@@ -19,18 +13,11 @@ export default function ProjectSection() {
         Projects
       </div>
 
-      <div className="mx-auto grid w-fit grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12 xl:grid-cols-3">
-        <ProjectCardContainer
-          title="Ponovo"
-          link="/projects/ponovo"
-          img="/card-images/ponovo.png"
-          timeLine="July 2024 - Present"
-          bulletPoints={ponovoBulletPoints}
-          technologies={ponovoTechnologies}
-          liveLink="https://ponovo.app"
-          githubLink="https://github.com/AgrawalVi/ponovo"
-        />
-        <ProjectCardContainer
+      <div className="flex flex-wrap justify-center gap-12">
+        {projects.map((project, idx) => (
+          <ProjectCardContainer project={project} key={idx} />
+        ))}
+        {/* <ProjectCardContainer
           title="SweetBeasts"
           link="/projects/sweetbeasts"
           img="/card-images/sweetbeasts.png"
@@ -46,17 +33,7 @@ export default function ProjectSection() {
           timeLine="May 2024 - Present"
           bulletPoints={SweetBeastsAdminCardDescription}
           technologies={SweetBeastsAdminTechnologies}
-        />
-        <ProjectCardContainer
-          title="Personal Portfolio"
-          link="/projects/personal-portfolio"
-          img="/card-images/personal-portfolio.png"
-          timeLine="June 2024 - Present"
-          bulletPoints={PersonalPortfolioCardDescription}
-          technologies={PersonalPortfolioTechnologies}
-          liveLink="https://vishrut.tech"
-          githubLink="https://github.com/AgrawalVi/personal-portfolio"
-        />
+        /> */}
       </div>
     </main>
   )

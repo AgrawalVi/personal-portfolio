@@ -1,4 +1,4 @@
-export default function ProjectPageContainer({
+export default function PageContainer({
   children,
 }: {
   children: React.ReactNode
