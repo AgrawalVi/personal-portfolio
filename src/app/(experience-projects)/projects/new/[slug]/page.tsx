@@ -1,11 +1,7 @@
-import { LinkPreview } from '@/components/aceternity/link-preview'
-import { TracingBeam } from '@/components/aceternity/tracing-beam'
-import PageContainer from '@/components/general/projects/page-container'
 import PageData from '@/components/general/projects/page-data'
-import PageSection from '@/components/general/projects/page-section'
 import ProjectPageTitle from '@/components/general/projects/project-page-title'
+import { ScrollProgress } from '@/components/magicui/scroll-progress'
 import { projects } from '@/data/projects'
-import { slugifyString } from '@/lib/utils'
 import { redirect } from 'next/navigation'
 
 export function generateStaticParams() {
@@ -27,19 +23,18 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
 
   return (
     <main className="flex w-full justify-center pt-5 sm:pt-10">
-      <TracingBeam>
-        <div className="flex w-full max-w-5xl flex-col items-center justify-center">
-          <ProjectPageTitle
-            name={data.projectName}
-            dateText={data.timeline}
-            githubLink={data.githubLink}
-            liveLink={data.liveLink}
-          />
-          <div className="flex w-full flex-col pt-10">
-            <PageData sections={data.pageData.sections} />
-          </div>
+      <ScrollProgress />
+      <div className="flex w-full max-w-5xl flex-col items-center justify-center">
+        <ProjectPageTitle
+          name={data.projectName}
+          dateText={data.timeline}
+          githubLink={data.githubLink}
+          liveLink={data.liveLink}
+        />
+        <div className="flex w-full flex-col pt-10">
+          <PageData sections={data.pageData.sections} />
         </div>
-      </TracingBeam>
+      </div>
     </main>
   )
 }
