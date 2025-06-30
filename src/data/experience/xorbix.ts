@@ -4,6 +4,7 @@ import { ExperienceCardBullets, ExperiencePageData } from '@/types/experience'
 export const xorbixBulletPoints: ExperienceCardBullets[] = [
   'Xorbix is an IT Consulting Company that specializes in application development and maintenance',
   'Worked on several projects including AI POCs, a Time Tracking Portal, and many more',
+  'Specialized in AI integration across multiple industries including insurance, manufacturing, and healthcare using Azure Speech-to-Text and OpenAI APIs',
 ]
 
 export const xorbixTechnologies: TechnologyItem[] = [

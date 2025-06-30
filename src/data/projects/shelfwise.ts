@@ -24,12 +24,14 @@ const ShelfwiseTechnologies: TechnologyItem[] = [
   },
 ]
 
-const ShelfwiseBulletPoints: string[] = []
+const ShelfwiseBulletPoints: string[] = [
+  'Hackathon project developed to help manage groceries',
+]
 
 export const ShelfwiseData: Project = {
   projectName: 'Shelfwise',
   slug: 'shelfwise',
-  timeline: 'November 2024',
+  timeline: 'Madhacks Fall 2024',
   cardData: {
     technologies: ShelfwiseTechnologies,
     bulletPoints: ShelfwiseBulletPoints,

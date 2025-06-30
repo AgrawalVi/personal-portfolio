@@ -6,6 +6,7 @@ import {
 } from './xorbix'
 import { amazonBulletPoints } from './amazon'
 import { sweetbeastsBulletPoints, sweetBeastsTechnologies } from './sweetbeasts'
+import { globalSchoolWearBulletPoints } from './globalschoolwear'
 
 export const experiences: Experience[] = [
   {
@@ -31,7 +32,10 @@ export const experiences: Experience[] = [
     companyName: 'Global Schoolwear',
     position: 'Software Engineer',
     timeline: 'November 2024 - April 2025',
-    cardData: { cardBullets: [], cardImageUrl: '' },
+    cardData: {
+      cardBullets: globalSchoolWearBulletPoints,
+      cardImageUrl: '',
+    },
   },
   {
     slug: 'xorbix',
