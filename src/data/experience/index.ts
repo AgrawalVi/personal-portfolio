@@ -16,17 +16,17 @@ export const experiences: Experience[] = [
     timeline: 'May 2025 - Present',
     cardData: { cardBullets: amazonBulletPoints, cardImageUrl: '' },
   },
-  {
-    slug: 'sweetbeasts',
-    companyName: 'SweetBeasts',
-    position: 'Co-Founder, CTO, and COO',
-    timeline: 'April 2024 - Present',
-    cardData: {
-      cardBullets: sweetbeastsBulletPoints,
-      technologies: sweetBeastsTechnologies,
-      cardImageUrl: '',
-    },
-  },
+  // {
+  //   slug: 'sweetbeasts',
+  //   companyName: 'SweetBeasts',
+  //   position: 'Co-Founder, CTO, and COO',
+  //   timeline: 'April 2024 - Present',
+  //   cardData: {
+  //     cardBullets: sweetbeastsBulletPoints,
+  //     technologies: sweetBeastsTechnologies,
+  //     cardImageUrl: '',
+  //   },
+  // },
   {
     slug: 'global-schoolwear',
     companyName: 'Global Schoolwear',
