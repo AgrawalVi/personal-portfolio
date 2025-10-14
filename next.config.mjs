@@ -33,6 +33,11 @@ const nextConfig = {
         destination: '/experience/sweetbeasts',
         permanent: false,
       },
+      {
+        source: '/resume',
+        destination: 'https://drive.google.com/file/d/1_euc4NMr6xQrrPhRQh94nQ2NGSiAIXeo/view?usp=drivesdk',
+        permanent: false
+      }
     ]
   },
   images: {
