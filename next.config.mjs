@@ -37,6 +37,11 @@ const nextConfig = {
         source: '/resume',
         destination: 'https://drive.google.com/file/d/1_euc4NMr6xQrrPhRQh94nQ2NGSiAIXeo/view?usp=drivesdk',
         permanent: false
+      },
+      {
+        source: '/resume/mba',
+        destination: 'https://drive.google.com/file/d/1rk2hhINRasavxC8V0s4WG8WhE9-A2lpU/view?usp=sharing',
+        permanent: false
       }
     ]
   },
