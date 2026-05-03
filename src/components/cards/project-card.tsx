@@ -20,19 +20,25 @@ function ActionLink({
   label,
   icon: Icon,
   delayMs,
+  index,
+  total,
 }: {
   href: string
   label: string
   icon: typeof Github
   delayMs: number
+  index: number
+  total: number
 }) {
+  const isOrphan = total === 3 && index === 2
+  const layout = isOrphan ? 'col-span-2 justify-self-center w-1/2' : 'w-full'
   return (
     <Button
       asChild
       variant="outline"
       size="sm"
       style={{ transitionDelay: `${delayMs}ms` } as CSSProperties}
-      className="translate-y-0 opacity-100 transition-all duration-300 sm:translate-y-3 sm:opacity-0 sm:group-hover/card:translate-y-0 sm:group-hover/card:opacity-100"
+      className={`${layout} translate-y-0 opacity-100 transition-all duration-300 sm:translate-y-3 sm:opacity-0 sm:group-hover/card:translate-y-0 sm:group-hover/card:opacity-100`}
     >
       <Link href={href} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
         <Icon />
@@ -50,7 +56,7 @@ export function ProjectCard({ project }: { project: ProjectFrontmatter }) {
   if (project.liveUrl?.trim()) {
     links.push({
       url: project.liveUrl,
-      label: 'Live Url',
+      label: 'Live Site',
       icon: ExternalLink,
     })
   }
@@ -58,7 +64,7 @@ export function ProjectCard({ project }: { project: ProjectFrontmatter }) {
   if (project.demoVideo?.trim()) {
     links.push({
       url: project.demoVideo,
-      label: 'Demo Video',
+      label: 'Demo',
       icon: Video,
     })
   }
@@ -91,7 +97,7 @@ export function ProjectCard({ project }: { project: ProjectFrontmatter }) {
           className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover/card:opacity-100"
           style={{ background: hoverTint }}
         />
-        <div className="relative min-h-[240px]">
+        <div className="relative flex flex-col min-h-[224px]">
           <CardHeader className="py-4">
             <div className="flex flex-col gap-1">
               <span className="text-xs text-muted-foreground tabular-nums">
@@ -102,19 +108,29 @@ export function ProjectCard({ project }: { project: ProjectFrontmatter }) {
             </div>
           </CardHeader>
 
-          <div className="transition-all duration-300 sm:group-hover/card:-translate-y-1 sm:group-hover/card:opacity-0">
-            <CardContent className="pb-4 pt-2">
-              <p className="text-sm text-muted-foreground leading-relaxed">{project.summary}</p>
-            </CardContent>
-          </div>
-
-          {links.length > 0 && (
-            <div className="mt-2 flex flex-col items-center gap-2 px-6 pb-4 sm:absolute sm:inset-x-0 sm:top-[45%] sm:bottom-auto sm:mt-0 sm:items-center sm:justify-start sm:px-6 sm:pb-0">
-              {links.map((l, i) => (
-                <ActionLink key={l.url} href={l.url} label={l.label} icon={l.icon} delayMs={i * 50} />
-              ))}
+          <div className="relative flex-1">
+            <div className="transition-all duration-300 sm:group-hover/card:-translate-y-1 sm:group-hover/card:opacity-0">
+              <CardContent>
+                <p className="text-sm text-muted-foreground leading-relaxed">{project.summary}</p>
+              </CardContent>
             </div>
-          )}
+
+            {links.length > 0 && (
+              <div className="mt-2 grid grid-cols-2 gap-2 px-6 pb-4 sm:absolute sm:inset-0 sm:mt-0 sm:px-6 sm:pb-8 sm:items-center sm:content-center">
+                {links.map((l, i) => (
+                  <ActionLink
+                    key={l.url}
+                    href={l.url}
+                    label={l.label}
+                    icon={l.icon}
+                    delayMs={i * 50}
+                    index={i}
+                    total={links.length}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </GlassCard>
     </div>
