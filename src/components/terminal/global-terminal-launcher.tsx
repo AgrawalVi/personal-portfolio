@@ -12,14 +12,7 @@ import { TerminalCurrentLine } from './stream/terminal-current-line'
 import { TerminalLine } from './stream/terminal-line'
 
 function FloatingTerminal({ onClose }: { onClose: () => void }) {
-  const {
-    lines,
-    input,
-    isLoading,
-    handleInputChange,
-    handleKeyDown,
-    outputRef,
-  } = useTerminal([])
+  const { lines, input, isLoading, handleInputChange, handleKeyDown, outputRef } = useTerminal([])
   const router = useRouter()
   const inputRef = useRef<HTMLInputElement | null>(null)
   const wrapperRef = useRef<HTMLDivElement | null>(null)
@@ -27,6 +20,7 @@ function FloatingTerminal({ onClose }: { onClose: () => void }) {
 
   useEffect(() => {
     COMMANDS['navigate'] = makeNavigateCommand(router)
+    COMMANDS['home'] = makeRouteCommand(router, '/', 'Go to home')
     COMMANDS['experience'] = makeRouteCommand(router, '/experience', 'View my work experience')
     COMMANDS['projects'] = makeRouteCommand(router, '/projects', 'Browse my projects')
     COMMANDS['blog'] = makeRouteCommand(router, '/blog', 'Read the blog')
@@ -60,9 +54,9 @@ function FloatingTerminal({ onClose }: { onClose: () => void }) {
     <div
       ref={wrapperRef}
       onClick={() => inputRef.current?.focus()}
-      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-xl px-4"
+      className="fixed bottom-12 left-1/2 -translate-x-1/2 z-50 w-full max-w-xl px-4"
     >
-      <div className="flex flex-col rounded-lg border border-border bg-background/95 backdrop-blur-sm shadow-lg overflow-hidden cursor-text">
+      <div className="flex flex-col rounded-lg border border-border/40 bg-background/70 backdrop-blur-md shadow-lg overflow-hidden cursor-text">
         {lines.length > 0 && (
           <div
             ref={outputRef}
@@ -74,12 +68,7 @@ function FloatingTerminal({ onClose }: { onClose: () => void }) {
           </div>
         )}
         <div className="font-(family-name:--font-jetbrains-mono) px-4 py-3">
-          <TerminalCurrentLine
-            input={input}
-            isLoading={isLoading}
-            isFocused={isFocused}
-            showHint={false}
-          />
+          <TerminalCurrentLine input={input} isLoading={isLoading} isFocused={isFocused} showHint={false} />
         </div>
         <input
           ref={inputRef}
@@ -129,6 +118,21 @@ export function GlobalTerminalLauncher() {
     setOpen(false)
   }, [pathname])
 
-  if (!open) return null
-  return <FloatingTerminal onClose={() => setOpen(false)} />
+  if (pathname === '/') return null
+  if (open) return <FloatingTerminal onClose={() => setOpen(false)} />
+  return <TerminalHint />
+}
+
+function TerminalHint() {
+  return (
+    <div aria-hidden className="pointer-events-none fixed bottom-10 left-1/2 -translate-x-1/2 z-40 select-none">
+      <div className="flex items-center gap-1.5 rounded-full border border-border/30 bg-background/30 backdrop-blur-md px-3 py-1.5 text-xs text-muted-foreground font-(family-name:--font-jetbrains-mono)">
+        <span>press</span>
+        <kbd className="rounded border border-border/60 bg-background/40 px-1.5 py-0.5 text-[0.7rem] leading-none font-(family-name:--font-jetbrains-mono)">
+          /
+        </kbd>
+        <span>to open terminal</span>
+      </div>
+    </div>
+  )
 }
