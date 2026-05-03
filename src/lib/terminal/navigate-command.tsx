@@ -59,7 +59,12 @@ export function makeNavigateCommand(router: AppRouterInstance): CommandDef {
     hiddenFromHelp: false,
     complete: (args) =>
       args.length === 0
-        ? [...ROUTES.map(r => r.path), ...Object.keys(ALIASES)]
+        ? ROUTES.map(r => ({
+            value: r.path,
+            aliases: Object.entries(ALIASES)
+              .filter(([, p]) => p === r.path)
+              .map(([a]) => a),
+          }))
         : [],
     handler: (args) => {
       if (!args.length) {

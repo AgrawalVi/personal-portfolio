@@ -23,6 +23,10 @@ export interface CommandResult {
 
 export type AppendLine = (type: TerminalLineType, content: TerminalLine['content']) => void
 
+export type CompletionCandidate =
+  | string
+  | { value: string; aliases?: readonly string[] }
+
 export interface CommandDef {
   description: string
   /** One-line description shown in `help` listing. */
@@ -39,7 +43,9 @@ export interface CommandDef {
     append?: AppendLine,
   ) => CommandResult | Promise<CommandResult>
   /** Returns candidate completions for the next token. `args` = already-completed
-   * positional args; `partial` = the token being completed (empty if input ends in space). */
-  complete?: (args: string[], partial: string) => string[]
+   * positional args; `partial` = the token being completed (empty if input ends in space).
+   * Plain strings list directly. Object form lets aliases match without showing in the
+   * listing — e.g. `{ value: '/projects', aliases: ['proj', 'projects'] }`. */
+  complete?: (args: string[], partial: string) => CompletionCandidate[]
   hiddenFromHelp: boolean
 }
