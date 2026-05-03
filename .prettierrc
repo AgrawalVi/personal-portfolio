@@ -5,7 +5,7 @@
   ],
   "semi": false,
   "singleQuote": true,
-  "lineWidth": 120,
+  "printWidth": 120,
   "tabWidth": 2,
   "importOrder": [
     "^(react/(.*)$)|^(react$)",
