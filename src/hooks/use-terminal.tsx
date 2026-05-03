@@ -2,7 +2,9 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 
+import { Dim } from '@/components/terminal/rich'
 import { COMMANDS } from '@/lib/terminal/commands'
+import { getCompletion } from '@/lib/terminal/complete'
 import type { CommandResult, TerminalLine, TerminalState } from '@/types/terminal'
 
 function makeId(): string {
@@ -188,14 +190,19 @@ export function useTerminal(initialLines?: Omit<TerminalLine, 'id'>[]) {
 
       if (e.key === 'Tab') {
         e.preventDefault()
-        if (!input.trim()) return
-        const allNames = [
-          ...Object.keys(COMMANDS),
-          ...Object.values(COMMANDS).flatMap(d => d.aliases ?? []),
-        ]
-        const matches = allNames.filter(n => n.startsWith(input.toLowerCase()))
-        if (matches.length === 1) {
-          setState(prev => ({ ...prev, input: matches[0] }))
+        if (!input) return
+        const { completed, matches } = getCompletion(input, COMMANDS)
+        if (completed !== input) {
+          setState(prev => ({ ...prev, input: completed }))
+        } else if (matches.length > 1) {
+          const display =
+            matches.length > 12
+              ? `${matches.slice(0, 12).join('  ')}  … +${matches.length - 12} more`
+              : matches.join('  ')
+          setState(prev => ({
+            ...prev,
+            lines: [...prev.lines, makeLine('output', <Dim>{display}</Dim>)],
+          }))
         }
         return
       }

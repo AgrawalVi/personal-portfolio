@@ -15,6 +15,7 @@ export function makeGamesCommand(launchGame: (id: GameId) => void): CommandDef {
     usage: '[game]',
     type: 'sync',
     hiddenFromHelp: false,
+    complete: (args) => (args.length === 0 ? GAME_LIST.map(g => g.id) : []),
     handler: (args) => {
       if (!args.length) {
         return {
@@ -60,6 +61,7 @@ export function makeGamesRouteCommand(router: AppRouterInstance): CommandDef {
     usage: '[game]',
     type: 'sync',
     hiddenFromHelp: false,
+    complete: (args) => (args.length === 0 ? GAME_LIST.map(g => g.id) : []),
     handler: (args) => {
       if (!args.length) {
         return {

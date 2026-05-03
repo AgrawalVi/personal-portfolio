@@ -21,7 +21,7 @@ export function TerminalCurrentLine({
       <span className="text-primary select-none shrink-0">
         {TERMINAL_PROMPT}&nbsp;
       </span>
-      <span>{input}</span>
+      <span className="whitespace-pre">{input}</span>
       {showHint && input === '' && <TerminalGhostHint />}
       {!isLoading && (
         <span

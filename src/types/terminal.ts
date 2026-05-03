@@ -38,5 +38,8 @@ export interface CommandDef {
     state: TerminalState,
     append?: AppendLine,
   ) => CommandResult | Promise<CommandResult>
+  /** Returns candidate completions for the next token. `args` = already-completed
+   * positional args; `partial` = the token being completed (empty if input ends in space). */
+  complete?: (args: string[], partial: string) => string[]
   hiddenFromHelp: boolean
 }

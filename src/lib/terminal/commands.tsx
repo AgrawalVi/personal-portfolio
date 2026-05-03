@@ -119,6 +119,13 @@ export const COMMANDS: Record<string, CommandDef> = {
         }))
       return { lines }
     },
+    complete: (args, partial) =>
+      args.length === 0
+        ? [
+            ...Object.keys(COMMANDS),
+            ...Object.values(COMMANDS).flatMap(d => d.aliases ?? []),
+          ].filter(n => n.startsWith(partial.toLowerCase()))
+        : [],
     hiddenFromHelp: false,
   },
 

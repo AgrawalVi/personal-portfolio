@@ -57,6 +57,10 @@ export function makeNavigateCommand(router: AppRouterInstance): CommandDef {
     ],
     type: 'sync',
     hiddenFromHelp: false,
+    complete: (args) =>
+      args.length === 0
+        ? [...ROUTES.map(r => r.path), ...Object.keys(ALIASES)]
+        : [],
     handler: (args) => {
       if (!args.length) {
         return {
