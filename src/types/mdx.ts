@@ -12,7 +12,7 @@ export interface ExperienceFrontmatter {
   order: number
 }
 
-export interface ProjectLink {
+export interface CustomLink {
   label: string
   url: string
 }
@@ -26,7 +26,9 @@ export interface ProjectFrontmatter {
   status: 'active' | 'archived' | 'hackathon'
   featured: boolean
   githubUrl?: string
-  secondaryLink?: ProjectLink
+  liveUrl?: string
+  demoVideo?: string
+  customLink?: CustomLink
   colors: string[]
   summary: string
   order: number
