@@ -87,7 +87,7 @@ export function PageHeader() {
   }, [pathname, override])
 
   return (
-    <div className="mt-8 pb-2">
+    <div className="mt-6 pb-2">
       {/* Animated subtitle + title */}
       <div className="relative overflow-hidden">
         {/* Spacer keeps the container at the right height */}

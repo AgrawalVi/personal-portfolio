@@ -8,7 +8,7 @@ import { LinkedIn } from '../ui/icons/linkedin'
 
 export function HeroSection() {
   return (
-    <section className="w-full px-6">
+    <section className="w-full px-6 pb-10">
       <p className="text-muted-foreground leading-relaxed">
         Hey, I&apos;m a software engineer who enjoys taking early ideas and building
         them out into complete products. I prioritize getting the details right,

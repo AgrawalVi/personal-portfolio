@@ -37,7 +37,10 @@ const pressStart2P = Press_Start_2P({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteMetadata.url),
-  title: { template: `%s | ${siteMetadata.title}`, default: siteMetadata.title },
+  title: {
+    template: `%s | ${siteMetadata.title}`,
+    default: siteMetadata.title,
+  },
   description: siteMetadata.description,
   authors: [{ name: siteMetadata.author }],
   openGraph: {
@@ -71,15 +74,17 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="dark"
           disableTransitionOnChange
-          forcedTheme='dark'
+          forcedTheme="dark"
         >
           <TooltipProvider>
-            <SiteHeader />
-            <main className="flex-1 pt-4 w-full px-4 max-w-3xl mx-auto">
-              <PageHeader />
-              <div className="px-2">{children}</div>
-            </main>
-            <SiteFooter />
+            <div className="grid grid-rows-[auto_1fr_auto] h-screen">
+              <SiteHeader />
+              <main className="pt-4 w-full px-4 max-w-3xl mx-auto">
+                <PageHeader />
+                <div className="px-2">{children}</div>
+              </main>
+              <SiteFooter />
+            </div>
             <GlobalTerminalLauncher />
           </TooltipProvider>
         </ThemeProvider>
