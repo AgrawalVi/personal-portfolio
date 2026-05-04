@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { AnimatePresence, motion } from 'motion/react'
 
@@ -20,11 +20,16 @@ const SHELL_TRANSITION = {
   mass: 1.05,
 }
 
-function TerminalBody({ onClose }: { onClose: () => void }) {
+function TerminalBody({
+  onClose,
+  inputRef,
+}: {
+  onClose: () => void
+  inputRef: React.RefObject<HTMLInputElement | null>
+}) {
   const { lines, input, isLoading, handleInputChange, handleKeyDown, outputRef } =
     useTerminal([])
   const router = useRouter()
-  const inputRef = useRef<HTMLInputElement | null>(null)
   const [isFocused, setIsFocused] = useState(false)
 
   useEffect(() => {
@@ -36,14 +41,10 @@ function TerminalBody({ onClose }: { onClose: () => void }) {
     COMMANDS['games'] = makeGamesRouteCommand(router)
   }, [router])
 
-  useEffect(() => {
-    const t = setTimeout(() => inputRef.current?.focus(), 220)
-    return () => clearTimeout(t)
-  }, [])
-
   function onKeyDownWrap(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Escape') {
       e.preventDefault()
+      inputRef.current?.blur()
       onClose()
       return
     }
@@ -78,6 +79,7 @@ function TerminalBody({ onClose }: { onClose: () => void }) {
         disabled={isLoading}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
+        autoFocus
         autoComplete="off"
         autoCorrect="off"
         autoCapitalize="off"
@@ -105,6 +107,16 @@ export function GlobalTerminalLauncher() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
   const wrapperRef = useRef<HTMLDivElement | null>(null)
+  const inputRef = useRef<HTMLInputElement | null>(null)
+
+  useLayoutEffect(() => {
+    if (!open) return
+    inputRef.current?.focus({ preventScroll: true })
+    const raf = requestAnimationFrame(() => {
+      inputRef.current?.focus({ preventScroll: true })
+    })
+    return () => cancelAnimationFrame(raf)
+  }, [open])
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -171,7 +183,7 @@ export function GlobalTerminalLauncher() {
                 transition: { duration: 0.1 },
               }}
             >
-              <TerminalBody onClose={() => setOpen(false)} />
+              <TerminalBody onClose={() => setOpen(false)} inputRef={inputRef} />
             </motion.div>
           </motion.div>
         ) : (
