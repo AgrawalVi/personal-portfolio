@@ -8,7 +8,7 @@ export async function GET() {
   }
 
   const res = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=Madison, WI, USA&appid=${OPENWEATHER_API_KEY}&units=imperial`,
+    `https://api.openweathermap.org/data/2.5/weather?q=Sunnyvale, CA, USA&appid=${OPENWEATHER_API_KEY}&units=imperial`,
     { cache: 'no-store' },
   )
 
