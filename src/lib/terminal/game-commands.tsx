@@ -9,6 +9,14 @@ const GAME_LIST: { id: GameId; description: string }[] = [
   { id: 'space-invaders', description: 'Defend Earth from the alien fleet' },
 ]
 
+function isMobileViewport(): boolean {
+  if (typeof window === 'undefined') return false
+  return window.matchMedia('(max-width: 767px)').matches
+}
+
+const MOBILE_BLOCK_MESSAGE =
+  'Games require keyboard controls. Open this site on a desktop browser to play.'
+
 export function makeGamesCommand(launchGame: (id: GameId) => void): CommandDef {
   return {
     description: 'Browse and launch terminal games',
@@ -40,6 +48,15 @@ export function makeGamesCommand(launchGame: (id: GameId) => void): CommandDef {
           lines: [{
             type: 'error' as const,
             content: `Unknown game: "${gameId}". Type 'games' to see available games.`,
+          }],
+        }
+      }
+
+      if (isMobileViewport()) {
+        return {
+          lines: [{
+            type: 'error' as const,
+            content: MOBILE_BLOCK_MESSAGE,
           }],
         }
       }
@@ -86,6 +103,15 @@ export function makeGamesRouteCommand(router: AppRouterInstance): CommandDef {
           lines: [{
             type: 'error' as const,
             content: `Unknown game: "${gameId}". Type 'games' to see available games.`,
+          }],
+        }
+      }
+
+      if (isMobileViewport()) {
+        return {
+          lines: [{
+            type: 'error' as const,
+            content: MOBILE_BLOCK_MESSAGE,
           }],
         }
       }

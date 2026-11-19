@@ -90,10 +90,18 @@ export function TerminalWidget({ initialLines }: TerminalWidgetProps = {}) {
     if (!pending) return
     sessionStorage.removeItem('pendingGame')
     const valid: GameId[] = ['snake', 'space-invaders']
-    if (valid.includes(pending as GameId)) {
-      launchGame(pending as GameId)
+    if (!valid.includes(pending as GameId)) return
+    // Read viewport directly: a state hook is false until its effect runs,
+    // and pendingGame is already consumed above.
+    if (window.matchMedia('(max-width: 767px)').matches) {
+      appendLine(
+        'error',
+        'Games require keyboard controls. Open this site on a desktop browser to play.',
+      )
+      return
     }
-  }, [launchGame])
+    launchGame(pending as GameId)
+  }, [launchGame, appendLine])
 
   return (
     <>
@@ -123,7 +131,7 @@ export function TerminalWidget({ initialLines }: TerminalWidgetProps = {}) {
         </motion.div>
       )}
 
-      {/* Hidden input always present so focus restores after game exits */}
+      {/* Mobile: visible prompt input. Desktop (md+): sr-only, focus driven by Card click. */}
       <input
         ref={inputRef}
         value={input}
@@ -137,7 +145,8 @@ export function TerminalWidget({ initialLines }: TerminalWidgetProps = {}) {
         autoCapitalize="off"
         spellCheck={false}
         aria-label="Terminal input"
-        className="sr-only"
+        placeholder="Type a command…"
+        className="mt-3 block w-full rounded-md border border-border bg-muted/40 px-3 py-2 font-(family-name:--font-jetbrains-mono) text-sm outline-none placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring disabled:opacity-60 md:sr-only"
       />
 
       <AnimatePresence>
