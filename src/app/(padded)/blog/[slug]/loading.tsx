@@ -1,6 +1,8 @@
 import { Skeleton } from '@/components/ui/skeleton'
 import { Separator } from '@/components/ui/separator'
 
+const LINE_WIDTHS = [92, 97, 88, 95, 90, 99, 86, 94]
+
 export default function BlogPostLoading() {
   return (
     <main className="w-full max-w-2xl">
@@ -27,8 +29,8 @@ export default function BlogPostLoading() {
       <Separator className="mb-8 opacity-30" />
 
       <div className="space-y-3">
-        {Array.from({ length: 8 }).map((_, i) => (
-          <Skeleton key={i} className="h-4" style={{ width: `${85 + Math.random() * 15}%` }} />
+        {LINE_WIDTHS.map((width, i) => (
+          <Skeleton key={i} className="h-4" style={{ width: `${width}%` }} />
         ))}
         <Skeleton className="h-4 w-2/3" />
       </div>

@@ -23,10 +23,6 @@ export function PauseOverlay() {
   ]
 
   useEffect(() => {
-    setSelected(0)
-  }, [])
-
-  useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
         e.preventDefault()

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 
 import { TERMINAL_HINT_COMMANDS } from '@/constants/terminal'
 
@@ -8,8 +8,23 @@ const TYPE_MS = 80
 const DELETE_MS = 45
 const HOLD_MS = 900
 const PAUSE_MS = 350
+const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)'
 
 type Phase = 'typing' | 'holding' | 'deleting' | 'pausing'
+
+function subscribeReducedMotion(onStoreChange: () => void) {
+  const mq = window.matchMedia(REDUCED_MOTION_QUERY)
+  mq.addEventListener('change', onStoreChange)
+  return () => mq.removeEventListener('change', onStoreChange)
+}
+
+function getReducedMotionSnapshot() {
+  return window.matchMedia(REDUCED_MOTION_QUERY).matches
+}
+
+function getReducedMotionServerSnapshot() {
+  return false
+}
 
 function pickNext(current: string, pool: readonly string[]): string {
   if (pool.length <= 1) return pool[0] ?? ''
@@ -30,16 +45,12 @@ export function TerminalGhostHint({
   const [target, setTarget] = useState(() => pickNext('', commands))
   const [text, setText] = useState('')
   const [phase, setPhase] = useState<Phase>('typing')
-  const [reduced, setReduced] = useState(false)
+  const reduced = useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotionSnapshot,
+    getReducedMotionServerSnapshot,
+  )
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
-    setReduced(mq.matches)
-    const onChange = (e: MediaQueryListEvent) => setReduced(e.matches)
-    mq.addEventListener('change', onChange)
-    return () => mq.removeEventListener('change', onChange)
-  }, [])
 
   useEffect(() => {
     if (reduced) return

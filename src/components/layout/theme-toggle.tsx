@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { Monitor, Moon, Sun } from 'lucide-react'
+import { useSyncExternalStore } from 'react'
+import { Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
 
 import { Button } from '@/components/ui/button'
@@ -12,6 +12,8 @@ import {
 } from '@/components/ui/tooltip'
 
 import { Skeleton } from '../ui/skeleton'
+
+const emptySubscribe = () => () => {}
 
 const CYCLE: Record<string, string> = {
   light: 'dark',
@@ -30,9 +32,11 @@ const ICONS: Record<string, React.ReactNode> = {
 
 export function ThemeToggle() {
   const { theme = 'dark', setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => setMounted(true), [])
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false,
+  )
 
   function cycleTheme() {
     setTheme(CYCLE[theme])
