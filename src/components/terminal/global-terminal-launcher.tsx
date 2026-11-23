@@ -52,7 +52,10 @@ function TerminalBody({
   }
 
   return (
-    <div onClick={() => inputRef.current?.focus()} className="cursor-text">
+    <div
+      onClick={() => inputRef.current?.focus({ preventScroll: true })}
+      className="relative cursor-text"
+    >
       {lines.length > 0 && (
         <div
           ref={outputRef}
@@ -79,13 +82,12 @@ function TerminalBody({
         disabled={isLoading}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        autoFocus
         autoComplete="off"
         autoCorrect="off"
         autoCapitalize="off"
         spellCheck={false}
         aria-label="Terminal input"
-        className="sr-only"
+        className="sr-only top-0 left-0"
       />
     </div>
   )
@@ -104,8 +106,9 @@ function HintBody() {
 }
 
 export function GlobalTerminalLauncher() {
-  const [open, setOpen] = useState(false)
   const pathname = usePathname()
+  const [openPathname, setOpenPathname] = useState<string | null>(null)
+  const open = openPathname === pathname
   const wrapperRef = useRef<HTMLDivElement | null>(null)
   const inputRef = useRef<HTMLInputElement | null>(null)
 
@@ -131,7 +134,7 @@ export function GlobalTerminalLauncher() {
       if (pathname === '/') {
         window.dispatchEvent(new CustomEvent('terminal:focus'))
       } else {
-        setOpen(true)
+        setOpenPathname(pathname)
       }
     }
     document.addEventListener('keydown', onKey)
@@ -139,14 +142,10 @@ export function GlobalTerminalLauncher() {
   }, [pathname])
 
   useEffect(() => {
-    setOpen(false)
-  }, [pathname])
-
-  useEffect(() => {
     if (!open) return
     function onMouseDown(e: MouseEvent) {
       if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
-        setOpen(false)
+        setOpenPathname(null)
       }
     }
     document.addEventListener('mousedown', onMouseDown)
@@ -167,7 +166,7 @@ export function GlobalTerminalLauncher() {
             initial={{ borderRadius: 9999, scale: 0.96 }}
             animate={{ borderRadius: 12, scale: 1 }}
             exit={{ borderRadius: 9999, scale: 0.96 }}
-            className="w-full overflow-hidden border border-border/40 bg-background/80 backdrop-blur-md shadow-lg"
+            className="w-full overflow-clip border border-border/40 bg-background/80 backdrop-blur-md shadow-lg"
           >
             <motion.div
               initial={{ opacity: 0, filter: 'blur(8px)', y: 6 }}
@@ -183,7 +182,7 @@ export function GlobalTerminalLauncher() {
                 transition: { duration: 0.1 },
               }}
             >
-              <TerminalBody onClose={() => setOpen(false)} inputRef={inputRef} />
+              <TerminalBody onClose={() => setOpenPathname(null)} inputRef={inputRef} />
             </motion.div>
           </motion.div>
         ) : (
@@ -194,7 +193,7 @@ export function GlobalTerminalLauncher() {
             initial={{ borderRadius: 12, scale: 0.96 }}
             animate={{ borderRadius: 9999, scale: 1 }}
             exit={{ borderRadius: 12, scale: 0.96 }}
-            className="overflow-hidden border border-border/30 bg-background/40 backdrop-blur-md pointer-events-none"
+            className="overflow-clip border border-border/30 bg-background/40 backdrop-blur-md pointer-events-none"
             aria-hidden
           >
             <motion.div
