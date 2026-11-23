@@ -6,15 +6,20 @@ Tickets are ordered by priority and dependency. Complete each ticket before star
 
 ### Progress
 
-| Status | Range | Phase |
-|---|---|---|
-| ✅ Complete | PORT-001–019 | Setup, Layout, Shared, Homepage, Terminal core |
-| ✅ Complete | PORT-044–046 | Phase 4b — Snake game |
-| ✅ Complete | PORT-050–055 | Phase 4c — Game system overhaul (in-terminal + pixel + audio) |
-| 🔄 Next | PORT-020–024 | Phase 5 — API routes |
-| ⬜ Queued | PORT-026–040 | Phase 6–7 — MDX + Site pages |
-| ⬜ Queued | PORT-041–043 | Phase 8 — Polish |
-| ⬜ Queued | PORT-047–049 | Phase 9 — Terminal creativity |
+| Status | Range | Phase | Notes |
+|---|---|---|---|
+| 🔄 Partial | PORT-001–019 | Phase 1–4 — Setup, Layout, Shared, Homepage, Terminal core | Complete except PORT-003 (`.env.example` does not currently exist in repo) |
+| ✅ Complete | PORT-044–046 | Phase 4b — Snake game | — |
+| ✅ Complete | PORT-050–055 | Phase 4c — Game system overhaul (in-terminal + pixel + audio) | — |
+| ✅ Complete | PORT-020–024 | Phase 5 — API routes | — |
+| ✅ Complete | PORT-026–031 | Phase 6 — MDX setup & content | Placeholder TODO comments remain in experience & project MDX files |
+| 🔄 Partial | PORT-032–040 | Phase 7 — Content pages | PORT-032–033, 035–036, 038–040 complete; PORT-034 & PORT-037 detail pages open (cards currently expand inline / link out directly) |
+| 🔄 Partial | PORT-041–043 | Phase 8 — Polish | PORT-041–042 complete; PORT-043 (375px responsive polish pass) open |
+| 🔄 Partial | PORT-047–049 | Phase 9 — Terminal creativity | PORT-047 & PORT-049 complete; PORT-048 partial (`help --all`, `date --utc` done; `skills --verbose`, `neofetch --no-logo` open) |
+
+### Remaining Codebase TODOs
+
+- **MDX placeholder content:** `{/* TODO: CHANGE PLACEHOLDER CONTENT ABOVE */}` in `content/experience/amazon.mdx`, `content/experience/global-schoolwear.mdx`, `content/experience/xorbix.mdx`, `content/projects/personal-portfolio.mdx`, `content/projects/ponovo.mdx`, and `content/projects/shelfwise.mdx`.
 
 ---
 
@@ -532,6 +537,8 @@ Configure MDX support, then add content and content-driven pages.
 
 ### PORT-034 · Feature · Build Experience detail page (`/experience/[slug]`)
 
+**Status:** ⬜ Open (experience cards currently expand inline / link out directly rather than routing to `/experience/[slug]`)
+
 **Summary:** Full experience detail page driven by MDX.
 
 **Technical Notes:**
@@ -591,6 +598,8 @@ Configure MDX support, then add content and content-driven pages.
 ---
 
 ### PORT-037 · Feature · Build Project detail page (`/projects/[slug]`)
+
+**Status:** ⬜ Open (project cards currently expand inline / link out directly rather than routing to `/projects/[slug]`)
 
 **Technical Notes:**
 - `src/app/projects/[slug]/page.tsx`
@@ -763,6 +772,8 @@ Polish the terminal's personality — randomized responses, command flags, and m
 
 ### PORT-048 · Feature · Command flags
 
+**Status:** 🔄 Partial (`help --all` and `date --utc` are implemented; `skills --verbose` and `neofetch --no-logo` are not implemented)
+
 **Summary:** `--` flag support on select commands.
 
 **Technical Notes:**
@@ -806,7 +817,7 @@ All `hiddenFromHelp: true`. Visible only via `help --all`.
 |---|---|---|---|
 | PORT-001 | ✅ | 1 · Setup | Install npm dependencies |
 | PORT-002 | ✅ | 1 · Setup | JetBrains Mono font |
-| PORT-003 | ✅ | 1 · Setup | .env.example template |
+| PORT-003 | ⬜ | 1 · Setup | `.env.example` template (file does not currently exist in repo) |
 | PORT-004 | ✅ | 1 · Layout | next-themes setup |
 | PORT-005 | ✅ | 1 · Layout | ThemeToggle component |
 | PORT-006 | ✅ | 1 · Layout | Site header |
@@ -832,29 +843,29 @@ All `hiddenFromHelp: true`. Visible only via `help --all`.
 | PORT-053 | ✅ | 4c · Games | Context expansion (isMuted, isPaused, activeConfig) |
 | PORT-054 | ✅ | 4c · Games | Snake per-game config (palette, sounds, controls) |
 | PORT-055 | ✅ | 4c · Games | Universal PauseOverlay + title bar game mode |
-| PORT-020 | ⬜ | 5 · API | Spotify now-playing route |
-| PORT-021 | ⬜ | 5 · API | Weather route |
-| PORT-022 | ⬜ | 5 · API | Joke route |
-| PORT-023 | ⬜ | 5 · API | Crypto price route |
-| PORT-024 | ⬜ | 5 · API | Dictionary route |
-| PORT-026 | ⬜ | 6 · MDX | Configure Next.js for MDX |
-| PORT-027 | ⬜ | 6 · MDX | MDX content utilities |
-| PORT-028 | ⬜ | 6 · MDX | mdx-components styles |
-| PORT-029 | ⬜ | 6 · Content | Experience MDX files |
-| PORT-030 | ⬜ | 6 · Content | Project MDX files |
-| PORT-031 | ⬜ | 6 · Content | Migrate blog post |
-| PORT-032 | ⬜ | 7 · Pages | ExperienceCard component |
-| PORT-033 | ⬜ | 7 · Pages | Experience index page |
-| PORT-034 | ⬜ | 7 · Pages | Experience detail page |
-| PORT-035 | ⬜ | 7 · Pages | ProjectCard component |
-| PORT-036 | ⬜ | 7 · Pages | Projects index page |
-| PORT-037 | ⬜ | 7 · Pages | Project detail page |
-| PORT-038 | ⬜ | 7 · Pages | BlogCard component |
-| PORT-039 | ⬜ | 7 · Pages | Blog index page |
-| PORT-040 | ⬜ | 7 · Pages | Blog post page |
-| PORT-041 | ⬜ | 8 · Polish | SEO files |
-| PORT-042 | ⬜ | 8 · Polish | 404 page |
-| PORT-043 | ⬜ | 8 · Polish | Responsive polish pass |
-| PORT-047 | ⬜ | 9 · Creativity | Randomized easter egg responses |
-| PORT-048 | ⬜ | 9 · Creativity | Command flags (--verbose, --all, etc.) |
-| PORT-049 | ⬜ | 9 · Creativity | More easter egg commands |
+| PORT-020 | ✅ | 5 · API | Spotify now-playing route |
+| PORT-021 | ✅ | 5 · API | Weather route |
+| PORT-022 | ✅ | 5 · API | Joke route |
+| PORT-023 | ✅ | 5 · API | Crypto price route |
+| PORT-024 | ✅ | 5 · API | Dictionary route |
+| PORT-026 | ✅ | 6 · MDX | Configure Next.js for MDX |
+| PORT-027 | ✅ | 6 · MDX | MDX content utilities |
+| PORT-028 | ✅ | 6 · MDX | mdx-components styles |
+| PORT-029 | ✅ | 6 · Content | Experience MDX files (placeholder TODOs remain) |
+| PORT-030 | ✅ | 6 · Content | Project MDX files (placeholder TODOs remain) |
+| PORT-031 | ✅ | 6 · Content | Migrate blog post |
+| PORT-032 | ✅ | 7 · Pages | ExperienceCard component |
+| PORT-033 | ✅ | 7 · Pages | Experience index page |
+| PORT-034 | ⬜ | 7 · Pages | Experience detail page (cards currently expand inline / link out directly) |
+| PORT-035 | ✅ | 7 · Pages | ProjectCard component |
+| PORT-036 | ✅ | 7 · Pages | Projects index page |
+| PORT-037 | ⬜ | 7 · Pages | Project detail page (cards currently expand inline / link out directly) |
+| PORT-038 | ✅ | 7 · Pages | BlogCard component |
+| PORT-039 | ✅ | 7 · Pages | Blog index page |
+| PORT-040 | ✅ | 7 · Pages | Blog post page |
+| PORT-041 | ✅ | 8 · Polish | SEO files |
+| PORT-042 | ✅ | 8 · Polish | 404 page |
+| PORT-043 | ⬜ | 8 · Polish | Responsive polish pass (verify 375px checklist) |
+| PORT-047 | ✅ | 9 · Creativity | Randomized easter egg responses |
+| PORT-048 | 🔄 | 9 · Creativity | Command flags (`help --all`, `date --utc` done; `skills --verbose`, `neofetch --no-logo` open) |
+| PORT-049 | ✅ | 9 · Creativity | More easter egg commands |
