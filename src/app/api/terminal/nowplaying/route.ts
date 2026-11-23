@@ -1,10 +1,12 @@
 import { NextResponse } from 'next/server'
 
 export async function GET() {
-  const { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REFRESH_TOKEN } = process.env
+  const clientId = process.env.SPOTIFY_CLIENT_ID?.trim()
+  const clientSecret = process.env.SPOTIFY_CLIENT_SECRET?.trim()
+  const refreshToken = process.env.SPOTIFY_REFRESH_TOKEN?.trim()
 
-  if (!SPOTIFY_CLIENT_ID || !SPOTIFY_CLIENT_SECRET || !SPOTIFY_REFRESH_TOKEN) {
-    return NextResponse.json({ error: 'Spotify credentials not configured.' }, { status: 500 })
+  if (!clientId || !clientSecret || !refreshToken) {
+    return NextResponse.json({ error: 'Spotify credentials not configured.' }, { status: 503 })
   }
 
   // Exchange refresh token for access token
@@ -12,17 +14,23 @@ export async function GET() {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: `Basic ${Buffer.from(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`).toString('base64')}`,
+      Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`,
     },
-    body: new URLSearchParams({ grant_type: 'refresh_token', refresh_token: SPOTIFY_REFRESH_TOKEN }),
+    body: new URLSearchParams({ grant_type: 'refresh_token', refresh_token: refreshToken }).toString(),
     cache: 'no-store',
   })
 
   if (!tokenRes.ok) {
-    return NextResponse.json({ error: 'Failed to authenticate with Spotify.' }, { status: 500 })
+    console.error('[NOWPLAYING] Token refresh failed:', tokenRes.status, await tokenRes.text())
+    return NextResponse.json({ error: 'Failed to authenticate with Spotify.' }, { status: 502 })
   }
 
   const { access_token } = await tokenRes.json()
+
+  if (!access_token) {
+    console.error('[NOWPLAYING] Token response missing access_token')
+    return NextResponse.json({ error: 'Failed to authenticate with Spotify.' }, { status: 502 })
+  }
 
   // Try currently playing first
   const currentlyPlayingResponse = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
@@ -32,13 +40,19 @@ export async function GET() {
 
   if (currentlyPlayingResponse.status === 200) {
     const data = await currentlyPlayingResponse.json()
-    if (data?.item) {
+    if (data?.item && Array.isArray(data.item.artists)) {
       return NextResponse.json({
         track: data.item.name,
         artist: data.item.artists.map((a: { name: string }) => a.name).join(', '),
-        nowPlaying: !data.is_playing ? false : true,
+        nowPlaying: Boolean(data.is_playing),
       })
     }
+  } else if (!currentlyPlayingResponse.ok && currentlyPlayingResponse.status !== 204) {
+    console.error(
+      '[NOWPLAYING] Currently playing failed:',
+      currentlyPlayingResponse.status,
+      await currentlyPlayingResponse.text(),
+    )
   }
 
   // Fall back to recently played
@@ -48,12 +62,17 @@ export async function GET() {
   })
 
   if (!recentlyPlayedResponse.ok) {
+    console.error(
+      '[NOWPLAYING] Recently played failed:',
+      recentlyPlayedResponse.status,
+      await recentlyPlayedResponse.text(),
+    )
     return NextResponse.json({ error: 'Could not fetch Spotify data.' }, { status: 503 })
   }
 
   const recentlyPlayed = await recentlyPlayedResponse.json()
   const item = recentlyPlayed.items?.[0]?.track
-  if (!item) {
+  if (!item || !Array.isArray(item.artists)) {
     return NextResponse.json({ error: 'No recent tracks found.' }, { status: 404 })
   }
 
