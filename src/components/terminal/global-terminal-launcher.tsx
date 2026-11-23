@@ -90,7 +90,10 @@ function DesktopTerminalBody({
 
   return (
     <TerminalActionProvider value={{ selectCommand }}>
-      <div onClick={() => inputRef.current?.focus()} className="cursor-text">
+      <div
+        onClick={() => inputRef.current?.focus({ preventScroll: true })}
+        className="relative cursor-text"
+      >
         {lines.length > 0 && (
           <div
             ref={outputRef}
@@ -117,13 +120,12 @@ function DesktopTerminalBody({
           disabled={isLoading}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          autoFocus
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="off"
           spellCheck={false}
           aria-label="Terminal input"
-          className="sr-only"
+          className="sr-only top-0 left-0"
         />
       </div>
     </TerminalActionProvider>
@@ -463,7 +465,7 @@ export function GlobalTerminalLauncher() {
             initial={{ borderRadius: 9999, scale: 0.96 }}
             animate={{ borderRadius: 12, scale: 1 }}
             exit={{ borderRadius: 9999, scale: 0.96 }}
-            className="pointer-events-auto w-full overflow-hidden border border-border/40 bg-background/80 backdrop-blur-md shadow-lg"
+            className="pointer-events-auto w-full overflow-clip border border-border/40 bg-background/80 backdrop-blur-md shadow-lg"
           >
             <motion.div
               initial={{ opacity: 0, filter: 'blur(8px)', y: 6 }}
@@ -496,7 +498,7 @@ export function GlobalTerminalLauncher() {
             initial={{ borderRadius: 12, scale: 0.96 }}
             animate={{ borderRadius: 9999, scale: 1 }}
             exit={{ borderRadius: 12, scale: 0.96 }}
-            className="pointer-events-auto overflow-hidden border border-border/30 bg-background/40 hover:border-border/60 hover:bg-background/70 backdrop-blur-md transition-colors cursor-pointer"
+            className="pointer-events-auto overflow-clip border border-border/30 bg-background/40 hover:border-border/60 hover:bg-background/70 backdrop-blur-md transition-colors cursor-pointer"
           >
             <motion.div
               initial={{ opacity: 0, filter: 'blur(6px)' }}
