@@ -15,8 +15,6 @@ function seededRand(seed: number, min: number, max: number) {
   return min + Math.abs(t) * (max - min)
 }
 
-const blobCenters = [25, 50, 75]
-
 function Blob({
   color,
   position,
@@ -72,7 +70,7 @@ function Blob({
 }
 
 interface GlassCardProps {
-  /** Three hex colors for the animated blobs */
+  /** Hex colors for the animated blobs */
   colors: string[]
   /** Seed string used to deterministically position blobs */
   seed: string
@@ -100,12 +98,16 @@ export function GlassCard({
 }: GlassCardProps) {
   const blobPositions = useMemo<React.CSSProperties[]>(() => {
     const s = seed.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0)
-    return blobCenters.map((cx, i) => ({
-      top: `${seededRand(s + i * 7, 10, 55)}%`,
-      left: `${seededRand(s + i * 13, cx - 10, cx + 10)}%`,
-      transform: 'translate(-50%, -50%)',
-    }))
-  }, [seed])
+    const count = colors.length
+    return Array.from({ length: count }, (_, i) => {
+      const cx = ((i + 1) / (count + 1)) * 100
+      return {
+        top: `${seededRand(s + i * 7, 10, 55)}%`,
+        left: `${seededRand(s + i * 13, cx - 10, cx + 10)}%`,
+        transform: 'translate(-50%, -50%)',
+      }
+    })
+  }, [colors.length, seed])
 
   return (
     <motion.div
