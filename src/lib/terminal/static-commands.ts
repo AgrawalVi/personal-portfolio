@@ -8,7 +8,7 @@ export function handleClear(): CommandResult {
 }
 
 export function handleWhoami(): CommandResult {
-  return out('visitor') // TODO: Save contact us information in local storage and check and display that here
+  return out('visitor')
 }
 
 export function handleDate(args: string[]): CommandResult {
