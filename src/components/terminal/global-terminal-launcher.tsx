@@ -127,10 +127,12 @@ export function GlobalTerminalLauncher() {
         const tag = target.tagName
         if (tag === 'INPUT' || tag === 'TEXTAREA' || target.isContentEditable) return
       }
-      e.preventDefault()
       if (pathname === '/') {
+        e.preventDefault()
         window.dispatchEvent(new CustomEvent('terminal:focus'))
       } else {
+        if (window.matchMedia('(max-width: 767px)').matches) return
+        e.preventDefault()
         setOpen(true)
       }
     }
@@ -156,7 +158,7 @@ export function GlobalTerminalLauncher() {
   if (pathname === '/') return null
 
   return (
-    <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-50 w-full max-w-xl px-4 flex justify-center">
+    <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-50 w-full max-w-xl px-4 hidden md:flex justify-center">
       <AnimatePresence mode="popLayout" initial={false}>
         {open ? (
           <motion.div
