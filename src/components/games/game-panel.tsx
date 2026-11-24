@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 import { useGame } from '@/contexts/game-context'
 
 import type { GameControls } from '@/types/games'
+import { preloadSounds } from '@/lib/games/audio'
 import { loadGame } from '@/lib/games/registry'
 
 import { PauseOverlay } from './pause-overlay'
@@ -24,6 +25,11 @@ export function GamePanel() {
   } = useGame()
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const controlsRef = useRef<GameControls | null>(null)
+  const isMutedRef = useRef(isMuted)
+
+  useEffect(() => {
+    isMutedRef.current = isMuted
+  }, [isMuted])
 
   // Load config + start game
   useEffect(() => {
@@ -33,10 +39,11 @@ export function GamePanel() {
     loadGame(activeGame).then((config) => {
       if (!mounted || !canvasRef.current) return
       setActiveConfig(config)
+      preloadSounds(config.sounds)
       controlsRef.current = config.start(
         canvasRef.current,
         (score) => exitGame(score),
-        () => isMuted,
+        () => isMutedRef.current,
         (score) => setLiveScore(score),
       )
     })
@@ -46,7 +53,7 @@ export function GamePanel() {
       controlsRef.current?.cleanup()
       controlsRef.current = null
     }
-  }, [activeGame, restartKey, exitGame, setActiveConfig])
+  }, [activeGame, restartKey, exitGame, setActiveConfig, setLiveScore])
 
   // Sync isPaused context → game controls
   useEffect(() => {
