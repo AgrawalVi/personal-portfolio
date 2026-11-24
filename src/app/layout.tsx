@@ -5,6 +5,8 @@ import {
   Nunito_Sans,
   Press_Start_2P,
 } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 import './globals.css'
 
@@ -88,6 +90,8 @@ export default function RootLayout({
             <GlobalTerminalLauncher />
           </TooltipProvider>
         </ThemeProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )
