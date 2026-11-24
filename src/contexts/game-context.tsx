@@ -1,8 +1,49 @@
 'use client'
 
-import { createContext, useCallback, useContext, useState } from 'react'
+import { createContext, useCallback, useContext, useState, useSyncExternalStore } from 'react'
 
 import type { GameConfig, GameId } from '@/types/games'
+
+const MUTE_STORAGE_KEY = 'vishrut:game-muted'
+const muteListeners = new Set<() => void>()
+let memoryMuted: boolean | null = null
+
+function readMuted(): boolean {
+  try {
+    const stored = window.localStorage.getItem(MUTE_STORAGE_KEY)
+    if (stored !== null) return stored === 'true'
+    return memoryMuted ?? false
+  } catch {
+    return memoryMuted ?? false
+  }
+}
+
+function writeMuted(next: boolean): void {
+  try {
+    window.localStorage.setItem(MUTE_STORAGE_KEY, String(next))
+    memoryMuted = null
+  } catch {
+    memoryMuted = next
+  }
+  muteListeners.forEach(listener => listener())
+}
+
+function subscribeMute(callback: () => void): () => void {
+  muteListeners.add(callback)
+  const onStorage = (event: StorageEvent) => {
+    if (event.key === MUTE_STORAGE_KEY || event.key === null) {
+      memoryMuted = null
+      callback()
+    }
+  }
+  window.addEventListener('storage', onStorage)
+  return () => {
+    muteListeners.delete(callback)
+    window.removeEventListener('storage', onStorage)
+  }
+}
+
+const getServerMuted = () => false
 
 interface GameContextValue {
   activeGame: GameId | null
@@ -26,7 +67,7 @@ const GameContext = createContext<GameContextValue | null>(null)
 export function GameProvider({ children }: { children: React.ReactNode }) {
   const [activeGame, setActiveGame] = useState<GameId | null>(null)
   const [lastScore, setLastScore] = useState<{ gameId: GameId; score: number } | null>(null)
-  const [isMuted, setIsMuted] = useState(false)
+  const isMuted = useSyncExternalStore(subscribeMute, readMuted, getServerMuted)
   const [isPaused, setIsPaused] = useState(false)
   const [activeConfig, setActiveConfig] = useState<GameConfig | null>(null)
   const [liveScore, setLiveScore] = useState<number | null>(null)
@@ -53,7 +94,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     setRestartKey(k => k + 1)
   }, [])
 
-  const toggleMute = useCallback(() => setIsMuted(m => !m), [])
+  const toggleMute = useCallback(() => writeMuted(!readMuted()), [])
 
   return (
     <GameContext.Provider value={{
