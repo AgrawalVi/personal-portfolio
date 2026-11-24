@@ -54,7 +54,7 @@ export function Indent({ children, className }: { children: ReactNode; className
 
 /** Vertical stack with a small gap — for multi-line output blocks. */
 export function Stack({ children, className }: { children: ReactNode; className?: string }) {
-  return <div className={cn('space-y-0.5', className)}>{children}</div>
+  return <div className={cn('flex flex-col gap-y-0.5', className)}>{children}</div>
 }
 
 // ─── Composites ───────────────────────────────────────────────────────────────
