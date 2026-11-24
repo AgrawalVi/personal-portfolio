@@ -250,17 +250,22 @@ export const COMMANDS: Record<string, CommandDef> = {
 
   ls: {
     description: 'List portfolio files',
-    usage: '[-a]',
+    usage: '[-a] [dir]',
     details: [
       'Lists the totally real files powering this portfolio.',
-      'Pass -a or -la to reveal hidden dotfiles.',
+      'Pass -a or -la to reveal hidden dotfiles, or pass a folder name to peek inside.',
     ],
     type: 'sync',
-    handler: (args) => handleLs(args),
-    complete: (args, partial) =>
-      args.length === 0
-        ? ['-a', '-la', '--all'].filter(f => f.startsWith(partial.toLowerCase()))
-        : [],
+    stream: true,
+    handler: (args, state, append) => handleLs(args, state, append),
+    complete: (args, partial) => {
+      const hasTarget = args.some(a => !a.startsWith('-'))
+      if (hasTarget) return []
+      const pool = partial.startsWith('-')
+        ? ['-a', '-la', '--all']
+        : ['node_modules/', 'unfinished_side_projects/']
+      return pool.filter(c => c.startsWith(partial.toLowerCase()))
+    },
     hiddenFromHelp: false,
   },
 

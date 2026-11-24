@@ -24,24 +24,103 @@ export function handleDate(args: string[]): CommandResult {
 const LS_DOTFILES = [
   '-rw-------  403B  .env (nice try)',
   '-rw-------  666B  .secrets_do_not_commit',
-  '-rw-r--r--   42K  .tpu_cheat_codes',
+  '-rw-r--r--   42B  .vim_how_to_exit',
   '-rw-r--r--  1.2G  .unpushed_stashes',
 ]
 
 const LS_ENTRIES = [
   'drwxr-xr-x  4.2T  node_modules/',
   'drwxr-xr-x  128K  unfinished_side_projects/',
+  '-rw-r--r--  1.3K  AGENTS.md',
   '-rw-r--r--  4.2K  README_definitely_not_boilerplate.md',
   '-rw-r--r--    0B  bug_free_code.ts',
   '-rw-r--r--  999M  coffee_supply.log',
   '-rwxr-xr-x   42B  ship_on_friday.sh',
 ]
 
-export function handleLs(args: string[]): CommandResult {
+const NODE_MODULES_ENTRIES = [
+  'drwxr-xr-x   12K  left-pad/',
+  'drwxr-xr-x    8K  is-odd/',
+  'drwxr-xr-x    8K  is-even/',
+  'drwxr-xr-x   16K  is-thirteen/',
+  'drwxr-xr-x    4K  is-number/',
+  "... and 847,291 more (please don't)",
+]
+
+const UNFINISHED_PROJECTS_ENTRIES = [
+  'drwxr-xr-x   42K  startup-idea-v1/',
+  'drwxr-xr-x   44K  startup-idea-v2-final/',
+  'drwxr-xr-x   46K  startup-idea-v2-FINAL-real/',
+  'drwxr-xr-x  120K  todo-app-in-rust/',
+  'drwxr-xr-x   88K  blog-rewrite-2023/',
+  'drwxr-xr-x   91K  blog-rewrite-2024/',
+  'drwxr-xr-x   12K  blog-rewrite-astro/',
+  'drwxr-xr-x  256K  ai-wrapper-weekend-hack/',
+  'drwxr-xr-x   64K  custom-vim-config-from-scratch/',
+  'drwxr-xr-x   18K  budget-tracker-never-opened/',
+  'drwxr-xr-x  310K  game-engine-in-c/',
+  'drwxr-xr-x   77K  compiler-chapter-2/',
+  'drwxr-xr-x   54K  spotify-clone-broken-auth/',
+  'drwxr-xr-x  140K  chrome-extension-manifest-v2/',
+  'drwxr-xr-x   33K  saas-landing-page-no-backend/',
+  'drwxr-xr-x   99K  advent-of-code-day-3/',
+  'drwxr-xr-x  204K  kubernetes-homelab-overkill/',
+  'drwxr-xr-x   15K  untitled-folder-7/',
+  'drwxr-xr-x   62K  definitely-finishing-this-one/',
+  'drwxr-xr-x    4K  new-project-template-v9/',
+]
+
+function normalizePathArg(raw: string): string {
+  return raw.replace(/^\.\//, '').replace(/\/+$/, '')
+}
+
+export async function handleLs(
+  args: string[],
+  _state?: unknown,
+  append?: AppendLine,
+): Promise<CommandResult> {
   const showAll = args.some(
     a => a === '--all' || (a.startsWith('-') && !a.startsWith('--') && a.includes('a')),
   )
-  return out(...(showAll ? [...LS_DOTFILES, ...LS_ENTRIES] : LS_ENTRIES))
+  const rawTarget = args.find(a => !a.startsWith('-'))
+
+  if (!rawTarget || rawTarget === '.' || rawTarget === './') {
+    return out(...(showAll ? [...LS_DOTFILES, ...LS_ENTRIES] : LS_ENTRIES))
+  }
+
+  const target = normalizePathArg(rawTarget)
+
+  if (target === 'node_modules') {
+    return out(...NODE_MODULES_ENTRIES)
+  }
+
+  if (target === 'unfinished_side_projects') {
+    const oomError =
+      'FATAL ERROR: JavaScript heap out of memory — too many unfinished side projects'
+    if (!append) {
+      return {
+        lines: [
+          ...UNFINISHED_PROJECTS_ENTRIES.map(content => ({ type: 'output' as const, content })),
+          { type: 'error' as const, content: oomError },
+        ],
+      }
+    }
+    for (const entry of UNFINISHED_PROJECTS_ENTRIES) {
+      append('output', entry)
+      await new Promise(resolve => setTimeout(resolve, 45))
+    }
+    return { lines: [{ type: 'error', content: oomError }] }
+  }
+
+  const singleMatch = [...LS_DOTFILES, ...LS_ENTRIES].find(line => {
+    const name = line.slice(18).split(' ')[0].replace(/\/$/, '')
+    return name === target
+  })
+  if (singleMatch) {
+    return out(singleMatch)
+  }
+
+  return err(`ls: cannot access '${rawTarget}': No such file or directory`)
 }
 
 export function handleSudo(): CommandResult {
