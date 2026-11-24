@@ -11,7 +11,7 @@ Tickets are ordered by priority and dependency. Complete each ticket before star
 | ✅ Complete | PORT-001–019 | Setup, Layout, Shared, Homepage, Terminal core |
 | ✅ Complete | PORT-044–046 | Phase 4b — Snake game |
 | ✅ Complete | PORT-050–055 | Phase 4c — Game system overhaul (in-terminal + pixel + audio) |
-| 🔄 Next | PORT-020–025 | Phase 5 — API routes |
+| 🔄 Next | PORT-020–024 | Phase 5 — API routes |
 | ⬜ Queued | PORT-026–040 | Phase 6–7 — MDX + Site pages |
 | ⬜ Queued | PORT-041–043 | Phase 8 — Polish |
 | ⬜ Queued | PORT-047–049 | Phase 9 — Terminal creativity |
@@ -306,26 +306,6 @@ Can be built in parallel with or immediately after Phase 4. The terminal command
 - `src/app/api/terminal/define/route.ts`
 
 **Dependencies:** none
-
----
-
-### PORT-025 · Feature · Contact email route
-
-**Summary:** Receives terminal contact submission and sends email via Resend.
-
-**Technical Notes:**
-- Create `src/app/api/terminal/contact/route.ts`
-- Method: POST, body: `{ name: string, email: string, message: string }`
-- Server-side validation: all fields non-empty, basic email format check
-- Send via Resend SDK to `process.env.CONTACT_TO_EMAIL`
-- Subject: `Portfolio contact from ${name}`
-- Return `200 { success: true }` or `400/500 { error: string }`
-- Never expose env var names or values in error responses
-
-**Files to create:**
-- `src/app/api/terminal/contact/route.ts`
-
-**Dependencies:** PORT-001, PORT-003
 
 ---
 
@@ -857,7 +837,6 @@ All `hiddenFromHelp: true`. Visible only via `help --all`.
 | PORT-022 | ⬜ | 5 · API | Joke route |
 | PORT-023 | ⬜ | 5 · API | Crypto price route |
 | PORT-024 | ⬜ | 5 · API | Dictionary route |
-| PORT-025 | ⬜ | 5 · API | Contact email route |
 | PORT-026 | ⬜ | 6 · MDX | Configure Next.js for MDX |
 | PORT-027 | ⬜ | 6 · MDX | MDX content utilities |
 | PORT-028 | ⬜ | 6 · MDX | mdx-components styles |
