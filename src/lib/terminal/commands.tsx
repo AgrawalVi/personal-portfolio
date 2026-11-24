@@ -235,10 +235,10 @@ export const COMMANDS: Record<string, CommandDef> = {
   },
 
   weather: {
-    description: 'Current weather in Sunnyvale, CA',
+    description: "Weather where I'm currently based",
     details: [
       'Fetches live conditions from the OpenWeatherMap API.',
-      "Always shows Sunnyvale, CA — where I'm based.",
+      "Shows the weather where I'm currently based.",
     ],
     aliases: ['location'],
     type: 'async',
