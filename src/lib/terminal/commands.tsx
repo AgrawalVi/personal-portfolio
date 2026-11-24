@@ -6,6 +6,7 @@ import {
   Dim,
   HelpRow,
   Indent,
+  KV,
   Muted,
   Stack,
 } from '@/components/terminal/rich'
@@ -24,6 +25,7 @@ import {
   handleExit,
   handleHack,
   handleHello,
+  handleLs,
   handleMatrix,
   handlePing,
   handleRm,
@@ -31,6 +33,52 @@ import {
   handleUname,
   handleWhoami,
 } from './static-commands'
+
+interface SocialLink {
+  label: string
+  display: string
+  href: string
+  external: boolean
+}
+
+const SOCIALS: Record<'github' | 'linkedin' | 'email', SocialLink> = {
+  github: {
+    label: 'GitHub',
+    display: 'https://github.com/AgrawalVi',
+    href: 'https://github.com/AgrawalVi',
+    external: true,
+  },
+  linkedin: {
+    label: 'LinkedIn',
+    display: 'https://linkedin.com/in/vishrut-agrawal',
+    href: 'https://linkedin.com/in/vishrut-agrawal',
+    external: true,
+  },
+  email: {
+    label: 'Email',
+    display: 'zvishrut@gmail.com',
+    href: 'mailto:zvishrut@gmail.com',
+    external: false,
+  },
+}
+
+function renderSocialLink(link: SocialLink) {
+  return (
+    <KV
+      label={link.label}
+      value={
+        <a
+          href={link.href}
+          target={link.external ? '_blank' : undefined}
+          rel={link.external ? 'noopener noreferrer' : undefined}
+          className="text-terminal-accent hover:underline underline-offset-4 break-all"
+        >
+          {link.display}
+        </a>
+      }
+    />
+  )
+}
 
 function renderCommandDetail(name: string, def: CommandDef) {
   return (
@@ -186,9 +234,78 @@ export const COMMANDS: Record<string, CommandDef> = {
 
   date: {
     description: 'Print current date and time',
+    usage: '[--utc]',
+    details: [
+      'Prints the current local date and time.',
+      'Pass --utc to display Coordinated Universal Time instead.',
+    ],
     type: 'sync',
     handler: handleDate,
+    complete: (args, partial) =>
+      args.length === 0 && '--utc'.startsWith(partial.toLowerCase())
+        ? ['--utc']
+        : [],
     hiddenFromHelp: false,
+  },
+
+  ls: {
+    description: 'List portfolio files',
+    usage: '[-a]',
+    details: [
+      'Lists the totally real files powering this portfolio.',
+      'Pass -a or -la to reveal hidden dotfiles.',
+    ],
+    type: 'sync',
+    handler: (args) => handleLs(args),
+    complete: (args, partial) =>
+      args.length === 0
+        ? ['-a', '-la', '--all'].filter(f => f.startsWith(partial.toLowerCase()))
+        : [],
+    hiddenFromHelp: false,
+  },
+
+  social: {
+    description: 'Show social & contact links',
+    aliases: ['links'],
+    details: [
+      'Displays clickable links for GitHub, LinkedIn, and Email.',
+      'Shortcuts: github, linkedin, email',
+    ],
+    type: 'sync',
+    handler: (): CommandResult => ({
+      lines: Object.values(SOCIALS).map(link => ({
+        type: 'output' as const,
+        content: renderSocialLink(link),
+      })),
+    }),
+    hiddenFromHelp: false,
+  },
+
+  github: {
+    description: 'GitHub profile link',
+    type: 'sync',
+    handler: (): CommandResult => ({
+      lines: [{ type: 'output', content: renderSocialLink(SOCIALS.github) }],
+    }),
+    hiddenFromHelp: true,
+  },
+
+  linkedin: {
+    description: 'LinkedIn profile link',
+    type: 'sync',
+    handler: (): CommandResult => ({
+      lines: [{ type: 'output', content: renderSocialLink(SOCIALS.linkedin) }],
+    }),
+    hiddenFromHelp: true,
+  },
+
+  email: {
+    description: 'Email address',
+    type: 'sync',
+    handler: (): CommandResult => ({
+      lines: [{ type: 'output', content: renderSocialLink(SOCIALS.email) }],
+    }),
+    hiddenFromHelp: true,
   },
 
   // ── Easter eggs ───────────────────────────────────────────────────────────

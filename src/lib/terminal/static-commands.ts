@@ -21,6 +21,29 @@ export function handleDate(args: string[]): CommandResult {
   )
 }
 
+const LS_DOTFILES = [
+  '-rw-------  403B  .env (nice try)',
+  '-rw-------  666B  .secrets_do_not_commit',
+  '-rw-r--r--   42K  .tpu_cheat_codes',
+  '-rw-r--r--  1.2G  .unpushed_stashes',
+]
+
+const LS_ENTRIES = [
+  'drwxr-xr-x  4.2T  node_modules/',
+  'drwxr-xr-x  128K  unfinished_side_projects/',
+  '-rw-r--r--  4.2K  README_definitely_not_boilerplate.md',
+  '-rw-r--r--    0B  bug_free_code.ts',
+  '-rw-r--r--  999M  coffee_supply.log',
+  '-rwxr-xr-x   42B  ship_on_friday.sh',
+]
+
+export function handleLs(args: string[]): CommandResult {
+  const showAll = args.some(
+    a => a === '--all' || (a.startsWith('-') && !a.startsWith('--') && a.includes('a')),
+  )
+  return out(...(showAll ? [...LS_DOTFILES, ...LS_ENTRIES] : LS_ENTRIES))
+}
+
 export function handleSudo(): CommandResult {
   return err(pick(POOLS.sudo))
 }
