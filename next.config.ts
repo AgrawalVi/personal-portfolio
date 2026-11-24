@@ -17,7 +17,17 @@ const nextConfig: NextConfig = {
         permanent: false
       },
       {
+        source: '/shelfwise',
+        destination: 'https://www.youtube.com/watch?v=ljWgrLuKK-s',
+        permanent: false
+      },
+      {
         source: '/sweetbeasts',
+        destination: 'https://sweetbeasts.shop',
+        permanent: false
+      },
+      {
+        source: '/sweetbeasts-admin',
         destination: 'https://sweetbeasts.shop',
         permanent: false
       },
@@ -29,6 +39,12 @@ const nextConfig: NextConfig = {
       {
         source: '/resume/mba',
         destination: 'https://drive.google.com/file/d/1rk2hhINRasavxC8V0s4WG8WhE9-A2lpU/view?usp=sharing',
+        permanent: false
+      },
+      // Redirect all project detail slugs to the projects index until dedicated project detail pages are built.
+      {
+        source: '/projects/:slug',
+        destination: '/projects',
         permanent: false
       }
     ]
