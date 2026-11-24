@@ -210,6 +210,42 @@ export function handleCat(args: string[]): CommandResult {
   return err(`cat: ${rawTarget}: No such file or directory`)
 }
 
+export function handleShipOnFriday(): CommandResult {
+  const isFriday = new Date().getDay() === 5
+  if (isFriday) {
+    return {
+      lines: [
+        { type: 'output', content: 'Checking calendar... IT IS LITERALLY FRIDAY.' },
+        {
+          type: 'error',
+          content: 'ABORTED: Step away from the keyboard and enjoy your weekend.',
+        },
+      ],
+    }
+  }
+  return {
+    lines: [
+      { type: 'output', content: 'Deploying to production...' },
+      {
+        type: 'error',
+        content: 'ABORTED: nice try. Even on a weekday, we do not run ./ship_on_friday.sh.',
+      },
+    ],
+  }
+}
+
+export function handleSh(args: string[]): CommandResult {
+  const rawTarget = args[0]
+  if (!rawTarget) {
+    return err('sh: missing script operand')
+  }
+  const target = normalizePathArg(rawTarget).toLowerCase()
+  if (target === 'ship_on_friday.sh') {
+    return handleShipOnFriday()
+  }
+  return err(`sh: ${rawTarget}: Permission denied`)
+}
+
 export function handleSudo(): CommandResult {
   return err(pick(POOLS.sudo))
 }
