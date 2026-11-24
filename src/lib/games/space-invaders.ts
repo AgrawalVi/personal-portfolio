@@ -457,7 +457,7 @@ class SpaceInvadersGame extends GameEngine {
             this.ufoTicksLeft = this.randomUfoDelay()
             this.playerBullet.active = false
             this.score += UFO_POINTS[Math.floor(Math.random() * UFO_POINTS.length)]
-            playSound('eat', this.isMuted())
+            playSound('hit', this.isMuted())
           }
         }
 
@@ -492,7 +492,7 @@ class SpaceInvadersGame extends GameEngine {
               alien.alive = false
               this.playerBullet.active = false
               this.score += POINTS[alien.type]
-              playSound('eat', this.isMuted())
+              playSound('hit', this.isMuted())
               break
             }
           }
@@ -585,7 +585,7 @@ export const config: GameConfig = {
   id: 'space-invaders',
   label: 'space invaders',
   bg: BG,
-  sounds: ['shoot', 'die'],
+  sounds: ['shoot', 'hit', 'die'],
   controls: ['ARROWS / AD  MOVE', 'SPACE  SHOOT', 'ESC  PAUSE', 'CTRL+C  QUIT'],
   start,
 }
