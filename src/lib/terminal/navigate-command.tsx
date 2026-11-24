@@ -20,6 +20,12 @@ const ALIASES: Record<string, string> = {
   writing: '/blog',
 }
 
+const FAKE_DIR_RESPONSES: Record<string, string> = {
+  node_modules: "cd: node_modules: You'll never make it back out.",
+  unfinished_side_projects:
+    "cd: unfinished_side_projects: Trust me, you don't want to go in there.",
+}
+
 function resolve(target: string): string | null {
   const lower = target.toLowerCase()
   if (lower in ALIASES) return ALIASES[lower]
@@ -90,10 +96,12 @@ export function makeNavigateCommand(router: AppRouterInstance): CommandDef {
 
       const path = resolve(args[0])
       if (!path) {
+        const normalized = args[0].replace(/^\.\//, '').replace(/\/+$/, '').toLowerCase()
+        const dirMessage = FAKE_DIR_RESPONSES[normalized]
         return {
           lines: [{
             type: 'error' as const,
-            content: `navigate: no such route '${args[0]}'`,
+            content: dirMessage ?? `navigate: no such route '${args[0]}'`,
           }],
         }
       }
