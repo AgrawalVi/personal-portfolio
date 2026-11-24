@@ -99,20 +99,7 @@ export function useTerminal(initialLines?: Omit<TerminalLine, 'id'>[]) {
         history: historyRef.current,
       }
 
-      if (def.type === 'sync') {
-        const result = def.handler(args, currentState) as CommandResult
-        if (result.nextState?.history && result.nextState.history.length === 0) {
-          clearHistory()
-        }
-        setState((prev) => ({
-          ...prev,
-          lines: [...prev.lines, ...hydrateLines(result.lines)],
-          ...omitHistory(result.nextState),
-        }))
-        return
-      }
-
-      // Streaming async: no loading placeholder; handler appends lines as it goes.
+      // Streaming commands skip the loading placeholder and receive an append callback.
       if (def.stream) {
         const append = (type: TerminalLine['type'], content: TerminalLine['content']) => {
           setState((prev) => ({ ...prev, lines: [...prev.lines, makeLine(type, content)] }))
@@ -136,6 +123,19 @@ export function useTerminal(initialLines?: Omit<TerminalLine, 'id'>[]) {
             lines: [...prev.lines, makeLine('error', 'Command failed. Please try again.')],
           }))
         }
+        return
+      }
+
+      if (def.type === 'sync') {
+        const result = def.handler(args, currentState) as CommandResult
+        if (result.nextState?.history && result.nextState.history.length === 0) {
+          clearHistory()
+        }
+        setState((prev) => ({
+          ...prev,
+          lines: [...prev.lines, ...hydrateLines(result.lines)],
+          ...omitHistory(result.nextState),
+        }))
         return
       }
 
