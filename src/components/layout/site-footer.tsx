@@ -1,6 +1,5 @@
 import Link from 'next/link'
 
-import { ThemeToggle } from '@/components/layout/theme-toggle'
 import { GitHubDark, GitHubLight } from '../ui/icons/github'
 import { LinkedIn } from '../ui/icons/linkedin'
 
@@ -31,7 +30,6 @@ export function SiteFooter() {
           >
             <LinkedIn className="h-4 w-4" />
           </Link>
-          {/* <ThemeToggle /> */}
         </div>
       </div>
     </footer>
