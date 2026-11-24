@@ -32,6 +32,8 @@ import {
   handleMatrix,
   handlePing,
   handleRm,
+  handleSh,
+  handleShipOnFriday,
   handleSudo,
   handleUname,
   handleWhoami,
@@ -458,6 +460,27 @@ export const COMMANDS: Record<string, CommandDef> = {
     usage: '[host]',
     type: 'sync',
     handler: (args) => handlePing(args),
+    hiddenFromHelp: true,
+  },
+
+  './ship_on_friday.sh': {
+    description: 'Definitely do not run this',
+    aliases: ['ship_on_friday.sh'],
+    type: 'sync',
+    handler: handleShipOnFriday,
+    hiddenFromHelp: true,
+  },
+
+  sh: {
+    description: 'Run a shell script',
+    usage: '<script>',
+    aliases: ['bash'],
+    type: 'sync',
+    handler: (args) => handleSh(args),
+    complete: (args, partial) =>
+      args.length === 0 && 'ship_on_friday.sh'.startsWith(partial.toLowerCase())
+        ? ['ship_on_friday.sh']
+        : [],
     hiddenFromHelp: true,
   },
 }
