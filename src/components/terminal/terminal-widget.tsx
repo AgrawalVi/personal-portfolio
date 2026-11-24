@@ -26,6 +26,8 @@ const SPRING = {
   damping: 45,
 } as const satisfies Transition
 
+const IDLE_HINT_DELAY_MS = 5_000
+
 interface TerminalWidgetProps {
   initialLines?: Omit<TerminalLine, 'id'>[]
 }
@@ -41,11 +43,31 @@ export function TerminalWidget({ initialLines }: TerminalWidgetProps = {}) {
     outputRef,
     appendLine,
   } = useTerminal(initialLines)
-  const showHint = !input && !isLoading && history.length === 0
   const { activeGame, lastScore, launchGame } = useGame()
   const router = useRouter()
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [isFocused, setIsFocused] = useState(false)
+  const [idleHintActive, setIdleHintActive] = useState(false)
+
+  const canReplayHint =
+    !input &&
+    !isLoading &&
+    !activeGame &&
+    !isFocused &&
+    lines.length === 0 &&
+    history.length > 0
+  const showHint =
+    (!input && !isLoading && history.length === 0) ||
+    (canReplayHint && idleHintActive)
+
+  useEffect(() => {
+    if (!canReplayHint) return
+    const timer = setTimeout(() => setIdleHintActive(true), IDLE_HINT_DELAY_MS)
+    return () => {
+      clearTimeout(timer)
+      setIdleHintActive(false)
+    }
+  }, [canReplayHint])
 
   useEffect(() => {
     COMMANDS['games'] = makeGamesCommand(launchGame)
