@@ -53,7 +53,6 @@ export function TerminalWidget({ initialLines }: TerminalWidgetProps = {}) {
     !input &&
     !isLoading &&
     !activeGame &&
-    !isFocused &&
     lines.length === 0 &&
     history.length > 0
   const showHint =
