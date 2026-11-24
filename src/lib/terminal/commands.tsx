@@ -32,6 +32,39 @@ import {
   handleWhoami,
 } from './static-commands'
 
+function renderCommandDetail(name: string, def: CommandDef) {
+  return (
+    <Stack>
+      <div>
+        <Cmd>{name}</Cmd>
+        {def.usage && (
+          <>
+            {' '}
+            <Arg>{def.usage}</Arg>
+          </>
+        )}
+        {def.type === 'async' && (
+          <>
+            {' '}
+            <Badge>async</Badge>
+          </>
+        )}
+      </div>
+      <Indent>
+        <Stack>
+          <Muted>{def.description}</Muted>
+          {def.details?.map((line, i) => (
+            <Dim key={i}>{line}</Dim>
+          ))}
+          {def.aliases?.length ? (
+            <Dim>aliases: {def.aliases.join(', ')}</Dim>
+          ) : null}
+        </Stack>
+      </Indent>
+    </Stack>
+  )
+}
+
 // ─── Registry ─────────────────────────────────────────────────────────────────
 
 export const COMMANDS: Record<string, CommandDef> = {
@@ -41,12 +74,13 @@ export const COMMANDS: Record<string, CommandDef> = {
     usage: '[command]',
     details: [
       'Lists all available commands with their usage.',
-      'Run `help <command>` for detailed info on a specific command.',
+      'Run help <command> for detailed info on a specific command.',
+      'Run help --verbose (or -v) to show detailed info for all commands.',
     ],
     type: 'sync',
     handler: (args): CommandResult => {
-      const flags = new Set(args.filter(a => a.startsWith('--')))
-      const positional = args.filter(a => !a.startsWith('--'))
+      const flags = new Set(args.filter(a => a.startsWith('-')))
+      const positional = args.filter(a => !a.startsWith('-'))
 
       // help <command> — detail view for a specific command
       if (positional[0]) {
@@ -66,66 +100,72 @@ export const COMMANDS: Record<string, CommandDef> = {
           lines: [
             {
               type: 'output',
-              content: (
-                <Stack>
-                  <div>
-                    <Cmd>{name}</Cmd>
-                    {def.usage && (
-                      <>
-                        {' '}
-                        <Arg>{def.usage}</Arg>
-                      </>
-                    )}
-                    {def.type === 'async' && (
-                      <>
-                        {' '}
-                        <Badge>async</Badge>
-                      </>
-                    )}
-                  </div>
-                  <Indent>
-                    <Stack>
-                      <Muted>{def.description}</Muted>
-                      {def.details?.map((line, i) => (
-                        <Dim key={i}>{line}</Dim>
-                      ))}
-                      {def.aliases?.length ? (
-                        <Dim>aliases: {def.aliases.join(', ')}</Dim>
-                      ) : null}
-                    </Stack>
-                  </Indent>
-                </Stack>
-              ),
+              content: renderCommandDetail(name, def),
             },
           ],
         }
       }
 
-      // help — list visible commands. --all also includes hidden ones.
       const showAll = flags.has('--all')
-      const lines = Object.entries(COMMANDS)
-        .filter(([, def]) => showAll || !def.hiddenFromHelp)
-        .map(([name, def]) => ({
-          type: 'output' as const,
-          content: (
-            <HelpRow
-              name={name}
-              usage={def.usage}
-              description={def.description}
-              isAsync={def.type === 'async'}
-              aliases={def.aliases}
-            />
-          ),
-        }))
-      return { lines }
+      const verbose = flags.has('--verbose') || flags.has('-v')
+      const entries = Object.entries(COMMANDS).filter(
+        ([, def]) => showAll || !def.hiddenFromHelp,
+      )
+
+      // help --verbose (or -v) — detail view for all matched commands
+      if (verbose) {
+        return {
+          lines: entries.map(([name, def]) => ({
+            type: 'output' as const,
+            content: <div className="py-1">{renderCommandDetail(name, def)}</div>,
+          })),
+        }
+      }
+
+      // help — list visible commands. --all also includes hidden ones.
+      return {
+        lines: [
+          ...entries.map(([name, def]) => ({
+            type: 'output' as const,
+            content: (
+              <HelpRow
+                name={name}
+                usage={def.usage}
+                description={def.description}
+                isAsync={def.type === 'async'}
+                aliases={def.aliases}
+              />
+            ),
+          })),
+          {
+            type: 'output' as const,
+            content: (
+              <Dim className="block pt-1">
+                type <Muted>help &lt;command&gt;</Muted> for details, or{' '}
+                <Muted>help --verbose</Muted> to show details for all
+              </Dim>
+            ),
+          },
+        ],
+      }
     },
-    complete: (args, partial) =>
-      args.length === 0
-        ? [
-            ...Object.keys(COMMANDS),
-            ...Object.values(COMMANDS).flatMap(d => d.aliases ?? []),
-          ].filter(n => n.startsWith(partial.toLowerCase()))
-        : [],
+    complete: (args, partial) => {
+      if (args.some(a => !a.startsWith('-'))) return []
+      const used = new Set(args)
+      const remainingFlags = [
+        ...(!used.has('--verbose') && !used.has('-v') ? ['--verbose'] : []),
+        ...(!used.has('--all') ? ['--all'] : []),
+      ]
+      const candidates =
+        args.length === 0
+          ? [
+              ...remainingFlags,
+              ...Object.keys(COMMANDS),
+              ...Object.values(COMMANDS).flatMap(d => d.aliases ?? []),
+            ]
+          : remainingFlags
+      return candidates.filter(n => n.startsWith(partial.toLowerCase()))
+    },
     hiddenFromHelp: false,
   },
 
