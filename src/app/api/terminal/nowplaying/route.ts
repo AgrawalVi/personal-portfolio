@@ -21,7 +21,30 @@ export async function GET() {
   })
 
   if (!tokenRes.ok) {
-    console.error('[NOWPLAYING] Token refresh failed:', tokenRes.status, await tokenRes.text())
+    const bodyText = await tokenRes.text()
+    console.error('[NOWPLAYING] Token refresh failed:', tokenRes.status, bodyText)
+
+    let isInvalidRefreshToken = false
+    try {
+      const errorData = JSON.parse(bodyText) as { error?: unknown; error_description?: unknown }
+      isInvalidRefreshToken =
+        errorData?.error === 'invalid_grant' ||
+        (typeof errorData?.error_description === 'string' &&
+          errorData.error_description.toLowerCase().includes('refresh token'))
+    } catch {
+      // Non-JSON error body from Spotify; fall back to generic auth error
+    }
+
+    if (isInvalidRefreshToken) {
+      return NextResponse.json(
+        {
+          error:
+            "Welp, Vishrut's Spotify refresh token expired again. Tell him to log back in so you can judge his music taste.",
+        },
+        { status: 503 },
+      )
+    }
+
     return NextResponse.json({ error: 'Failed to authenticate with Spotify.' }, { status: 502 })
   }
 
