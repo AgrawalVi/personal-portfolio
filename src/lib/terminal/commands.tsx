@@ -19,6 +19,9 @@ import {
   handleWeather,
 } from './async-commands'
 import {
+  CAT_DOTFILES,
+  CAT_VISIBLE_FILES,
+  handleCat,
   handleClear,
   handleCoffee,
   handleDate,
@@ -267,6 +270,23 @@ export const COMMANDS: Record<string, CommandDef> = {
       return pool.filter(c => c.startsWith(partial.toLowerCase()))
     },
     hiddenFromHelp: false,
+  },
+
+  cat: {
+    description: 'Read a portfolio file',
+    usage: '<file>',
+    details: [
+      'Prints the contents of one of the files listed by ls.',
+      'Start typing a dot (cat .) to tab-complete hidden dotfiles.',
+    ],
+    type: 'sync',
+    handler: (args) => handleCat(args),
+    complete: (args, partial) => {
+      if (args.length > 0) return []
+      const pool = partial.startsWith('.') ? CAT_DOTFILES : CAT_VISIBLE_FILES
+      return pool.filter(f => f.toLowerCase().startsWith(partial.toLowerCase()))
+    },
+    hiddenFromHelp: true,
   },
 
   social: {
