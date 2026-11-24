@@ -1,26 +1,70 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { useGame } from '@/contexts/game-context'
+import { Volume2, VolumeX } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
-type MenuItem = { label: string; hint?: string; action: () => void }
+type MenuItem = {
+  id: string
+  label: string
+  hint?: string
+  status?: ReactNode
+  ariaLabel?: string
+  action: () => void
+}
 
 export function PauseOverlay() {
   const { isMuted, toggleMute, setIsPaused, exitGame, restartGame } = useGame()
   const [selected, setSelected] = useState(0)
 
-  const items: MenuItem[] = [
-    { label: 'RESUME', hint: 'ESC', action: () => setIsPaused(false) },
-    { label: 'RESTART', hint: 'CTRL+R', action: restartGame },
-    {
-      label: `SOUND  ${isMuted ? 'OFF' : 'ON'}`,
-      hint: 'CTRL+M',
-      action: toggleMute,
-    },
-    { label: 'QUIT', hint: 'CTRL+C', action: () => exitGame() },
-  ]
+  const items = useMemo<MenuItem[]>(
+    () => [
+      { id: 'resume', label: 'RESUME', hint: 'ESC', action: () => setIsPaused(false) },
+      { id: 'restart', label: 'RESTART', hint: 'CTRL+R', action: restartGame },
+      {
+        id: 'sound',
+        label: 'SOUND',
+        hint: 'CTRL+M',
+        ariaLabel: isMuted ? 'Sound: Off. Toggle sound' : 'Sound: On. Toggle sound',
+        status: (
+          <span aria-hidden="true" className="inline-flex items-center gap-1.5">
+            {isMuted ? (
+              <VolumeX className="text-destructive size-3 shrink-0" />
+            ) : (
+              <Volume2 className="text-game-accent size-3 shrink-0" />
+            )}
+            <span className="border-game-divider bg-game-surface inline-flex items-center border p-0.5 text-[6px] leading-none">
+              <span
+                className={cn(
+                  'border px-1.5 py-0.5 transition-colors',
+                  !isMuted
+                    ? 'bg-game-accent/20 text-game-accent border-game-accent/60'
+                    : 'text-game-muted/50 border-transparent',
+                )}
+              >
+                ON
+              </span>
+              <span
+                className={cn(
+                  'border px-1.5 py-0.5 transition-colors',
+                  isMuted
+                    ? 'bg-destructive/20 text-destructive border-destructive/50'
+                    : 'text-game-muted/50 border-transparent',
+                )}
+              >
+                OFF
+              </span>
+            </span>
+          </span>
+        ),
+        action: toggleMute,
+      },
+      { id: 'quit', label: 'QUIT', hint: 'CTRL+C', action: () => exitGame() },
+    ],
+    [exitGame, isMuted, restartGame, setIsPaused, toggleMute],
+  )
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -36,49 +80,59 @@ export function PauseOverlay() {
       }
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault()
+        e.stopPropagation()
         items[selected]?.action()
       }
     }
     document.addEventListener('keydown', onKey, true)
     return () => document.removeEventListener('keydown', onKey, true)
-  }, [selected, isMuted])
+  }, [items, selected])
 
   return (
-    <div className="absolute inset-0 flex items-center justify-center bg-game-bg/95 backdrop-blur-[1px]">
-      <div className="font-pixel bg-game-bg border-2 border-game-border p-5 min-w-[220px] shadow-[0_0_0_1px_var(--game-bg),0_0_24px_rgb(69_212_176/10%)]">
+    <div className="bg-game-bg/95 absolute inset-0 flex items-center justify-center backdrop-blur-[1px]">
+      <div className="font-pixel bg-game-bg border-game-border min-w-[270px] border-2 p-5 shadow-[0_0_0_1px_var(--game-bg),0_0_24px_rgb(69_212_176/10%)]">
         {/* Title */}
-        <p className="text-[9px] text-game-accent tracking-[0.05em] mb-4 pb-2.5 border-b border-game-divider">
+        <p className="text-game-accent border-game-divider mb-4 border-b pb-2.5 text-[9px] tracking-[0.05em]">
           PAUSED
         </p>
 
         {/* Menu items */}
-        <div className="flex flex-col gap-2.5">
+        <div role="menu" aria-label="Pause menu" className="flex flex-col gap-2.5">
           {items.map((item, i) => {
             const isSelected = i === selected
             return (
-              <div
-                key={item.label}
+              <button
+                key={item.id}
+                type="button"
+                role="menuitem"
+                aria-label={item.ariaLabel}
+                onMouseEnter={() => setSelected(i)}
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={item.action}
                 className={cn(
-                  'flex items-center gap-1.5 text-[7px]',
+                  'flex w-full cursor-pointer items-center gap-2 text-left text-[7px] transition-colors',
                   isSelected ? 'text-game-accent' : 'text-game-border/70',
                 )}
               >
-                <span className="w-2.5 shrink-0 text-game-mid">
+                <span className="text-game-mid w-2.5 shrink-0" aria-hidden="true">
                   {isSelected ? '>' : ' '}
                 </span>
-                <span className="flex-1">{item.label}</span>
+                <span className="flex flex-1 items-center gap-2.5">
+                  <span>{item.label}</span>
+                  {item.status}
+                </span>
                 {item.hint && (
-                  <span className="text-[6px] text-game-muted">
+                  <span className="text-game-muted shrink-0 text-[6px]">
                     [{item.hint}]
                   </span>
                 )}
-              </div>
+              </button>
             )
           })}
         </div>
 
         {/* Navigation hint */}
-        <p className="text-[6px] text-game-muted mt-4 pt-2.5 border-t border-game-divider">
+        <p className="text-game-muted border-game-divider mt-4 border-t pt-2.5 text-[6px]">
           ↑↓ SELECT · ENTER CONFIRM
         </p>
       </div>
