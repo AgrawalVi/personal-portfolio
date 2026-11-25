@@ -38,7 +38,7 @@ function ActionLink({
       variant="outline"
       size="sm"
       style={{ transitionDelay: `${delayMs}ms` } as CSSProperties}
-      className={`${layout} translate-y-0 opacity-100 transition-all duration-300 sm:translate-y-3 sm:opacity-0 sm:group-hover/card:translate-y-0 sm:group-hover/card:opacity-100`}
+      className={`${layout} translate-y-0 opacity-100 transition-all duration-300 sm:can-hover:translate-y-3 sm:can-hover:opacity-0 sm:can-hover:group-hover/card:translate-y-0 sm:can-hover:group-hover/card:opacity-100`}
     >
       <Link href={href} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
         <Icon />
@@ -91,13 +91,13 @@ export function ProjectCard({ project }: { project: ProjectFrontmatter }) {
         } as CSSProperties
       }
     >
-      <GlassCard colors={project.colors} seed={project.slug} solid className="group/card">
+      <GlassCard colors={project.colors} seed={project.slug} solid className="group/card h-full">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover/card:opacity-100"
+          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 can-hover:group-hover/card:opacity-100"
           style={{ background: hoverTint }}
         />
-        <div className="relative flex flex-col sm:min-h-[224px]">
+        <div className="relative flex h-full flex-col sm:can-hover:min-h-[224px]">
           <CardHeader className="py-4">
             <div className="flex flex-col gap-1">
               <span className="text-xs text-muted-foreground tabular-nums">
@@ -109,14 +109,14 @@ export function ProjectCard({ project }: { project: ProjectFrontmatter }) {
           </CardHeader>
 
           <div className="relative flex flex-1 flex-col">
-            <div className="transition-all duration-300 sm:group-hover/card:-translate-y-1 sm:group-hover/card:opacity-0">
+            <div className="transition-all duration-300 sm:can-hover:group-hover/card:-translate-y-1 sm:can-hover:group-hover/card:opacity-0">
               <CardContent className={links.length === 0 ? 'pb-4' : undefined}>
                 <p className="text-sm text-muted-foreground leading-relaxed">{project.summary}</p>
               </CardContent>
             </div>
 
             {links.length > 0 && (
-              <div className="mt-auto grid grid-cols-2 gap-2 px-4 pt-4 pb-4 sm:absolute sm:inset-0 sm:mt-0 sm:px-6 sm:pt-0 sm:pb-8 sm:items-center sm:content-center">
+              <div className="mt-auto grid grid-cols-2 gap-2 px-4 pt-4 pb-4 sm:can-hover:absolute sm:can-hover:inset-0 sm:can-hover:mt-0 sm:can-hover:px-6 sm:can-hover:pt-0 sm:can-hover:pb-8 sm:can-hover:items-center sm:can-hover:content-center">
                 {links.map((l, i) => (
                   <ActionLink
                     key={l.url}
