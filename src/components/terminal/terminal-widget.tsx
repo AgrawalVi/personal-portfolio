@@ -223,6 +223,7 @@ export function TerminalWidget({ initialLines }: TerminalWidgetProps = {}) {
           input={input}
           isLoading={isLoading}
           disabled={!!activeGame}
+          showHint={showHint}
           inputRef={inputRef}
           suggestions={suggestions}
           quickCommands={HOME_QUICK_COMMANDS}

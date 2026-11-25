@@ -25,10 +25,13 @@ import {
 } from '@/components/ui/input-group'
 import { Separator } from '@/components/ui/separator'
 
+import { TerminalGhostHint } from './stream/terminal-ghost-hint'
+
 interface TouchTerminalDockProps {
   input: string
   isLoading: boolean
   disabled?: boolean
+  showHint?: boolean
   inputRef: React.RefObject<HTMLInputElement | null>
   suggestions: LiveSuggestion[]
   quickCommands: readonly QuickCommand[]
@@ -57,6 +60,7 @@ export function TouchTerminalDock({
   input,
   isLoading,
   disabled = false,
+  showHint = false,
   inputRef,
   suggestions,
   quickCommands,
@@ -80,6 +84,7 @@ export function TouchTerminalDock({
   const isDisabled = isLoading || disabled
   const hasInput = input.trim().length > 0
   const showLiveSuggestions = input.trim().length > 0
+  const showGhostHint = showHint && input.length === 0 && !isDisabled
 
   useEffect(() => {
     if (!preventFocusScroll || !isIOSDevice()) return
@@ -260,7 +265,7 @@ export function TouchTerminalDock({
         </div>
       </div>
 
-      {/* Row 2: Integrated terminal prompt input (16px font prevents iOS Safari auto-zoom) */}
+      {/* Row 2: Single integrated terminal prompt input (16px font prevents iOS Safari auto-zoom) */}
       <form
         onSubmit={(e) => {
           e.preventDefault()
@@ -281,24 +286,40 @@ export function TouchTerminalDock({
             </span>
           </InputGroupAddon>
 
-          <InputGroupInput
-            ref={inputRef}
-            type="text"
-            value={input}
-            onChange={onInputChange}
-            onKeyDown={onKeyDown}
-            disabled={isDisabled}
-            onFocus={onFocus}
-            onBlur={onBlur}
-            enterKeyHint="send"
-            autoComplete="off"
-            autoCorrect="off"
-            autoCapitalize="none"
-            spellCheck={false}
-            aria-label="Terminal input"
-            placeholder={isLoading ? 'Running…' : 'Type a command…'}
-            className="h-10 px-1.5 font-(family-name:--font-jetbrains-mono) text-base md:text-base leading-6 text-foreground placeholder:text-muted-foreground/60"
-          />
+          <div className="relative flex-1 min-w-0 flex items-center">
+            <InputGroupInput
+              ref={inputRef}
+              type="text"
+              value={input}
+              onChange={onInputChange}
+              onKeyDown={onKeyDown}
+              disabled={isDisabled}
+              onFocus={onFocus}
+              onBlur={onBlur}
+              enterKeyHint="send"
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="none"
+              spellCheck={false}
+              aria-label="Terminal input"
+              placeholder={
+                isLoading
+                  ? 'Running…'
+                  : showGhostHint
+                    ? ''
+                    : 'Type a command…'
+              }
+              className="h-10 px-1.5 font-(family-name:--font-jetbrains-mono) text-base md:text-base leading-6 text-foreground placeholder:text-muted-foreground/60"
+            />
+            {showGhostHint && (
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-y-0 left-1.5 right-1 flex items-center font-(family-name:--font-jetbrains-mono) text-base leading-6 overflow-hidden whitespace-nowrap"
+              >
+                <TerminalGhostHint />
+              </div>
+            )}
+          </div>
 
           <InputGroupAddon
             align="inline-end"
