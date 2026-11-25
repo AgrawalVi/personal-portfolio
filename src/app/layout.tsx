@@ -1,14 +1,11 @@
 import type { Metadata } from 'next'
-import {
-  JetBrains_Mono,
-  Josefin_Sans,
-  Nunito_Sans,
-  Press_Start_2P,
-} from 'next/font/google'
+import { JetBrains_Mono, Josefin_Sans, Nunito_Sans, Press_Start_2P } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
 import './globals.css'
+
+import { TerminalHistoryProvider } from '@/contexts/terminal-history-context'
 
 import { siteMetadata } from '@/lib/metadata'
 import { cn } from '@/lib/utils'
@@ -72,22 +69,19 @@ export default function RootLayout({
       )}
     >
       <body className="min-h-full flex flex-col">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          disableTransitionOnChange
-          forcedTheme="dark"
-        >
+        <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange forcedTheme="dark">
           <TooltipProvider>
-            <div className="grid grid-cols-[minmax(0,1fr)] grid-rows-[auto_1fr_auto] min-h-dvh">
-              <SiteHeader />
-              <main className="pt-4 w-full min-w-0 px-3 sm:px-4 max-w-3xl mx-auto">
-                <PageHeader />
-                <div className="px-2 min-w-0">{children}</div>
-              </main>
-              <SiteFooter />
-            </div>
-            <GlobalTerminalLauncher />
+            <TerminalHistoryProvider>
+              <div className="grid grid-cols-[minmax(0,1fr)] grid-rows-[auto_1fr_auto] min-h-dvh">
+                <SiteHeader />
+                <main className="pt-4 w-full min-w-0 px-3 sm:px-4 max-w-3xl mx-auto">
+                  <PageHeader />
+                  <div className="px-2 min-w-0">{children}</div>
+                </main>
+                <SiteFooter />
+              </div>
+              <GlobalTerminalLauncher />
+            </TerminalHistoryProvider>
           </TooltipProvider>
         </ThemeProvider>
         <Analytics />

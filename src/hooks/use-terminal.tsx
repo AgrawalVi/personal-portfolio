@@ -1,25 +1,32 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { useTerminalHistory } from '@/contexts/terminal-history-context'
 
-import { Dim } from '@/components/terminal/rich'
+import type { CommandResult, TerminalLine, TerminalState } from '@/types/terminal'
 import { COMMANDS } from '@/lib/terminal/commands'
 import { getCompletion, getCompletionSuggestions } from '@/lib/terminal/complete'
-import type { CommandResult, TerminalLine, TerminalState } from '@/types/terminal'
+import { Dim } from '@/components/terminal/rich'
+
+type LocalTerminalState = Omit<TerminalState, 'history'>
 
 function makeId(): string {
   return Math.random().toString(36).slice(2, 10)
 }
 
-function makeLine(
-  type: TerminalLine['type'],
-  content: TerminalLine['content'],
-): TerminalLine {
+function makeLine(type: TerminalLine['type'], content: TerminalLine['content']): TerminalLine {
   return { id: makeId(), type, content }
 }
 
 function hydrateLines(lines: Omit<TerminalLine, 'id'>[]): TerminalLine[] {
-  return lines.map(l => ({ ...l, id: makeId() }))
+  return lines.map((l) => ({ ...l, id: makeId() }))
+}
+
+function omitHistory(nextState?: Partial<TerminalState>): Partial<LocalTerminalState> {
+  if (!nextState) return {}
+  const { history: _history, ...rest } = nextState
+  void _history
+  return rest
 }
 
 const DEFAULT_INITIAL_LINES: Omit<TerminalLine, 'id'>[] = [
@@ -27,24 +34,28 @@ const DEFAULT_INITIAL_LINES: Omit<TerminalLine, 'id'>[] = [
   { type: 'system', content: "Type 'help' to see available commands." },
 ]
 
-function buildInitialState(
-  initialLines?: Omit<TerminalLine, 'id'>[],
-): TerminalState {
+function buildInitialState(initialLines?: Omit<TerminalLine, 'id'>[]): LocalTerminalState {
   return {
     lines: hydrateLines(initialLines ?? DEFAULT_INITIAL_LINES),
     input: '',
-    history: [],
     historyIndex: -1,
     isLoading: false,
   }
 }
 
 export function useTerminal(initialLines?: Omit<TerminalLine, 'id'>[]) {
-  const [state, setState] = useState<TerminalState>(() => buildInitialState(initialLines))
+  const { history, pushHistory, clearHistory } = useTerminalHistory()
+  const [state, setState] = useState<LocalTerminalState>(() => buildInitialState(initialLines))
   const outputRef = useRef<HTMLDivElement | null>(null)
-  // Keep a ref to state so async callbacks always see current state
+  // Keep refs to state & global history so async callbacks always see current values
   const stateRef = useRef(state)
-  useEffect(() => { stateRef.current = state }, [state])
+  useEffect(() => {
+    stateRef.current = state
+  }, [state])
+  const historyRef = useRef(history)
+  useEffect(() => {
+    historyRef.current = history
+  }, [history])
 
   // Auto-scroll output pane on new lines
   useEffect(() => {
@@ -54,100 +65,112 @@ export function useTerminal(initialLines?: Omit<TerminalLine, 'id'>[]) {
   }, [state.lines])
 
   const setInput = useCallback((value: string) => {
-    setState(prev => ({ ...prev, input: value, historyIndex: -1 }))
+    setState((prev) => ({ ...prev, input: value, historyIndex: -1 }))
   }, [])
 
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setState(prev => ({ ...prev, input: e.target.value }))
+    setState((prev) => ({ ...prev, input: e.target.value }))
   }, [])
 
   // ─── Command dispatch ─────────────────────────────────────────────────────
 
-  const runCommand = useCallback(async (raw: string) => {
-    const [name, ...args] = raw.trim().split(/\s+/)
-    const key = name.toLowerCase()
+  const runCommand = useCallback(
+    async (raw: string) => {
+      const [name, ...args] = raw.trim().split(/\s+/)
+      const key = name.toLowerCase()
 
-    // Resolve command by name or alias
-    let def = COMMANDS[key]
-    if (!def) {
-      const entry = Object.entries(COMMANDS).find(([, d]) => d.aliases?.includes(key))
-      if (entry) def = entry[1]
-    }
-
-    if (!def) {
-      setState(prev => ({
-        ...prev,
-        lines: [...prev.lines, makeLine('error', `command not found: ${key}`)],
-      }))
-      return
-    }
-
-    const currentState = stateRef.current
-
-    if (def.type === 'sync') {
-      const result = def.handler(args, currentState) as CommandResult
-      setState(prev => ({
-        ...prev,
-        lines: [...prev.lines, ...hydrateLines(result.lines)],
-        ...(result.nextState ?? {}),
-      }))
-      return
-    }
-
-    // Streaming async: no loading placeholder; handler appends lines as it goes.
-    if (def.stream) {
-      const append = (type: TerminalLine['type'], content: TerminalLine['content']) => {
-        setState(prev => ({ ...prev, lines: [...prev.lines, makeLine(type, content)] }))
+      // Resolve command by name or alias
+      let def = COMMANDS[key]
+      if (!def) {
+        const entry = Object.entries(COMMANDS).find(([, d]) => d.aliases?.includes(key))
+        if (entry) def = entry[1]
       }
-      setState(prev => ({ ...prev, isLoading: true }))
+
+      if (!def) {
+        setState((prev) => ({
+          ...prev,
+          lines: [...prev.lines, makeLine('error', `command not found: ${key}`)],
+        }))
+        return
+      }
+
+      const currentState: TerminalState = {
+        ...stateRef.current,
+        history: historyRef.current,
+      }
+
+      if (def.type === 'sync') {
+        const result = def.handler(args, currentState) as CommandResult
+        if (result.nextState?.history && result.nextState.history.length === 0) {
+          clearHistory()
+        }
+        setState((prev) => ({
+          ...prev,
+          lines: [...prev.lines, ...hydrateLines(result.lines)],
+          ...omitHistory(result.nextState),
+        }))
+        return
+      }
+
+      // Streaming async: no loading placeholder; handler appends lines as it goes.
+      if (def.stream) {
+        const append = (type: TerminalLine['type'], content: TerminalLine['content']) => {
+          setState((prev) => ({ ...prev, lines: [...prev.lines, makeLine(type, content)] }))
+        }
+        setState((prev) => ({ ...prev, isLoading: true }))
+        try {
+          const result = (await def.handler(args, currentState, append)) as CommandResult | undefined
+          if (result?.nextState?.history && result.nextState.history.length === 0) {
+            clearHistory()
+          }
+          setState((prev) => ({
+            ...prev,
+            isLoading: false,
+            lines: result?.lines ? [...prev.lines, ...hydrateLines(result.lines)] : prev.lines,
+            ...omitHistory(result?.nextState),
+          }))
+        } catch {
+          setState((prev) => ({
+            ...prev,
+            isLoading: false,
+            lines: [...prev.lines, makeLine('error', 'Command failed. Please try again.')],
+          }))
+        }
+        return
+      }
+
+      // Async: show a loading placeholder, then swap it out
+      const loadingId = makeId()
+      setState((prev) => ({
+        ...prev,
+        isLoading: true,
+        lines: [...prev.lines, { id: loadingId, type: 'system' as const, content: 'Loading...' }],
+      }))
+
       try {
-        const result = (await def.handler(args, currentState, append)) as CommandResult | undefined
-        setState(prev => ({
+        const result = await (def.handler(args, currentState) as Promise<CommandResult>)
+        if (result.nextState?.history && result.nextState.history.length === 0) {
+          clearHistory()
+        }
+        setState((prev) => ({
           ...prev,
           isLoading: false,
-          lines: result?.lines ? [...prev.lines, ...hydrateLines(result.lines)] : prev.lines,
-          ...(result?.nextState ?? {}),
+          lines: [...prev.lines.filter((l) => l.id !== loadingId), ...hydrateLines(result.lines)],
+          ...omitHistory(result.nextState),
         }))
       } catch {
-        setState(prev => ({
+        setState((prev) => ({
           ...prev,
           isLoading: false,
-          lines: [...prev.lines, makeLine('error', 'Command failed. Please try again.')],
+          lines: [
+            ...prev.lines.filter((l) => l.id !== loadingId),
+            makeLine('error', 'Command failed. Please try again.'),
+          ],
         }))
       }
-      return
-    }
-
-    // Async: show a loading placeholder, then swap it out
-    const loadingId = makeId()
-    setState(prev => ({
-      ...prev,
-      isLoading: true,
-      lines: [...prev.lines, { id: loadingId, type: 'system' as const, content: 'Loading...' }],
-    }))
-
-    try {
-      const result = await (def.handler(args, currentState) as Promise<CommandResult>)
-      setState(prev => ({
-        ...prev,
-        isLoading: false,
-        lines: [
-          ...prev.lines.filter(l => l.id !== loadingId),
-          ...hydrateLines(result.lines),
-        ],
-        ...(result.nextState ?? {}),
-      }))
-    } catch {
-      setState(prev => ({
-        ...prev,
-        isLoading: false,
-        lines: [
-          ...prev.lines.filter(l => l.id !== loadingId),
-          makeLine('error', 'Command failed. Please try again.'),
-        ],
-      }))
-    }
-  }, [])
+    },
+    [clearHistory],
+  )
 
   // ─── Imperative actions (shared by keyboard & touch toolbar) ──────────────
 
@@ -159,27 +182,27 @@ export function useTerminal(initialLines?: Omit<TerminalLine, 'id'>[]) {
       const raw = rawOverride !== undefined ? rawOverride : input
       const trimmed = raw.trim()
 
-      // Echo the typed line and update history
-      setState(prev => ({
+      // Echo the typed line and update global history
+      setState((prev) => ({
         ...prev,
         input: '',
         historyIndex: -1,
         lines: [...prev.lines, makeLine('input', trimmed || '')],
-        history: trimmed
-          ? [trimmed, ...prev.history.filter(h => h !== trimmed)]
-          : prev.history,
       }))
+      if (trimmed) {
+        pushHistory(trimmed)
+      }
 
       if (!trimmed) return
 
       await runCommand(trimmed)
     },
-    [runCommand],
+    [pushHistory, runCommand],
   )
 
   const cancelInput = useCallback(() => {
     if (stateRef.current.isLoading) return
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
       input: '',
       historyIndex: -1,
@@ -189,24 +212,26 @@ export function useTerminal(initialLines?: Omit<TerminalLine, 'id'>[]) {
 
   const clearTerminal = useCallback(() => {
     if (stateRef.current.isLoading) return
-    setState(prev => ({ ...prev, lines: [], input: '', historyIndex: -1 }))
+    setState((prev) => ({ ...prev, lines: [], input: '', historyIndex: -1 }))
   }, [])
 
   const historyPrev = useCallback(() => {
-    const { history, historyIndex, isLoading } = stateRef.current
-    if (isLoading || history.length === 0) return
-    const next = Math.min(historyIndex + 1, history.length - 1)
-    setState(prev => ({ ...prev, historyIndex: next, input: history[next] ?? '' }))
+    const currentHistory = historyRef.current
+    const { historyIndex, isLoading } = stateRef.current
+    if (isLoading || currentHistory.length === 0) return
+    const next = Math.min(historyIndex + 1, currentHistory.length - 1)
+    setState((prev) => ({ ...prev, historyIndex: next, input: currentHistory[next] ?? '' }))
   }, [])
 
   const historyNext = useCallback(() => {
-    const { history, historyIndex, isLoading } = stateRef.current
+    const currentHistory = historyRef.current
+    const { historyIndex, isLoading } = stateRef.current
     if (isLoading || historyIndex === -1) return
     const next = Math.max(historyIndex - 1, -1)
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
       historyIndex: next,
-      input: next === -1 ? '' : history[next],
+      input: next === -1 ? '' : (currentHistory[next] ?? ''),
     }))
   }, [])
 
@@ -215,13 +240,11 @@ export function useTerminal(initialLines?: Omit<TerminalLine, 'id'>[]) {
     if (isLoading || !input) return
     const { completed, matches } = getCompletion(input, COMMANDS)
     if (completed !== input) {
-      setState(prev => ({ ...prev, input: completed }))
+      setState((prev) => ({ ...prev, input: completed }))
     } else if (matches.length > 1) {
       const display =
-        matches.length > 12
-          ? `${matches.slice(0, 12).join('  ')}  … +${matches.length - 12} more`
-          : matches.join('  ')
-      setState(prev => ({
+        matches.length > 12 ? `${matches.slice(0, 12).join('  ')}  … +${matches.length - 12} more` : matches.join('  ')
+      setState((prev) => ({
         ...prev,
         lines: [...prev.lines, makeLine('output', <Dim>{display}</Dim>)],
       }))
@@ -271,33 +294,22 @@ export function useTerminal(initialLines?: Omit<TerminalLine, 'id'>[]) {
         await submitCommand()
       }
     },
-    [
-      cancelInput,
-      clearTerminal,
-      historyPrev,
-      historyNext,
-      triggerTabComplete,
-      submitCommand,
-    ],
+    [cancelInput, clearTerminal, historyPrev, historyNext, triggerTabComplete, submitCommand],
   )
 
-  const appendLine = useCallback(
-    (type: TerminalLine['type'], content: TerminalLine['content']) => {
-      setState(prev => ({ ...prev, lines: [...prev.lines, makeLine(type, content)] }))
-    },
-    [],
-  )
+  const appendLine = useCallback((type: TerminalLine['type'], content: TerminalLine['content']) => {
+    setState((prev) => ({ ...prev, lines: [...prev.lines, makeLine(type, content)] }))
+  }, [])
 
   const suggestions = getCompletionSuggestions(state.input, COMMANDS)
-  const canHistoryPrev =
-    state.history.length > 0 && state.historyIndex < state.history.length - 1
+  const canHistoryPrev = history.length > 0 && state.historyIndex < history.length - 1
   const canHistoryNext = state.historyIndex >= 0
 
   return {
     lines: state.lines,
     input: state.input,
     isLoading: state.isLoading,
-    history: state.history,
+    history,
     suggestions,
     canHistoryPrev,
     canHistoryNext,
