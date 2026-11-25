@@ -4,8 +4,10 @@ import { TerminalWidget } from '../terminal/terminal-widget'
 
 export function TerminalSection() {
   return (
-    <GameProvider>
-      <TerminalWidget />
-    </GameProvider>
+    <div className="phone-hidden">
+      <GameProvider>
+        <TerminalWidget />
+      </GameProvider>
+    </div>
   )
 }

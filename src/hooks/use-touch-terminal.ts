@@ -10,9 +10,17 @@ import {
 export const TOUCH_MEDIA_QUERY =
   '(hover: none), (pointer: coarse), (max-width: 1023px)'
 
+export const PHONE_MEDIA_QUERY =
+  '(hover: none) and (max-width: 639px), (pointer: coarse) and (max-width: 639px), (hover: none) and (max-height: 500px), (pointer: coarse) and (max-height: 500px)'
+
 export function matchesTouchMode(): boolean {
   if (typeof window === 'undefined') return false
   return window.matchMedia(TOUCH_MEDIA_QUERY).matches
+}
+
+export function matchesPhoneMode(): boolean {
+  if (typeof window === 'undefined') return false
+  return window.matchMedia(PHONE_MEDIA_QUERY).matches
 }
 
 export function isIOSDevice(): boolean {
@@ -74,6 +82,32 @@ export function useTouchMode(): boolean {
     subscribeTouchMode,
     getTouchModeSnapshot,
     getTouchModeServerSnapshot,
+  )
+}
+
+function subscribePhoneMode(callback: () => void) {
+  const mq = window.matchMedia(PHONE_MEDIA_QUERY)
+  mq.addEventListener('change', callback)
+  return () => mq.removeEventListener('change', callback)
+}
+
+function getPhoneModeSnapshot(): boolean {
+  return matchesPhoneMode()
+}
+
+function getPhoneModeServerSnapshot(): boolean {
+  return false
+}
+
+/**
+ * Returns true on phone-sized touch devices (portrait < 640px or landscape
+ * height <= 500px), excluding tablets (iPad mini 744px+) and desktop.
+ */
+export function usePhoneMode(): boolean {
+  return useSyncExternalStore(
+    subscribePhoneMode,
+    getPhoneModeSnapshot,
+    getPhoneModeServerSnapshot,
   )
 }
 
