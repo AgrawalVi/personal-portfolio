@@ -136,7 +136,7 @@ export function GlassCard({
         </>
       )}
 
-      <div className="relative z-10 pb-1">{children}</div>
+      <div className="relative z-10 h-full pb-1">{children}</div>
     </motion.div>
   )
 }
