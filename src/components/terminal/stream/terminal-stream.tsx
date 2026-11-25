@@ -1,5 +1,6 @@
 import type { RefObject } from 'react'
 
+import { TOUCH_TERMINAL_HINT_COMMANDS } from '@/constants/terminal'
 import type { TerminalLine } from '@/types/terminal'
 
 import { TerminalCurrentLine } from './terminal-current-line'
@@ -47,7 +48,7 @@ export function TerminalStream({
             <span className="text-primary/70 shrink-0">
               <span className="hidden sm:inline">visitor@vishrut.tech:</span>~$&nbsp;
             </span>
-            <TerminalGhostHint />
+            <TerminalGhostHint commands={TOUCH_TERMINAL_HINT_COMMANDS} />
           </div>
         )
       )}

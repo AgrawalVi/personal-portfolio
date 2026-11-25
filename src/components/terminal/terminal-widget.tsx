@@ -8,9 +8,16 @@ import { useGame } from '@/contexts/game-context'
 import { TerminalActionProvider } from '@/contexts/terminal-action-context'
 import { HOME_QUICK_COMMANDS } from '@/constants/terminal'
 import { useTerminal } from '@/hooks/use-terminal'
-import { useTouchMode, useVisualViewport } from '@/hooks/use-touch-terminal'
+import {
+  matchesTouchMode,
+  useTouchMode,
+  useVisualViewport,
+} from '@/hooks/use-touch-terminal'
 import { COMMANDS } from '@/lib/terminal/commands'
-import { makeGamesCommand } from '@/lib/terminal/game-commands'
+import {
+  GAMES_DESKTOP_ONLY_MESSAGE,
+  makeGamesCommand,
+} from '@/lib/terminal/game-commands'
 import {
   makeNavigateCommand,
   makeRouteCommand,
@@ -90,7 +97,9 @@ export function TerminalWidget({ initialLines }: TerminalWidgetProps = {}) {
   }, [canReplayHint])
 
   useEffect(() => {
-    COMMANDS['games'] = makeGamesCommand(launchGame)
+    COMMANDS['games'] = makeGamesCommand(launchGame, {
+      hiddenFromHelp: isTouchMode,
+    })
     COMMANDS['navigate'] = makeNavigateCommand(router)
     COMMANDS['experience'] = makeRouteCommand(
       router,
@@ -104,7 +113,7 @@ export function TerminalWidget({ initialLines }: TerminalWidgetProps = {}) {
     )
     COMMANDS['blog'] = makeRouteCommand(router, '/blog', 'Read the blog')
     COMMANDS['home'] = makeRouteCommand(router, '/', 'Go to home')
-  }, [launchGame, router])
+  }, [launchGame, router, isTouchMode])
 
   useEffect(() => {
     if (lastScore) {
@@ -170,13 +179,9 @@ export function TerminalWidget({ initialLines }: TerminalWidgetProps = {}) {
     sessionStorage.removeItem('pendingGame')
     const valid: GameId[] = ['snake', 'space-invaders']
     if (!valid.includes(pending as GameId)) return
-    // Read viewport directly: a state hook is false until its effect runs,
-    // and pendingGame is already consumed above.
-    if (window.matchMedia('(max-width: 767px)').matches) {
-      appendLine(
-        'error',
-        'Games require keyboard controls. Open this site on a desktop browser to play.',
-      )
+    // Read media query directly: pendingGame is already consumed above.
+    if (matchesTouchMode()) {
+      appendLine('error', GAMES_DESKTOP_ONLY_MESSAGE)
       return
     }
     launchGame(pending as GameId)

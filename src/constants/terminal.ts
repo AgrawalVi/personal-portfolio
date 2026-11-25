@@ -13,6 +13,10 @@ export const TERMINAL_HINT_COMMANDS = [
   'coffee',
 ] as const
 
+export const TOUCH_TERMINAL_HINT_COMMANDS = TERMINAL_HINT_COMMANDS.filter(
+  (cmd) => !cmd.startsWith('games'),
+)
+
 export interface QuickCommand {
   label: string
   command: string
@@ -30,7 +34,6 @@ export const HOME_QUICK_COMMANDS: readonly QuickCommand[] = [
   { label: 'joke', command: 'joke' },
   { label: 'price …', command: 'price ', prefillOnly: true },
   { label: 'define …', command: 'define ', prefillOnly: true },
-  { label: 'games', command: 'games' },
 ]
 
 export function getGlobalQuickCommands(pathname: string): QuickCommand[] {
