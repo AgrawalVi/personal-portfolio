@@ -1,10 +1,8 @@
 import type { RefObject } from 'react'
 
-import { TOUCH_TERMINAL_HINT_COMMANDS } from '@/constants/terminal'
 import type { TerminalLine } from '@/types/terminal'
 
 import { TerminalCurrentLine } from './terminal-current-line'
-import { TerminalGhostHint } from './terminal-ghost-hint'
 import { TerminalLine as TerminalLineComponent } from './terminal-line'
 
 interface TerminalStreamProps {
@@ -42,14 +40,10 @@ export function TerminalStream({
           showHint={showHint}
         />
       ) : (
-        showHint &&
-        input === '' && (
-          <div className="text-sm leading-5 flex items-center pt-0.5 select-none pointer-events-none">
-            <span className="text-primary/70 shrink-0">
-              <span className="hidden sm:inline">visitor@vishrut.tech:</span>~$&nbsp;
-            </span>
-            <TerminalGhostHint commands={TOUCH_TERMINAL_HINT_COMMANDS} />
-          </div>
+        lines.length === 0 && (
+          <p className="text-xs leading-5 text-muted-foreground/55 select-none">
+            visitor@vishrut.tech — ready. Tap a command or type below.
+          </p>
         )
       )}
     </div>
