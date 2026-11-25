@@ -1,24 +1,30 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useGame } from '@/contexts/game-context'
-import { AnimatePresence, motion, Transition } from 'motion/react'
+import { AnimatePresence, motion, type Transition } from 'motion/react'
 
-import type { GameId } from '@/types/games'
-import type { TerminalLine } from '@/types/terminal'
+import { useGame } from '@/contexts/game-context'
+import { TerminalActionProvider } from '@/contexts/terminal-action-context'
+import { HOME_QUICK_COMMANDS } from '@/constants/terminal'
+import { useTerminal } from '@/hooks/use-terminal'
+import { useTouchMode, useVisualViewport } from '@/hooks/use-touch-terminal'
 import { COMMANDS } from '@/lib/terminal/commands'
 import { makeGamesCommand } from '@/lib/terminal/game-commands'
 import {
   makeNavigateCommand,
   makeRouteCommand,
 } from '@/lib/terminal/navigate-command'
-import { useTerminal } from '@/hooks/use-terminal'
-import { Card } from '@/components/ui/card'
+import { cn } from '@/lib/utils'
 import { GamePanel } from '@/components/games/game-panel'
+import { Card } from '@/components/ui/card'
+
+import type { GameId } from '@/types/games'
+import type { TerminalLine } from '@/types/terminal'
 
 import { TerminalTitleBar } from './chrome/terminal-title-bar'
 import { TerminalStream } from './stream/terminal-stream'
+import { TouchTerminalDock } from './touch-terminal-dock'
 
 const SPRING = {
   type: 'spring',
@@ -38,6 +44,16 @@ export function TerminalWidget({ initialLines }: TerminalWidgetProps = {}) {
     input,
     isLoading,
     history,
+    suggestions,
+    canHistoryPrev,
+    canHistoryNext,
+    setInput,
+    submitCommand,
+    cancelInput,
+    clearTerminal,
+    historyPrev,
+    historyNext,
+    triggerTabComplete,
     handleInputChange,
     handleKeyDown,
     outputRef,
@@ -45,9 +61,14 @@ export function TerminalWidget({ initialLines }: TerminalWidgetProps = {}) {
   } = useTerminal(initialLines)
   const { activeGame, lastScore, launchGame } = useGame()
   const router = useRouter()
+  const isTouchMode = useTouchMode()
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [isFocused, setIsFocused] = useState(false)
   const [idleHintActive, setIdleHintActive] = useState(false)
+  const [isFullscreen, setIsFullscreen] = useState(false)
+
+  const showFullscreen = isFullscreen && !activeGame
+  const viewport = useVisualViewport(showFullscreen)
 
   const canReplayHint =
     !input &&
@@ -94,9 +115,46 @@ export function TerminalWidget({ initialLines }: TerminalWidgetProps = {}) {
     }
   }, [lastScore]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Auto-focus only on desktop (never randomly summon the software keyboard on touch devices)
   useEffect(() => {
-    if (!activeGame) inputRef.current?.focus()
-  }, [lines, activeGame])
+    if (!activeGame && !isTouchMode) {
+      inputRef.current?.focus()
+    }
+  }, [lines, activeGame, isTouchMode])
+
+  // Lock background page scroll while fullscreen terminal is open
+  useEffect(() => {
+    if (!showFullscreen) return
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = prevOverflow
+    }
+  }, [showFullscreen])
+
+  // Keep latest output scrolled into view when toggling fullscreen or virtual keyboard
+  useEffect(() => {
+    if (!showFullscreen) return
+    const raf = requestAnimationFrame(() => {
+      if (outputRef.current) {
+        outputRef.current.scrollTop = outputRef.current.scrollHeight
+      }
+    })
+    return () => cancelAnimationFrame(raf)
+  }, [showFullscreen, viewport.height, outputRef])
+
+  // Allow Escape to exit fullscreen (e.g. tablet with hardware keyboard)
+  useEffect(() => {
+    if (!showFullscreen) return
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        e.preventDefault()
+        setIsFullscreen(false)
+      }
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [showFullscreen])
 
   useEffect(() => {
     function onFocusEvent() {
@@ -124,51 +182,164 @@ export function TerminalWidget({ initialLines }: TerminalWidgetProps = {}) {
     launchGame(pending as GameId)
   }, [launchGame, appendLine])
 
+  const selectCommand = useCallback(
+    (command: string, options?: { prefillOnly?: boolean }) => {
+      if (options?.prefillOnly) {
+        setInput(command)
+        inputRef.current?.focus()
+        return
+      }
+      submitCommand(command)
+    },
+    [setInput, submitCommand],
+  )
+
+  const toggleFullscreen = useCallback(() => {
+    setIsFullscreen((prev) => !prev)
+  }, [])
+
+  const terminalInner = (
+    <TerminalActionProvider value={{ selectCommand }}>
+      <TerminalTitleBar
+        isFullscreen={showFullscreen}
+        showFullscreenToggle={isTouchMode}
+        onToggleFullscreen={toggleFullscreen}
+      />
+      <TerminalStream
+        lines={lines}
+        input={input}
+        isLoading={isLoading}
+        isFocused={isFocused}
+        showHint={showHint}
+        hideCurrentLine={isTouchMode}
+        outputRef={outputRef}
+      />
+      {isTouchMode && (
+        <TouchTerminalDock
+          input={input}
+          isLoading={isLoading}
+          disabled={!!activeGame}
+          inputRef={inputRef}
+          suggestions={suggestions}
+          quickCommands={HOME_QUICK_COMMANDS}
+          canHistoryPrev={canHistoryPrev}
+          canHistoryNext={canHistoryNext}
+          hasLines={lines.length > 0}
+          safeAreaBottom={showFullscreen && !viewport.isKeyboardOpen}
+          onInputChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          onSubmit={submitCommand}
+          onSetInput={setInput}
+          onTabComplete={triggerTabComplete}
+          onHistoryPrev={historyPrev}
+          onHistoryNext={historyNext}
+          onCancel={cancelInput}
+          onClear={clearTerminal}
+        />
+      )}
+    </TerminalActionProvider>
+  )
+
+  const inlineHeightClass = isTouchMode
+    ? 'h-[390px] sm:h-[440px]'
+    : 'h-[400px]'
+
   return (
     <>
-      {/* In-flow slot: terminal when idle, spacer when game is active */}
-      {activeGame ? (
-        <div className="h-[400px]" />
+      <p className="text-xs text-muted-foreground font-(family-name:--font-jetbrains-mono) mb-3 sm:mb-4">
+        {isTouchMode ? (
+          <>
+            Type <span className="text-foreground">help</span> or tap a command
+            to explore.
+          </>
+        ) : (
+          <>
+            Type <span className="text-foreground">help</span> to explore.
+          </>
+        )}
+      </p>
+
+      {/* In-flow slot: terminal when idle & inline, spacer when game or fullscreen is active */}
+      {activeGame || showFullscreen ? (
+        <div className={inlineHeightClass} />
       ) : (
         <motion.div
           layoutId="terminal-card"
           transition={SPRING}
-          className="h-[400px]"
+          className={inlineHeightClass}
         >
           <Card
-            className="flex flex-col shadow-none border-border overflow-hidden cursor-text h-full"
-            onClick={() => inputRef.current?.focus()}
+            className={cn(
+              'flex flex-col shadow-none border-border overflow-hidden h-full py-0 gap-0',
+              !isTouchMode && 'cursor-text',
+            )}
+            onClick={() => {
+              if (!isTouchMode) inputRef.current?.focus()
+            }}
           >
-            <TerminalTitleBar />
-            <TerminalStream
-              lines={lines}
-              input={input}
-              isLoading={isLoading}
-              isFocused={isFocused}
-              showHint={showHint}
-              outputRef={outputRef}
-            />
+            {terminalInner}
           </Card>
         </motion.div>
       )}
 
-      {/* Mobile: visible prompt input. Desktop (md+): sr-only, focus driven by Card click. */}
-      <input
-        ref={inputRef}
-        value={input}
-        onChange={handleInputChange}
-        onKeyDown={handleKeyDown}
-        disabled={isLoading || !!activeGame}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-        autoComplete="off"
-        autoCorrect="off"
-        autoCapitalize="off"
-        spellCheck={false}
-        aria-label="Terminal input"
-        placeholder="Type a command…"
-        className="mt-3 block w-full rounded-md border border-border bg-muted/40 px-3 py-2 font-(family-name:--font-jetbrains-mono) text-sm outline-none placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring disabled:opacity-60 md:sr-only"
-      />
+      {/* Desktop-only sr-only input driven by Card click; touch devices use the integrated TouchTerminalDock */}
+      {!isTouchMode && (
+        <input
+          ref={inputRef}
+          value={input}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+          disabled={isLoading || !!activeGame}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck={false}
+          aria-label="Terminal input"
+          className="sr-only"
+        />
+      )}
+
+      {/* Fullscreen touch/tablet terminal overlay — synced to visualViewport so keyboard never obscures input */}
+      <AnimatePresence>
+        {showFullscreen && (
+          <>
+            <motion.div
+              key="terminal-fullscreen-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.18 }}
+              onClick={() => setIsFullscreen(false)}
+              className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm"
+            />
+            <div
+              style={
+                viewport.height !== null
+                  ? { top: viewport.offsetTop, height: viewport.height }
+                  : undefined
+              }
+              className="fixed inset-x-0 top-0 h-dvh z-50 flex flex-col md:p-6 pointer-events-none"
+            >
+              <motion.div
+                key="terminal-fullscreen-shell"
+                initial={{ opacity: 0, y: 16, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 12, scale: 0.98 }}
+                transition={{ duration: 0.2, ease: 'easeOut' }}
+                className="w-full h-full md:max-w-3xl md:mx-auto pointer-events-auto flex flex-col"
+              >
+                <Card className="flex flex-col shadow-2xl border-0 md:border md:border-border rounded-none md:rounded-xl overflow-hidden h-full py-0 gap-0 pt-[env(safe-area-inset-top)] md:pt-0 bg-card">
+                  {terminalInner}
+                </Card>
+              </motion.div>
+            </div>
+          </>
+        )}
+      </AnimatePresence>
 
       <AnimatePresence>
         {activeGame && (
@@ -187,7 +358,7 @@ export function TerminalWidget({ initialLines }: TerminalWidgetProps = {}) {
                 transition={SPRING}
                 className="w-full max-w-3xl px-4 h-[480px] pointer-events-auto"
               >
-                <Card className="flex flex-col shadow-none border-border overflow-hidden h-full">
+                <Card className="flex flex-col shadow-none border-border overflow-hidden h-full py-0 gap-0">
                   <TerminalTitleBar />
                   <GamePanel />
                 </Card>

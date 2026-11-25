@@ -84,3 +84,90 @@ export function getCompletion(
 
   return { completed: prefix + cp, matches: matchedValues }
 }
+
+export interface LiveSuggestion {
+  /** Display label on the chip (e.g. "weather", "--verbose", "/projects") */
+  label: string
+  /** Full input string produced when this suggestion is tapped */
+  nextInput: string
+  /** Whether selecting this suggestion produces a standalone runnable command */
+  appendSpace: boolean
+}
+
+/**
+ * Computes live tappable autocomplete suggestions for touch devices as the user types.
+ * Prioritizes visible (non-hidden) commands first so common commands surface immediately.
+ */
+export function getCompletionSuggestions(
+  input: string,
+  commands: Record<string, CommandDef>,
+  limit = 8,
+): LiveSuggestion[] {
+  if (!input.trim()) return []
+
+  const endsWithSpace = /\s$/.test(input)
+  const tokens = input.trim().split(/\s+/)
+
+  if (tokens.length === 1 && !endsWithSpace) {
+    const partial = tokens[0].toLowerCase()
+    const entries = Object.entries(commands)
+
+    // Prioritize visible commands before hidden easter eggs
+    const sorted = [
+      ...entries.filter(([, def]) => !def.hiddenFromHelp),
+      ...entries.filter(([, def]) => def.hiddenFromHelp),
+    ]
+
+    const results: LiveSuggestion[] = []
+    const seen = new Set<string>()
+
+    for (const [name, def] of sorted) {
+      const keys = [name, ...(def.aliases ?? [])]
+      if (keys.some((k) => k.toLowerCase().startsWith(partial)) && !seen.has(name)) {
+        seen.add(name)
+        const needsArg = Boolean(def.usage?.startsWith('<'))
+        results.push({
+          label: name,
+          nextInput: needsArg ? `${name} ` : name,
+          appendSpace: needsArg,
+        })
+        if (results.length >= limit) break
+      }
+    }
+
+    return results
+  }
+
+  const def = resolveCommand(tokens[0], commands)
+  if (!def?.complete) return []
+
+  const args = endsWithSpace ? tokens.slice(1) : tokens.slice(1, -1)
+  const partial = endsWithSpace ? '' : (tokens.at(-1) ?? '')
+  const prefix = endsWithSpace
+    ? input
+    : input.slice(0, input.length - partial.length)
+  const lowerPartial = partial.toLowerCase()
+
+  const candidates = def.complete(args, partial)
+  const results: LiveSuggestion[] = []
+  const seen = new Set<string>()
+
+  for (const cand of candidates) {
+    const { value, matchKeys } = normalize(cand)
+    if (
+      matchKeys.some((k) => k.toLowerCase().startsWith(lowerPartial)) &&
+      !seen.has(value)
+    ) {
+      seen.add(value)
+      results.push({
+        label: value,
+        nextInput: `${prefix}${value}`,
+        appendSpace: false,
+      })
+      if (results.length >= limit) break
+    }
+  }
+
+  return results
+}
+

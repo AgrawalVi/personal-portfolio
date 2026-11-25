@@ -72,7 +72,13 @@ export function makeNavigateCommand(router: AppRouterInstance): CommandDef {
           lines: [
             ...ROUTES.map(r => ({
               type: 'output' as const,
-              content: <HelpRow name={r.path} description={r.description} />,
+              content: (
+                <HelpRow
+                  name={r.path}
+                  description={r.description}
+                  runCommand={`navigate ${r.path}`}
+                />
+              ),
             })),
             {
               type: 'output' as const,
