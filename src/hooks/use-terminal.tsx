@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { Dim } from '@/components/terminal/rich'
 import { COMMANDS } from '@/lib/terminal/commands'
-import { getCompletion } from '@/lib/terminal/complete'
+import { getCompletion, getCompletionSuggestions } from '@/lib/terminal/complete'
 import type { CommandResult, TerminalLine, TerminalState } from '@/types/terminal'
 
 function makeId(): string {
@@ -52,6 +52,10 @@ export function useTerminal(initialLines?: Omit<TerminalLine, 'id'>[]) {
       outputRef.current.scrollTop = outputRef.current.scrollHeight
     }
   }, [state.lines])
+
+  const setInput = useCallback((value: string) => {
+    setState(prev => ({ ...prev, input: value, historyIndex: -1 }))
+  }, [])
 
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setState(prev => ({ ...prev, input: e.target.value }))
@@ -145,89 +149,136 @@ export function useTerminal(initialLines?: Omit<TerminalLine, 'id'>[]) {
     }
   }, [])
 
+  // ─── Imperative actions (shared by keyboard & touch toolbar) ──────────────
+
+  const submitCommand = useCallback(
+    async (rawOverride?: string) => {
+      const { input, isLoading } = stateRef.current
+      if (isLoading) return
+
+      const raw = rawOverride !== undefined ? rawOverride : input
+      const trimmed = raw.trim()
+
+      // Echo the typed line and update history
+      setState(prev => ({
+        ...prev,
+        input: '',
+        historyIndex: -1,
+        lines: [...prev.lines, makeLine('input', trimmed || '')],
+        history: trimmed
+          ? [trimmed, ...prev.history.filter(h => h !== trimmed)]
+          : prev.history,
+      }))
+
+      if (!trimmed) return
+
+      await runCommand(trimmed)
+    },
+    [runCommand],
+  )
+
+  const cancelInput = useCallback(() => {
+    if (stateRef.current.isLoading) return
+    setState(prev => ({
+      ...prev,
+      input: '',
+      historyIndex: -1,
+      lines: [...prev.lines, makeLine('system', '^C')],
+    }))
+  }, [])
+
+  const clearTerminal = useCallback(() => {
+    if (stateRef.current.isLoading) return
+    setState(prev => ({ ...prev, lines: [], input: '', historyIndex: -1 }))
+  }, [])
+
+  const historyPrev = useCallback(() => {
+    const { history, historyIndex, isLoading } = stateRef.current
+    if (isLoading || history.length === 0) return
+    const next = Math.min(historyIndex + 1, history.length - 1)
+    setState(prev => ({ ...prev, historyIndex: next, input: history[next] ?? '' }))
+  }, [])
+
+  const historyNext = useCallback(() => {
+    const { history, historyIndex, isLoading } = stateRef.current
+    if (isLoading || historyIndex === -1) return
+    const next = Math.max(historyIndex - 1, -1)
+    setState(prev => ({
+      ...prev,
+      historyIndex: next,
+      input: next === -1 ? '' : history[next],
+    }))
+  }, [])
+
+  const triggerTabComplete = useCallback(() => {
+    const { input, isLoading } = stateRef.current
+    if (isLoading || !input) return
+    const { completed, matches } = getCompletion(input, COMMANDS)
+    if (completed !== input) {
+      setState(prev => ({ ...prev, input: completed }))
+    } else if (matches.length > 1) {
+      const display =
+        matches.length > 12
+          ? `${matches.slice(0, 12).join('  ')}  … +${matches.length - 12} more`
+          : matches.join('  ')
+      setState(prev => ({
+        ...prev,
+        lines: [...prev.lines, makeLine('output', <Dim>{display}</Dim>)],
+      }))
+    }
+  }, [])
+
   // ─── Keyboard handler ─────────────────────────────────────────────────────
 
   const handleKeyDown = useCallback(
     async (e: React.KeyboardEvent<HTMLInputElement>) => {
-      const { input, history, historyIndex, isLoading } = stateRef.current
-      if (isLoading) return
+      if (stateRef.current.isLoading) return
 
       // Ctrl+C — cancel
       if (e.ctrlKey && e.key === 'c') {
         e.preventDefault()
-        setState(prev => ({
-          ...prev,
-          input: '',
-          lines: [...prev.lines, makeLine('system', '^C')],
-        }))
+        cancelInput()
         return
       }
 
       // Ctrl+L — clear
       if (e.ctrlKey && e.key === 'l') {
         e.preventDefault()
-        setState(prev => ({ ...prev, lines: [], input: '' }))
+        clearTerminal()
         return
       }
 
       if (e.key === 'ArrowUp') {
         e.preventDefault()
-        const next = Math.min(historyIndex + 1, history.length - 1)
-        setState(prev => ({ ...prev, historyIndex: next, input: history[next] ?? '' }))
+        historyPrev()
         return
       }
 
       if (e.key === 'ArrowDown') {
         e.preventDefault()
-        const next = Math.max(historyIndex - 1, -1)
-        setState(prev => ({
-          ...prev,
-          historyIndex: next,
-          input: next === -1 ? '' : history[next],
-        }))
+        historyNext()
         return
       }
 
       if (e.key === 'Tab') {
         e.preventDefault()
-        if (!input) return
-        const { completed, matches } = getCompletion(input, COMMANDS)
-        if (completed !== input) {
-          setState(prev => ({ ...prev, input: completed }))
-        } else if (matches.length > 1) {
-          const display =
-            matches.length > 12
-              ? `${matches.slice(0, 12).join('  ')}  … +${matches.length - 12} more`
-              : matches.join('  ')
-          setState(prev => ({
-            ...prev,
-            lines: [...prev.lines, makeLine('output', <Dim>{display}</Dim>)],
-          }))
-        }
+        triggerTabComplete()
         return
       }
 
       if (e.key === 'Enter') {
         e.preventDefault()
-        const trimmed = input.trim()
-
-        // Echo the typed line and update history
-        setState(prev => ({
-          ...prev,
-          input: '',
-          historyIndex: -1,
-          lines: [...prev.lines, makeLine('input', trimmed || '')],
-          history: trimmed
-            ? [trimmed, ...prev.history.filter(h => h !== trimmed)]
-            : prev.history,
-        }))
-
-        if (!trimmed) return
-
-        await runCommand(trimmed)
+        await submitCommand()
       }
     },
-    [runCommand],
+    [
+      cancelInput,
+      clearTerminal,
+      historyPrev,
+      historyNext,
+      triggerTabComplete,
+      submitCommand,
+    ],
   )
 
   const appendLine = useCallback(
@@ -237,11 +288,26 @@ export function useTerminal(initialLines?: Omit<TerminalLine, 'id'>[]) {
     [],
   )
 
+  const suggestions = getCompletionSuggestions(state.input, COMMANDS)
+  const canHistoryPrev =
+    state.history.length > 0 && state.historyIndex < state.history.length - 1
+  const canHistoryNext = state.historyIndex >= 0
+
   return {
     lines: state.lines,
     input: state.input,
     isLoading: state.isLoading,
     history: state.history,
+    suggestions,
+    canHistoryPrev,
+    canHistoryNext,
+    setInput,
+    submitCommand,
+    cancelInput,
+    clearTerminal,
+    historyPrev,
+    historyNext,
+    triggerTabComplete,
     handleInputChange,
     handleKeyDown,
     outputRef,

@@ -166,6 +166,13 @@
   .font-pixel {
     font-family: var(--font-pixel), monospace;
   }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @keyframes blink {

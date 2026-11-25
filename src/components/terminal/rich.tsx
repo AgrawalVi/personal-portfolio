@@ -1,3 +1,5 @@
+'use client'
+
 /**
  * Rich terminal output primitives.
  *
@@ -9,6 +11,8 @@
  */
 
 import type { ReactNode } from 'react'
+
+import { useTerminalAction } from '@/contexts/terminal-action-context'
 import { cn } from '@/lib/utils'
 
 // ─── Inline text ──────────────────────────────────────────────────────────────
@@ -90,38 +94,78 @@ export function KV({
 }) {
   return (
     <div className="flex items-baseline gap-x-2">
-      <Muted>
+      <Muted className="shrink-0">
         <span style={{ display: 'inline-block', minWidth: labelWidth }}>{label}</span>
       </Muted>
-      <span>{value}</span>
+      <span className="min-w-0 break-words">{value}</span>
     </div>
   )
 }
 
-/** A single row in a help listing. */
+/** A single row in a help listing. Stacks cleanly on mobile and taps to run/prefill. */
 export function HelpRow({
   name,
   usage,
   description,
   isAsync,
-  aliases,
+  runCommand,
 }: {
   name: string
   usage?: string
   description: string
   isAsync?: boolean
   aliases?: string[]
+  /** Override command string executed when tapped (e.g. `games snake` or `navigate /projects`). */
+  runCommand?: string
 }) {
+  const terminalAction = useTerminalAction()
+  const needsRequiredArg = !runCommand && Boolean(usage?.startsWith('<'))
+  const targetCommand = runCommand ?? (needsRequiredArg ? `${name} ` : name)
+
+  const content = (
+    <>
+      <span className="flex items-center justify-between gap-2 sm:block sm:shrink-0 sm:min-w-[18ch]">
+        <span className="truncate">
+          <Cmd>{name}</Cmd>
+          {usage && <Arg> {usage}</Arg>}
+        </span>
+        {isAsync && (
+          <span className="sm:hidden shrink-0">
+            <Badge>async</Badge>
+          </span>
+        )}
+      </span>
+      <span className="text-xs sm:text-sm sm:flex-1 text-muted-foreground leading-snug sm:leading-5">
+        {description}
+      </span>
+      {isAsync && (
+        <span className="hidden sm:flex items-center gap-1.5 shrink-0">
+          <Badge>async</Badge>
+        </span>
+      )}
+    </>
+  )
+
+  if (!terminalAction) {
+    return (
+      <div className="flex flex-col gap-0.5 py-1 sm:flex-row sm:items-baseline sm:gap-x-3 sm:py-px">
+        {content}
+      </div>
+    )
+  }
+
   return (
-    <div className="flex items-baseline gap-x-3 py-px">
-      <span className="shrink-0" style={{ minWidth: '18ch' }}>
-        <Cmd>{name}</Cmd>
-        {usage && <Arg> {usage}</Arg>}
-      </span>
-      <span className="flex-1 text-muted-foreground">{description}</span>
-      <span className="flex items-center gap-1.5 shrink-0">
-        {isAsync && <Badge>async</Badge>}
-      </span>
-    </div>
+    <button
+      type="button"
+      onClick={(e) => {
+        e.stopPropagation()
+        terminalAction.selectCommand(targetCommand, {
+          prefillOnly: needsRequiredArg,
+        })
+      }}
+      className="w-full text-left flex flex-col gap-0.5 py-1.5 px-1.5 -mx-1.5 rounded-md sm:flex-row sm:items-baseline sm:gap-x-3 sm:py-0.5 hover:bg-muted/40 active:bg-muted/60 transition-colors cursor-pointer"
+    >
+      {content}
+    </button>
   )
 }

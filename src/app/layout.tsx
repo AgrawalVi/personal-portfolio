@@ -79,11 +79,11 @@ export default function RootLayout({
           forcedTheme="dark"
         >
           <TooltipProvider>
-            <div className="grid grid-rows-[auto_1fr_auto] h-screen">
+            <div className="grid grid-cols-[minmax(0,1fr)] grid-rows-[auto_1fr_auto] min-h-dvh">
               <SiteHeader />
-              <main className="pt-4 w-full px-4 max-w-3xl mx-auto">
+              <main className="pt-4 w-full min-w-0 px-3 sm:px-4 max-w-3xl mx-auto">
                 <PageHeader />
-                <div className="px-2">{children}</div>
+                <div className="px-2 min-w-0">{children}</div>
               </main>
               <SiteFooter />
             </div>

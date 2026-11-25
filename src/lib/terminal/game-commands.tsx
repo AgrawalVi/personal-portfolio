@@ -30,7 +30,13 @@ export function makeGamesCommand(launchGame: (id: GameId) => void): CommandDef {
           lines: [
             ...GAME_LIST.map(g => ({
               type: 'output' as const,
-              content: <HelpRow name={g.id} description={g.description} />,
+              content: (
+                <HelpRow
+                  name={g.id}
+                  description={g.description}
+                  runCommand={`games ${g.id}`}
+                />
+              ),
             })),
             {
               type: 'output' as const,
@@ -85,7 +91,13 @@ export function makeGamesRouteCommand(router: AppRouterInstance): CommandDef {
           lines: [
             ...GAME_LIST.map(g => ({
               type: 'output' as const,
-              content: <HelpRow name={g.id} description={g.description} />,
+              content: (
+                <HelpRow
+                  name={g.id}
+                  description={g.description}
+                  runCommand={`games ${g.id}`}
+                />
+              ),
             })),
             {
               type: 'output' as const,
