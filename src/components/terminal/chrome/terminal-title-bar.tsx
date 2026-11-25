@@ -40,14 +40,14 @@ export function TerminalTitleBar({
               className={cn(
                 'font-pixel inline-flex cursor-pointer items-center gap-1.5 border px-2 py-1 text-[7px] leading-none transition-colors',
                 isMuted
-                  ? 'border-destructive/40 bg-destructive/10 text-destructive/90 hover:border-destructive/70'
+                  ? 'border-game-divider text-game-dim hover:border-game-border/60 hover:text-game-border bg-transparent'
                   : 'border-game-border/50 bg-game-accent/10 text-game-accent hover:border-game-accent',
               )}
             >
               {isMuted ? (
                 <>
                   <VolumeX className="size-3 shrink-0" aria-hidden="true" />
-                  <span>MUTED</span>
+                  <span>OFF</span>
                 </>
               ) : (
                 <>
