@@ -174,7 +174,7 @@ function TouchTerminalSheet({
       'Browse my projects',
     )
     COMMANDS['blog'] = makeRouteCommand(router, '/blog', 'Read the blog')
-    COMMANDS['games'] = makeGamesRouteCommand(router)
+    COMMANDS['games'] = makeGamesRouteCommand(router, { hiddenFromHelp: true })
   }, [router])
 
   // Lock background scroll while sheet is open

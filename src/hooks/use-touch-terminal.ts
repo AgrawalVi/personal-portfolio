@@ -2,7 +2,13 @@
 
 import { useEffect, useState, useSyncExternalStore } from 'react'
 
-const TOUCH_MEDIA_QUERY = '(hover: none), (pointer: coarse), (max-width: 1023px)'
+export const TOUCH_MEDIA_QUERY =
+  '(hover: none), (pointer: coarse), (max-width: 1023px)'
+
+export function matchesTouchMode(): boolean {
+  if (typeof window === 'undefined') return false
+  return window.matchMedia(TOUCH_MEDIA_QUERY).matches
+}
 
 function subscribeTouchMode(callback: () => void) {
   const mq = window.matchMedia(TOUCH_MEDIA_QUERY)
@@ -11,7 +17,7 @@ function subscribeTouchMode(callback: () => void) {
 }
 
 function getTouchModeSnapshot(): boolean {
-  return window.matchMedia(TOUCH_MEDIA_QUERY).matches
+  return matchesTouchMode()
 }
 
 function getTouchModeServerSnapshot(): boolean {
