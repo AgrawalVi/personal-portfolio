@@ -4,6 +4,7 @@ import { useGame } from '@/contexts/game-context'
 import { Maximize2, Minimize2, Volume2, VolumeX } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
 
 import { TitleBar } from './title-bar'
 
@@ -74,15 +75,17 @@ export function TerminalTitleBar({
       }
       rightContent={
         showFullscreenToggle && onToggleFullscreen ? (
-          <button
+          <Button
             type="button"
+            variant="ghost"
+            size={isFullscreen ? 'xs' : 'icon-xs'}
             onClick={(e) => {
               e.stopPropagation()
               onToggleFullscreen()
             }}
             aria-label={isFullscreen ? 'Exit fullscreen' : 'Expand terminal'}
             title={isFullscreen ? 'Exit fullscreen' : 'Expand terminal'}
-            className="inline-flex items-center gap-1.5 -my-1 -mr-1 px-2 py-1 rounded-md text-xs font-(family-name:--font-jetbrains-mono) text-muted-foreground hover:text-foreground hover:bg-muted/60 active:bg-muted transition-colors cursor-pointer"
+            className="-my-1 -mr-1 font-(family-name:--font-jetbrains-mono) text-muted-foreground hover:text-foreground cursor-pointer"
           >
             {isFullscreen ? (
               <>
@@ -92,7 +95,7 @@ export function TerminalTitleBar({
             ) : (
               <Maximize2 className="size-3.5" />
             )}
-          </button>
+          </Button>
         ) : undefined
       }
     />
