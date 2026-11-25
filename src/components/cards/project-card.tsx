@@ -30,7 +30,7 @@ function ActionLink({
   index: number
   total: number
 }) {
-  const isOrphan = total === 3 && index === 2
+  const isOrphan = total % 2 === 1 && index === total - 1
   const layout = isOrphan ? 'col-span-2 justify-self-center w-1/2' : 'w-full'
   return (
     <Button
@@ -97,7 +97,7 @@ export function ProjectCard({ project }: { project: ProjectFrontmatter }) {
           className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover/card:opacity-100"
           style={{ background: hoverTint }}
         />
-        <div className="relative flex flex-col min-h-[224px]">
+        <div className="relative flex flex-col sm:min-h-[224px]">
           <CardHeader className="py-4">
             <div className="flex flex-col gap-1">
               <span className="text-xs text-muted-foreground tabular-nums">
@@ -108,15 +108,15 @@ export function ProjectCard({ project }: { project: ProjectFrontmatter }) {
             </div>
           </CardHeader>
 
-          <div className="relative flex-1">
+          <div className="relative flex flex-1 flex-col">
             <div className="transition-all duration-300 sm:group-hover/card:-translate-y-1 sm:group-hover/card:opacity-0">
-              <CardContent>
+              <CardContent className={links.length === 0 ? 'pb-4' : undefined}>
                 <p className="text-sm text-muted-foreground leading-relaxed">{project.summary}</p>
               </CardContent>
             </div>
 
             {links.length > 0 && (
-              <div className="mt-2 grid grid-cols-2 gap-2 px-6 pb-4 sm:absolute sm:inset-0 sm:mt-0 sm:px-6 sm:pb-8 sm:items-center sm:content-center">
+              <div className="mt-auto grid grid-cols-2 gap-2 px-4 pt-4 pb-4 sm:absolute sm:inset-0 sm:mt-0 sm:px-6 sm:pt-0 sm:pb-8 sm:items-center sm:content-center">
                 {links.map((l, i) => (
                   <ActionLink
                     key={l.url}
