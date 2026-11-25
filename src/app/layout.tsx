@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Josefin_Sans, Nunito } from 'next/font/google'
 import { ThemeProvider } from '@/components/theme-provider'
+import { HistoryProvider } from '@/components/history-provider'
 import './globals.css'
 import { MenuDock } from '@/components/general/nav-dock'
 import Footer from '@/components/general/footer'
@@ -34,14 +35,16 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="relative">
-            <MenuDock />
-            <div className="grid min-h-dvh grid-rows-[1fr_auto]">
-              <main className="pb-20">{children}</main>
-              <Footer />
+          <HistoryProvider>
+            <div className="relative">
+              <MenuDock />
+              <div className="grid min-h-dvh grid-rows-[1fr_auto]">
+                <main className="pb-20">{children}</main>
+                <Footer />
+              </div>
+              <Analytics />
             </div>
-            <Analytics />
-          </div>
+          </HistoryProvider>
         </ThemeProvider>
       </body>
     </html>
