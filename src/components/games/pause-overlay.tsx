@@ -29,34 +29,26 @@ export function PauseOverlay() {
         hint: 'CTRL+M',
         ariaLabel: isMuted ? 'Sound: Off. Toggle sound' : 'Sound: On. Toggle sound',
         status: (
-          <span aria-hidden="true" className="inline-flex items-center gap-1.5">
-            {isMuted ? (
-              <VolumeX className="text-destructive size-3 shrink-0" />
-            ) : (
-              <Volume2 className="text-game-accent size-3 shrink-0" />
+          <span
+            aria-hidden="true"
+            className={cn(
+              'inline-flex min-w-[46px] items-center justify-center gap-1 border px-1.5 py-0.5 text-[6px] leading-none transition-colors',
+              isMuted
+                ? 'border-game-divider text-game-dim bg-transparent'
+                : 'border-game-accent/50 bg-game-accent/15 text-game-accent',
             )}
-            <span className="border-game-divider bg-game-surface inline-flex items-center border p-0.5 text-[6px] leading-none">
-              <span
-                className={cn(
-                  'border px-1.5 py-0.5 transition-colors',
-                  !isMuted
-                    ? 'bg-game-accent/20 text-game-accent border-game-accent/60'
-                    : 'text-game-muted/50 border-transparent',
-                )}
-              >
-                ON
-              </span>
-              <span
-                className={cn(
-                  'border px-1.5 py-0.5 transition-colors',
-                  isMuted
-                    ? 'bg-destructive/20 text-destructive border-destructive/50'
-                    : 'text-game-muted/50 border-transparent',
-                )}
-              >
-                OFF
-              </span>
-            </span>
+          >
+            {isMuted ? (
+              <>
+                <VolumeX className="size-2.5 shrink-0" />
+                <span>OFF</span>
+              </>
+            ) : (
+              <>
+                <Volume2 className="size-2.5 shrink-0" />
+                <span>ON</span>
+              </>
+            )}
           </span>
         ),
         action: toggleMute,
@@ -90,14 +82,14 @@ export function PauseOverlay() {
 
   return (
     <div className="bg-game-bg/95 absolute inset-0 flex items-center justify-center backdrop-blur-[1px]">
-      <div className="font-pixel bg-game-bg border-game-border min-w-[270px] border-2 p-5 shadow-[0_0_0_1px_var(--game-bg),0_0_24px_rgb(69_212_176/10%)]">
+      <div className="font-pixel bg-game-bg border-game-border min-w-[272px] border-2 p-5 shadow-[0_0_0_1px_var(--game-bg),0_0_24px_rgb(69_212_176/10%)]">
         {/* Title */}
         <p className="text-game-accent border-game-divider mb-4 border-b pb-2.5 text-[9px] tracking-[0.05em]">
           PAUSED
         </p>
 
         {/* Menu items */}
-        <div role="menu" aria-label="Pause menu" className="flex flex-col gap-2.5">
+        <div role="menu" aria-label="Pause menu" className="flex flex-col gap-3">
           {items.map((item, i) => {
             const isSelected = i === selected
             return (
@@ -110,7 +102,7 @@ export function PauseOverlay() {
                 onMouseDown={(e) => e.preventDefault()}
                 onClick={item.action}
                 className={cn(
-                  'flex w-full cursor-pointer items-center gap-2 text-left text-[7px] transition-colors',
+                  'flex w-full cursor-pointer items-center gap-3 text-left text-[7px] transition-colors',
                   isSelected ? 'text-game-accent' : 'text-game-border/70',
                 )}
               >
