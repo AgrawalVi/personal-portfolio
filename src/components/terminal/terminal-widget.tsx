@@ -9,7 +9,10 @@ import { TerminalActionProvider } from '@/contexts/terminal-action-context'
 import { HOME_QUICK_COMMANDS } from '@/constants/terminal'
 import { useTerminal } from '@/hooks/use-terminal'
 import {
+  focusInputWithoutViewportPan,
   matchesTouchMode,
+  useLockBodyScroll,
+  usePreventOverlayTouchScroll,
   useTouchMode,
   useVisualViewport,
 } from '@/hooks/use-touch-terminal'
@@ -70,6 +73,7 @@ export function TerminalWidget({ initialLines }: TerminalWidgetProps = {}) {
   const router = useRouter()
   const isTouchMode = useTouchMode()
   const inputRef = useRef<HTMLInputElement | null>(null)
+  const fullscreenContainerRef = useRef<HTMLDivElement | null>(null)
   const [isFocused, setIsFocused] = useState(false)
   const [idleHintActive, setIdleHintActive] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
@@ -131,15 +135,9 @@ export function TerminalWidget({ initialLines }: TerminalWidgetProps = {}) {
     }
   }, [lines, activeGame, isTouchMode])
 
-  // Lock background page scroll while fullscreen terminal is open
-  useEffect(() => {
-    if (!showFullscreen) return
-    const prevOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => {
-      document.body.style.overflow = prevOverflow
-    }
-  }, [showFullscreen])
+  // Lock background page scroll and prevent visualViewport touch-pan while fullscreen is open
+  useLockBodyScroll(showFullscreen)
+  usePreventOverlayTouchScroll(showFullscreen, fullscreenContainerRef)
 
   // Keep latest output scrolled into view when toggling fullscreen or virtual keyboard
   useEffect(() => {
@@ -191,17 +189,25 @@ export function TerminalWidget({ initialLines }: TerminalWidgetProps = {}) {
     (command: string, options?: { prefillOnly?: boolean }) => {
       if (options?.prefillOnly) {
         setInput(command)
-        inputRef.current?.focus()
+        focusInputWithoutViewportPan(inputRef.current, showFullscreen)
         return
       }
       submitCommand(command)
     },
-    [setInput, submitCommand],
+    [setInput, submitCommand, showFullscreen],
   )
 
-  const toggleFullscreen = useCallback(() => {
-    setIsFullscreen((prev) => !prev)
+  const exitFullscreen = useCallback(() => {
+    inputRef.current?.blur()
+    setIsFullscreen(false)
   }, [])
+
+  const toggleFullscreen = useCallback(() => {
+    if (isFullscreen) {
+      inputRef.current?.blur()
+    }
+    setIsFullscreen((prev) => !prev)
+  }, [isFullscreen])
 
   const terminalInner = (
     <TerminalActionProvider value={{ selectCommand }}>
@@ -231,6 +237,7 @@ export function TerminalWidget({ initialLines }: TerminalWidgetProps = {}) {
           canHistoryNext={canHistoryNext}
           hasLines={lines.length > 0}
           safeAreaBottom={showFullscreen && !viewport.isKeyboardOpen}
+          preventFocusScroll={showFullscreen}
           onInputChange={handleInputChange}
           onKeyDown={handleKeyDown}
           onFocus={() => setIsFocused(true)}
@@ -318,16 +325,17 @@ export function TerminalWidget({ initialLines }: TerminalWidgetProps = {}) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.18 }}
-              onClick={() => setIsFullscreen(false)}
+              onClick={exitFullscreen}
               className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm"
             />
             <div
+              ref={fullscreenContainerRef}
               style={
                 viewport.height !== null
                   ? { top: viewport.offsetTop, height: viewport.height }
                   : undefined
               }
-              className="fixed inset-x-0 top-0 h-dvh z-50 flex flex-col md:p-6 pointer-events-none"
+              className="fixed inset-x-0 top-0 h-dvh z-50 flex flex-col md:p-6 pointer-events-none motion-safe:transition-[height] motion-safe:duration-200 motion-safe:ease-[cubic-bezier(0.32,0.72,0,1)]"
             >
               <motion.div
                 key="terminal-fullscreen-shell"

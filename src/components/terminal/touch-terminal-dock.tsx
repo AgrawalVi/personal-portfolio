@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import {
   ChevronDown,
   ChevronUp,
@@ -9,6 +10,10 @@ import {
 } from 'lucide-react'
 
 import type { QuickCommand } from '@/constants/terminal'
+import {
+  focusInputWithoutViewportPan,
+  isIOSDevice,
+} from '@/hooks/use-touch-terminal'
 import type { LiveSuggestion } from '@/lib/terminal/complete'
 import { cn } from '@/lib/utils'
 
@@ -23,6 +28,7 @@ interface TouchTerminalDockProps {
   canHistoryNext: boolean
   hasLines: boolean
   safeAreaBottom?: boolean
+  preventFocusScroll?: boolean
   onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void
   onFocus?: () => void
@@ -50,6 +56,7 @@ export function TouchTerminalDock({
   canHistoryNext,
   hasLines,
   safeAreaBottom = false,
+  preventFocusScroll = false,
   onInputChange,
   onKeyDown,
   onFocus,
@@ -66,6 +73,27 @@ export function TouchTerminalDock({
   const hasInput = input.trim().length > 0
   const showLiveSuggestions = input.trim().length > 0
 
+  useEffect(() => {
+    if (!preventFocusScroll || !isIOSDevice()) return
+    const el = inputRef.current
+    if (!el) return
+
+    const onTouchStart = (e: TouchEvent) => {
+      if (
+        el.disabled ||
+        document.activeElement === el ||
+        e.touches.length !== 1
+      ) {
+        return
+      }
+      e.preventDefault()
+      focusInputWithoutViewportPan(el, true)
+    }
+
+    el.addEventListener('touchstart', onTouchStart, { passive: false })
+    return () => el.removeEventListener('touchstart', onTouchStart)
+  }, [preventFocusScroll, inputRef])
+
   function keepKeyboardOpen(e: React.PointerEvent) {
     e.preventDefault()
   }
@@ -74,7 +102,7 @@ export function TouchTerminalDock({
     if (isDisabled) return
     if (chip.prefillOnly) {
       onSetInput(chip.command)
-      inputRef.current?.focus()
+      focusInputWithoutViewportPan(inputRef.current, preventFocusScroll)
       return
     }
     onSubmit(chip.command)
@@ -89,7 +117,7 @@ export function TouchTerminalDock({
       return
     }
     onSetInput(suggestion.nextInput)
-    inputRef.current?.focus()
+    focusInputWithoutViewportPan(inputRef.current, preventFocusScroll)
   }
 
   return (

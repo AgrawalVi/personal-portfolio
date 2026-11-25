@@ -8,7 +8,13 @@ import { AnimatePresence, motion } from 'motion/react'
 import { TerminalActionProvider } from '@/contexts/terminal-action-context'
 import { getGlobalQuickCommands } from '@/constants/terminal'
 import { useTerminal } from '@/hooks/use-terminal'
-import { useTouchMode, useVisualViewport } from '@/hooks/use-touch-terminal'
+import {
+  focusInputWithoutViewportPan,
+  useLockBodyScroll,
+  usePreventOverlayTouchScroll,
+  useTouchMode,
+  useVisualViewport,
+} from '@/hooks/use-touch-terminal'
 import { COMMANDS } from '@/lib/terminal/commands'
 import { makeGamesRouteCommand } from '@/lib/terminal/game-commands'
 import {
@@ -159,6 +165,7 @@ function TouchTerminalSheet({
   } = useTerminal([])
   const router = useRouter()
   const inputRef = useRef<HTMLInputElement | null>(null)
+  const sheetContainerRef = useRef<HTMLDivElement | null>(null)
   const [expanded, setExpanded] = useState(false)
   const viewport = useVisualViewport(true)
 
@@ -179,14 +186,9 @@ function TouchTerminalSheet({
     COMMANDS['games'] = makeGamesRouteCommand(router, { hiddenFromHelp: true })
   }, [router])
 
-  // Lock background scroll while sheet is open
-  useEffect(() => {
-    const prevOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => {
-      document.body.style.overflow = prevOverflow
-    }
-  }, [])
+  // Lock background scroll and prevent visualViewport touch-pan while sheet is open
+  useLockBodyScroll(true)
+  usePreventOverlayTouchScroll(true, sheetContainerRef)
 
   // Allow Escape to dismiss when using a tablet keyboard
   useEffect(() => {
@@ -214,13 +216,18 @@ function TouchTerminalSheet({
     (command: string, options?: { prefillOnly?: boolean }) => {
       if (options?.prefillOnly) {
         setInput(command)
-        inputRef.current?.focus()
+        focusInputWithoutViewportPan(inputRef.current, true)
         return
       }
       submitCommand(command)
     },
     [setInput, submitCommand],
   )
+
+  const handleClose = useCallback(() => {
+    inputRef.current?.blur()
+    onClose()
+  }, [onClose])
 
   const quickCommands = getGlobalQuickCommands(pathname)
 
@@ -233,18 +240,19 @@ function TouchTerminalSheet({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.18 }}
-        onClick={onClose}
+        onClick={handleClose}
         className="fixed inset-0 z-40 bg-background/65 backdrop-blur-xs"
       />
 
       {/* Keyboard-aware viewport container */}
       <div
+        ref={sheetContainerRef}
         style={
           viewport.height !== null
             ? { top: viewport.offsetTop, height: viewport.height }
             : undefined
         }
-        className="fixed inset-x-0 top-0 h-dvh z-50 flex flex-col justify-end pointer-events-none md:px-4"
+        className="fixed inset-x-0 top-0 h-dvh z-50 flex flex-col justify-end pointer-events-none md:px-4 motion-safe:transition-[height] motion-safe:duration-200 motion-safe:ease-[cubic-bezier(0.32,0.72,0,1)]"
       >
         <motion.div
           key="sheet-panel"
@@ -293,7 +301,7 @@ function TouchTerminalSheet({
                 </button>
                 <button
                   type="button"
-                  onClick={onClose}
+                  onClick={handleClose}
                   aria-label="Close terminal"
                   className="size-8 rounded-md flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/60 active:bg-muted transition-colors cursor-pointer"
                 >
@@ -332,6 +340,7 @@ function TouchTerminalSheet({
             canHistoryNext={canHistoryNext}
             hasLines={lines.length > 0}
             safeAreaBottom={!viewport.isKeyboardOpen}
+            preventFocusScroll
             onInputChange={handleInputChange}
             onKeyDown={handleKeyDown}
             onSubmit={submitCommand}
