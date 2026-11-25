@@ -12,6 +12,7 @@ import {
   focusInputWithoutViewportPan,
   matchesTouchMode,
   useLockBodyScroll,
+  usePhoneMode,
   usePreventOverlayTouchScroll,
   useTouchMode,
   useVisualViewport,
@@ -54,7 +55,13 @@ interface TerminalWidgetProps {
   initialLines?: Omit<TerminalLine, 'id'>[]
 }
 
-export function TerminalWidget({ initialLines }: TerminalWidgetProps = {}) {
+export function TerminalWidget(props: TerminalWidgetProps = {}) {
+  const isPhoneMode = usePhoneMode()
+  if (isPhoneMode) return null
+  return <TerminalWidgetInner {...props} />
+}
+
+function TerminalWidgetInner({ initialLines }: TerminalWidgetProps = {}) {
   const {
     lines,
     input,

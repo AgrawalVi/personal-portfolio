@@ -6,11 +6,15 @@ import { Maximize2, Minimize2, Terminal, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 
 import { TerminalActionProvider } from '@/contexts/terminal-action-context'
-import { getGlobalQuickCommands } from '@/constants/terminal'
+import {
+  getGlobalQuickCommands,
+  HOME_QUICK_COMMANDS,
+} from '@/constants/terminal'
 import { useTerminal } from '@/hooks/use-terminal'
 import {
   focusInputWithoutViewportPan,
   useLockBodyScroll,
+  usePhoneMode,
   usePreventOverlayTouchScroll,
   useTouchMode,
   useVisualViewport,
@@ -238,7 +242,8 @@ function TouchTerminalSheet({
     handleOpenChange(false)
   }, [handleOpenChange])
 
-  const quickCommands = getGlobalQuickCommands(pathname)
+  const quickCommands =
+    pathname === '/' ? HOME_QUICK_COMMANDS : getGlobalQuickCommands(pathname)
 
   return (
     <>
@@ -398,6 +403,7 @@ export function GlobalTerminalLauncher() {
   const [openedOnPath, setOpenedOnPath] = useState<string | null>(null)
   const open = openedOnPath === pathname
   const isTouchMode = useTouchMode()
+  const isPhoneMode = usePhoneMode()
   const wrapperRef = useRef<HTMLDivElement | null>(null)
   const inputRef = useRef<HTMLInputElement | null>(null)
 
@@ -429,7 +435,7 @@ export function GlobalTerminalLauncher() {
           return
       }
       e.preventDefault()
-      if (pathname === '/') {
+      if (pathname === '/' && !isPhoneMode) {
         window.dispatchEvent(new CustomEvent('terminal:focus'))
       } else {
         setOpenedOnPath(pathname)
@@ -437,7 +443,7 @@ export function GlobalTerminalLauncher() {
     }
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
-  }, [pathname])
+  }, [pathname, isPhoneMode])
 
   useEffect(() => {
     if (!open || isTouchMode) return
@@ -453,7 +459,7 @@ export function GlobalTerminalLauncher() {
     return () => document.removeEventListener('mousedown', onMouseDown)
   }, [open, isTouchMode])
 
-  if (pathname === '/') return null
+  if (pathname === '/' && !isPhoneMode) return null
 
   if (isTouchMode) {
     return (

@@ -178,6 +178,14 @@
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
+  @media (hover: none) and (max-width: 639px),
+    (pointer: coarse) and (max-width: 639px),
+    (hover: none) and (max-height: 500px),
+    (pointer: coarse) and (max-height: 500px) {
+    .phone-hidden {
+      display: none;
+    }
+  }
 }
 
 @keyframes blink {
