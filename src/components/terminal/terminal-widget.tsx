@@ -28,6 +28,12 @@ import {
 import { cn } from '@/lib/utils'
 import { GamePanel } from '@/components/games/game-panel'
 import { Card } from '@/components/ui/card'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from '@/components/ui/dialog'
 
 import type { GameId } from '@/types/games'
 import type { TerminalLine } from '@/types/terminal'
@@ -149,19 +155,6 @@ export function TerminalWidget({ initialLines }: TerminalWidgetProps = {}) {
     })
     return () => cancelAnimationFrame(raf)
   }, [showFullscreen, viewport.height, outputRef])
-
-  // Allow Escape to exit fullscreen (e.g. tablet with hardware keyboard)
-  useEffect(() => {
-    if (!showFullscreen) return
-    function onKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') {
-        e.preventDefault()
-        setIsFullscreen(false)
-      }
-    }
-    document.addEventListener('keydown', onKey)
-    return () => document.removeEventListener('keydown', onKey)
-  }, [showFullscreen])
 
   useEffect(() => {
     function onFocusEvent() {
@@ -315,44 +308,49 @@ export function TerminalWidget({ initialLines }: TerminalWidgetProps = {}) {
         />
       )}
 
-      {/* Fullscreen touch/tablet terminal overlay — synced to visualViewport so keyboard never obscures input */}
+      {/* Fullscreen touch/tablet terminal dialog — synced to visualViewport so keyboard never obscures input */}
       <AnimatePresence>
         {showFullscreen && (
-          <>
-            <motion.div
-              key="terminal-fullscreen-backdrop"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.18 }}
-              onClick={exitFullscreen}
-              className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm"
-            />
-            <div
-              ref={fullscreenContainerRef}
-              style={
-                viewport.height !== null
-                  ? { top: viewport.offsetTop, height: viewport.height }
-                  : undefined
-              }
-              className="fixed inset-x-0 top-0 h-dvh z-50 flex flex-col md:p-6 pointer-events-none motion-safe:transition-[height] motion-safe:duration-200 motion-safe:ease-[cubic-bezier(0.32,0.72,0,1)]"
-            >
-              <motion.div
-                key="terminal-fullscreen-shell"
-                initial={{ opacity: 0, y: 16, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 12, scale: 0.98 }}
-                transition={{ duration: 0.2, ease: 'easeOut' }}
-                className="w-full h-full md:max-w-3xl md:mx-auto pointer-events-auto flex flex-col"
-              >
-                <Card className="flex flex-col shadow-2xl border-0 md:border md:border-border rounded-none md:rounded-xl overflow-hidden h-full py-0 gap-0 pt-[env(safe-area-inset-top)] md:pt-0 bg-card">
-                  {terminalInner}
-                </Card>
-              </motion.div>
-            </div>
-          </>
+          <motion.div
+            key="terminal-fullscreen-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.18 }}
+            onClick={exitFullscreen}
+            className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm"
+          />
         )}
       </AnimatePresence>
+
+      <Dialog
+        open={showFullscreen}
+        modal={false}
+        onOpenChange={(nextOpen) => {
+          if (!nextOpen) exitFullscreen()
+        }}
+      >
+        <DialogContent
+          ref={fullscreenContainerRef}
+          showCloseButton={false}
+          onOpenAutoFocus={(e) => e.preventDefault()}
+          onInteractOutside={(e) => e.preventDefault()}
+          style={
+            viewport.height !== null
+              ? { top: viewport.offsetTop, height: viewport.height }
+              : undefined
+          }
+          className="fixed inset-x-0 top-0 left-0 translate-x-0 translate-y-0 h-dvh w-full max-w-none sm:max-w-none rounded-none border-0 ring-0 bg-transparent p-0 md:p-6 shadow-none flex flex-col gap-0 pointer-events-none motion-safe:transition-[height] motion-safe:duration-200 motion-safe:ease-[cubic-bezier(0.32,0.72,0,1)]"
+        >
+          <DialogTitle className="sr-only">Interactive terminal</DialogTitle>
+          <DialogDescription className="sr-only">
+            Fullscreen interactive portfolio terminal
+          </DialogDescription>
+          <Card className="pointer-events-auto w-full h-full md:max-w-3xl md:mx-auto flex flex-col shadow-2xl border-0 md:border md:border-border rounded-none md:rounded-xl overflow-hidden py-0 gap-0 pt-[env(safe-area-inset-top)] md:pt-0 bg-card">
+            {terminalInner}
+          </Card>
+        </DialogContent>
+      </Dialog>
 
       <AnimatePresence>
         {activeGame && (

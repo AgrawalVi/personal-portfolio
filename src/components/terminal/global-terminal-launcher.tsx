@@ -22,6 +22,15 @@ import {
   makeRouteCommand,
 } from '@/lib/terminal/navigate-command'
 import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from '@/components/ui/sheet'
 
 import { TerminalCurrentLine } from './stream/terminal-current-line'
 import { TerminalLine } from './stream/terminal-line'
@@ -139,11 +148,13 @@ function DesktopTerminalBody({
 }
 
 function TouchTerminalSheet({
+  open,
   pathname,
-  onClose,
+  onOpenChange,
 }: {
+  open: boolean
   pathname: string
-  onClose: () => void
+  onOpenChange: (open: boolean) => void
 }) {
   const {
     lines,
@@ -167,7 +178,7 @@ function TouchTerminalSheet({
   const inputRef = useRef<HTMLInputElement | null>(null)
   const sheetContainerRef = useRef<HTMLDivElement | null>(null)
   const [expanded, setExpanded] = useState(false)
-  const viewport = useVisualViewport(true)
+  const viewport = useVisualViewport(open)
 
   useEffect(() => {
     COMMANDS['navigate'] = makeNavigateCommand(router)
@@ -187,30 +198,19 @@ function TouchTerminalSheet({
   }, [router])
 
   // Lock background scroll and prevent visualViewport touch-pan while sheet is open
-  useLockBodyScroll(true)
-  usePreventOverlayTouchScroll(true, sheetContainerRef)
-
-  // Allow Escape to dismiss when using a tablet keyboard
-  useEffect(() => {
-    function onKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') {
-        e.preventDefault()
-        onClose()
-      }
-    }
-    document.addEventListener('keydown', onKey)
-    return () => document.removeEventListener('keydown', onKey)
-  }, [onClose])
+  useLockBodyScroll(open)
+  usePreventOverlayTouchScroll(open, sheetContainerRef)
 
   // Keep output scrolled to bottom when software keyboard opens/resizes
   useEffect(() => {
+    if (!open) return
     const raf = requestAnimationFrame(() => {
       if (outputRef.current) {
         outputRef.current.scrollTop = outputRef.current.scrollHeight
       }
     })
     return () => cancelAnimationFrame(raf)
-  }, [viewport.height, expanded, outputRef])
+  }, [open, viewport.height, expanded, outputRef])
 
   const selectCommand = useCallback(
     (command: string, options?: { prefillOnly?: boolean }) => {
@@ -224,136 +224,160 @@ function TouchTerminalSheet({
     [setInput, submitCommand],
   )
 
+  const handleOpenChange = useCallback(
+    (nextOpen: boolean) => {
+      if (!nextOpen) {
+        inputRef.current?.blur()
+      }
+      onOpenChange(nextOpen)
+    },
+    [onOpenChange],
+  )
+
   const handleClose = useCallback(() => {
-    inputRef.current?.blur()
-    onClose()
-  }, [onClose])
+    handleOpenChange(false)
+  }, [handleOpenChange])
 
   const quickCommands = getGlobalQuickCommands(pathname)
 
   return (
-    <TerminalActionProvider value={{ selectCommand }}>
-      {/* Scrim */}
-      <motion.div
-        key="sheet-backdrop"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.18 }}
-        onClick={handleClose}
-        className="fixed inset-0 z-40 bg-background/65 backdrop-blur-xs"
-      />
-
-      {/* Keyboard-aware viewport container */}
-      <div
-        ref={sheetContainerRef}
-        style={
-          viewport.height !== null
-            ? { top: viewport.offsetTop, height: viewport.height }
-            : undefined
-        }
-        className="fixed inset-x-0 top-0 h-dvh z-50 flex flex-col justify-end pointer-events-none md:px-4 motion-safe:transition-[height] motion-safe:duration-200 motion-safe:ease-[cubic-bezier(0.32,0.72,0,1)]"
-      >
-        <motion.div
-          key="sheet-panel"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Quick terminal"
-          initial={{ y: '100%' }}
-          animate={{ y: 0 }}
-          exit={{ y: '100%' }}
-          transition={{ type: 'spring', stiffness: 360, damping: 36 }}
-          className={cn(
-            'pointer-events-auto w-full md:max-w-2xl md:mx-auto flex flex-col overflow-hidden bg-card border-t md:border-x border-border shadow-2xl transition-[height,max-height,border-radius] duration-200',
-            expanded
-              ? 'h-full rounded-none pt-[env(safe-area-inset-top)] md:pt-0 md:h-[92%] md:rounded-t-2xl'
-              : viewport.isKeyboardOpen
-                ? 'h-[96%] max-h-full rounded-t-2xl'
-                : 'h-[72%] max-h-[600px] rounded-t-2xl',
-          )}
-        >
-          {/* Sheet handle + header */}
-          <div className="shrink-0 border-b border-border bg-muted/30 px-3.5 pt-2 pb-2.5">
-            {!expanded && (
-              <div className="flex justify-center pb-2" aria-hidden>
-                <div className="h-1 w-9 rounded-full bg-border" />
-              </div>
-            )}
-            <div className="flex items-center justify-between gap-2">
-              <div className="flex items-center gap-2 min-w-0">
-                <Terminal className="size-3.5 text-terminal-accent shrink-0" />
-                <span className="text-xs font-(family-name:--font-jetbrains-mono) text-muted-foreground truncate">
-                  vish — visitor@vishrut.tech
-                </span>
-              </div>
-              <div className="flex items-center gap-1 shrink-0">
-                <button
-                  type="button"
-                  onClick={() => setExpanded((prev) => !prev)}
-                  aria-label={expanded ? 'Collapse sheet' : 'Expand fullscreen'}
-                  className="size-8 rounded-md flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/60 active:bg-muted transition-colors cursor-pointer"
-                >
-                  {expanded ? (
-                    <Minimize2 className="size-3.5" />
-                  ) : (
-                    <Maximize2 className="size-3.5" />
-                  )}
-                </button>
-                <button
-                  type="button"
-                  onClick={handleClose}
-                  aria-label="Close terminal"
-                  className="size-8 rounded-md flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/60 active:bg-muted transition-colors cursor-pointer"
-                >
-                  <X className="size-4" />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Scrollable output stream */}
-          <div
-            ref={outputRef}
-            className="flex-1 min-h-0 overflow-y-auto overscroll-contain font-(family-name:--font-jetbrains-mono) px-4 py-3 space-y-1"
-          >
-            {lines.length === 0 ? (
-              <div className="text-sm text-muted-foreground/80 space-y-1 py-1">
-                <p>Quick terminal — jump anywhere or run a command.</p>
-                <p className="text-xs text-muted-foreground/60">
-                  Tap a shortcut below or type{' '}
-                  <span className="text-terminal-accent">help</span>.
-                </p>
-              </div>
-            ) : (
-              lines.map((line) => <TerminalLine key={line.id} line={line} />)
-            )}
-          </div>
-
-          {/* Integrated touch toolbar & prompt dock */}
-          <TouchTerminalDock
-            input={input}
-            isLoading={isLoading}
-            inputRef={inputRef}
-            suggestions={suggestions}
-            quickCommands={quickCommands}
-            canHistoryPrev={canHistoryPrev}
-            canHistoryNext={canHistoryNext}
-            hasLines={lines.length > 0}
-            safeAreaBottom={!viewport.isKeyboardOpen}
-            preventFocusScroll
-            onInputChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-            onSubmit={submitCommand}
-            onSetInput={setInput}
-            onTabComplete={triggerTabComplete}
-            onHistoryPrev={historyPrev}
-            onHistoryNext={historyNext}
-            onCancel={cancelInput}
-            onClear={clearTerminal}
+    <>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            key="sheet-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.18 }}
+            onClick={handleClose}
+            className="fixed inset-0 z-40 bg-background/65 backdrop-blur-xs"
           />
-        </motion.div>
-      </div>
-    </TerminalActionProvider>
+        )}
+      </AnimatePresence>
+
+      <Sheet open={open} modal={false} onOpenChange={handleOpenChange}>
+        <SheetContent
+          ref={sheetContainerRef}
+          side="bottom"
+          showCloseButton={false}
+          showOverlay={false}
+          onOpenAutoFocus={(e) => e.preventDefault()}
+          onInteractOutside={(e) => e.preventDefault()}
+          style={
+            viewport.height !== null
+              ? { top: viewport.offsetTop, height: viewport.height }
+              : undefined
+          }
+          className="fixed inset-x-0 top-0 bottom-auto h-dvh z-50 flex flex-col justify-end border-0 bg-transparent p-0 shadow-none pointer-events-none md:px-4 motion-safe:transition-[height] motion-safe:duration-200 motion-safe:ease-[cubic-bezier(0.32,0.72,0,1)]"
+        >
+          <TerminalActionProvider value={{ selectCommand }}>
+            <div
+              className={cn(
+                'pointer-events-auto w-full md:max-w-2xl md:mx-auto flex flex-col overflow-hidden bg-card border-t md:border-x border-border shadow-2xl transition-[height,max-height,border-radius] duration-200',
+                expanded
+                  ? 'h-full rounded-none pt-[env(safe-area-inset-top)] md:pt-0 md:h-[92%] md:rounded-t-2xl'
+                  : viewport.isKeyboardOpen
+                    ? 'h-[96%] max-h-full rounded-t-2xl'
+                    : 'h-[72%] max-h-[600px] rounded-t-2xl',
+              )}
+            >
+              {/* Sheet handle + header */}
+              <SheetHeader className="shrink-0 border-b border-border bg-muted/30 px-3.5 pt-2 pb-2.5 gap-0">
+                {!expanded && (
+                  <div className="flex justify-center pb-2" aria-hidden>
+                    <div className="h-1 w-9 rounded-full bg-border" />
+                  </div>
+                )}
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <Terminal className="size-3.5 text-terminal-accent shrink-0" />
+                    <SheetTitle className="text-xs font-normal font-(family-name:--font-jetbrains-mono) text-muted-foreground truncate">
+                      vish — visitor@vishrut.tech
+                    </SheetTitle>
+                    <SheetDescription className="sr-only">
+                      Quick terminal sheet to navigate pages or run commands
+                    </SheetDescription>
+                  </div>
+                  <div className="flex items-center gap-1 shrink-0">
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon-sm"
+                      onClick={() => setExpanded((prev) => !prev)}
+                      aria-label={
+                        expanded ? 'Collapse sheet' : 'Expand fullscreen'
+                      }
+                      className="text-muted-foreground hover:text-foreground cursor-pointer"
+                    >
+                      {expanded ? (
+                        <Minimize2 className="size-3.5" />
+                      ) : (
+                        <Maximize2 className="size-3.5" />
+                      )}
+                    </Button>
+                    <SheetClose asChild>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon-sm"
+                        aria-label="Close terminal"
+                        className="text-muted-foreground hover:text-foreground cursor-pointer"
+                      >
+                        <X className="size-4" />
+                      </Button>
+                    </SheetClose>
+                  </div>
+                </div>
+              </SheetHeader>
+
+              {/* Scrollable output stream */}
+              <div
+                ref={outputRef}
+                className="flex-1 min-h-0 overflow-y-auto overscroll-contain font-(family-name:--font-jetbrains-mono) px-4 py-3 space-y-1"
+              >
+                {lines.length === 0 ? (
+                  <div className="text-sm text-muted-foreground/80 space-y-1 py-1">
+                    <p>Quick terminal — jump anywhere or run a command.</p>
+                    <p className="text-xs text-muted-foreground/60">
+                      Tap a shortcut below or type{' '}
+                      <span className="text-terminal-accent">help</span>.
+                    </p>
+                  </div>
+                ) : (
+                  lines.map((line) => (
+                    <TerminalLine key={line.id} line={line} />
+                  ))
+                )}
+              </div>
+
+              {/* Integrated touch toolbar & prompt dock */}
+              <TouchTerminalDock
+                input={input}
+                isLoading={isLoading}
+                inputRef={inputRef}
+                suggestions={suggestions}
+                quickCommands={quickCommands}
+                canHistoryPrev={canHistoryPrev}
+                canHistoryNext={canHistoryNext}
+                hasLines={lines.length > 0}
+                safeAreaBottom={!viewport.isKeyboardOpen}
+                preventFocusScroll
+                onInputChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+                onSubmit={submitCommand}
+                onSetInput={setInput}
+                onTabComplete={triggerTabComplete}
+                onHistoryPrev={historyPrev}
+                onHistoryNext={historyNext}
+                onCancel={cancelInput}
+                onClear={clearTerminal}
+              />
+            </div>
+          </TerminalActionProvider>
+        </SheetContent>
+      </Sheet>
+    </>
   )
 }
 
@@ -436,28 +460,35 @@ export function GlobalTerminalLauncher() {
       <>
         <AnimatePresence>
           {!open && (
-            <motion.button
-              key="touch-launcher-pill"
-              type="button"
-              onClick={openTerminal}
-              aria-label="Open terminal"
-              initial={{ opacity: 0, y: 12, scale: 0.94 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 12, scale: 0.94 }}
-              transition={{ duration: 0.18, ease: 'easeOut' }}
-              className="fixed left-1/2 -translate-x-1/2 bottom-[max(1.25rem,env(safe-area-inset-bottom))] z-40 inline-flex items-center gap-2 min-h-10 px-4 rounded-full border border-border/70 bg-card/90 backdrop-blur-md shadow-lg font-(family-name:--font-jetbrains-mono) text-xs text-foreground active:scale-95 transition-transform cursor-pointer"
+            <Button
+              asChild
+              variant="outline"
+              className="fixed left-1/2 -translate-x-1/2 bottom-[max(1.25rem,env(safe-area-inset-bottom))] z-40 h-10 gap-2 px-4 rounded-full border-border/70 bg-card/90 hover:bg-card backdrop-blur-md shadow-lg font-(family-name:--font-jetbrains-mono) text-xs text-foreground active:scale-95 transition-transform cursor-pointer"
             >
-              <Terminal className="size-3.5 text-terminal-accent" />
-              <span>terminal</span>
-            </motion.button>
+              <motion.button
+                key="touch-launcher-pill"
+                type="button"
+                onClick={openTerminal}
+                aria-label="Open terminal"
+                initial={{ opacity: 0, y: 12, scale: 0.94 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 12, scale: 0.94 }}
+                transition={{ duration: 0.18, ease: 'easeOut' }}
+              >
+                <Terminal className="size-3.5 text-terminal-accent" />
+                <span>terminal</span>
+              </motion.button>
+            </Button>
           )}
         </AnimatePresence>
 
-        <AnimatePresence>
-          {open && (
-            <TouchTerminalSheet pathname={pathname} onClose={closeTerminal} />
-          )}
-        </AnimatePresence>
+        <TouchTerminalSheet
+          open={open}
+          pathname={pathname}
+          onOpenChange={(nextOpen) =>
+            nextOpen ? openTerminal() : closeTerminal()
+          }
+        />
       </>
     )
   }
