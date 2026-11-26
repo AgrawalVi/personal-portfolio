@@ -49,25 +49,23 @@ const NODE_MODULES_ENTRIES = [
 
 const UNFINISHED_PROJECTS_ENTRIES = [
   'drwxr-xr-x  142K  easy-sports-data/',
-  'drwxr-xr-x   88K  easy-sports-data-api/',
   'drwxr-xr-x  210K  my-finance-pal/',
   'drwxr-xr-x   12K  test2/',
-  'drwxr-xr-x  184K  ventro-api/',
-  'drwxr-xr-x   96K  ventro-api-hono/',
-  'drwxr-xr-x  260K  ventro-dashboard/',
-  'drwxr-xr-x    4K  asdf/',
+  'drwxr-xr-x  260K  ventro/',
   'drwxr-xr-x  156K  PrepNest/',
-  'drwxr-xr-x   74K  prepnest-problems/',
+  'drwxr-xr-x    4K  asdf/',
   'drwxr-xr-x  118K  spotifired/',
   'drwxr-xr-x   64K  too-long-didnt-watch/',
   'drwxr-xr-x   92K  equify/',
+  'drwxr-xr-x   16K  untitled-3/',
   'drwxr-xr-x   48K  foldcounter/',
   'drwxr-xr-x  132K  imageflow/',
   'drwxr-xr-x   54K  form-ui-package/',
   'drwxr-xr-x  108K  mac_file_sharer/',
+  'drwxr-xr-x   24K  temp-do-not-delete/',
   'drwxr-xr-x   16K  what-even-is-this/',
-  'drwxr-xr-x    8K  idek-anymore/',
-  'drwxr-xr-x    4K  idk/',
+  'drwxr-xr-x    8K  why-did-i-start-this/',
+  'drwxr-xr-x    4K  idek-anymore/',
 ]
 
 function normalizePathArg(raw: string): string {
