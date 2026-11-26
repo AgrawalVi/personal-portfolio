@@ -47,11 +47,7 @@ export function getCompletion(
   let prefix: string
 
   if (tokens.length === 1 && !endsWithSpace) {
-    const entries = Object.entries(commands)
-    candidates = [
-      ...entries.map(([name]) => name),
-      ...entries.flatMap(([, d]) => d.aliases ?? []),
-    ]
+    candidates = Object.keys(commands)
     partial = tokens[0].toLowerCase()
     prefix = ''
   } else {
@@ -121,8 +117,7 @@ export function getCompletionSuggestions(
     const seen = new Set<string>()
 
     for (const [name, def] of sorted) {
-      const keys = [name, ...(def.aliases ?? [])]
-      if (keys.some((k) => k.toLowerCase().startsWith(partial)) && !seen.has(name)) {
+      if (name.toLowerCase().startsWith(partial) && !seen.has(name)) {
         seen.add(name)
         const needsArg = Boolean(def.usage?.startsWith('<'))
         results.push({
