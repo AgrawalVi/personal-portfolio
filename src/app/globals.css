@@ -228,9 +228,7 @@
     bottom: auto;
     height: 100dvh;
     max-width: none;
-    padding-top: max(4rem, calc(env(safe-area-inset-top) + 0.75rem));
-    padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
-    padding-inline: 0.5rem;
+    padding-inline: 0;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;

@@ -21,19 +21,15 @@ export function SiteHeader() {
   return (
     <header
       className={cn(
-        'sticky top-0 z-40 transition-colors duration-200',
+        'sticky top-0 z-40 bg-background/70 backdrop-blur-md transition-colors duration-200',
         'border-b',
         scrolled ? 'border-border/40' : 'border-transparent',
       )}
     >
       <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 bg-background/70 backdrop-blur-md"
-      />
-      <div
         className={cn(
-          'relative z-10 max-w-3xl mx-auto px-4 transition-[padding] duration-300 ease-out',
-          scrolled ? 'pt-14 md:pt-4 pb-4' : 'pt-16 md:pt-12 pb-4',
+          'max-w-3xl mx-auto px-4 transition-[padding] duration-300 ease-out',
+          scrolled ? 'pt-4 pb-4' : 'pt-12 pb-4',
         )}
       >
         <NavLinks />

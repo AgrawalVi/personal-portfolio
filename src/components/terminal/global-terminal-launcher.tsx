@@ -295,6 +295,7 @@ function TouchTerminalBody({
           canHistoryPrev={canHistoryPrev}
           canHistoryNext={canHistoryNext}
           hasLines={lines.length > 0}
+          safeAreaBottom={expanded && !viewport.isKeyboardOpen}
           preventFocusScroll
           onInputChange={handleInputChange}
           onKeyDown={handleKeyDown}
@@ -409,7 +410,7 @@ export function GlobalTerminalLauncher() {
 
   if (pathname === '/' && !isPhoneMode) return null
 
-  const openBorderRadius = isTouchMode ? 20 : 12
+  const openBorderRadius = isTouchMode ? (expanded ? 0 : 20) : 12
 
   return (
     <>
@@ -422,7 +423,7 @@ export function GlobalTerminalLauncher() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.18, ease: 'easeOut' }}
             onClick={closeTerminal}
-            className="fixed inset-0 z-[45] bg-background/70"
+            className="fixed inset-0 z-[45] bg-background/55"
           />
         )}
       </AnimatePresence>
@@ -438,7 +439,6 @@ export function GlobalTerminalLauncher() {
           'launcher-viewport',
           isTouchOpen &&
             'launcher-viewport-open motion-safe:transition-[height] motion-safe:duration-200 motion-safe:ease-[cubic-bezier(0.32,0.72,0,1)]',
-          isTouchOpen && viewport.isKeyboardOpen && 'pb-2',
         )}
       >
         {open ? (
@@ -455,10 +455,12 @@ export function GlobalTerminalLauncher() {
               'pointer-events-auto overflow-hidden isolate border border-border/40 bg-background/80 backdrop-blur-md shadow-lg',
               isTouchMode
                 ? cn(
-                    'w-full md:max-w-2xl flex flex-col shadow-2xl',
-                    expanded || viewport.isKeyboardOpen
-                      ? 'h-full'
-                      : 'h-[75%] min-h-[min(320px,100%)] max-h-[600px]',
+                    'flex flex-col shadow-2xl',
+                    expanded
+                      ? 'w-full h-full border-0 md:border md:max-w-2xl md:h-[92%] pt-[env(safe-area-inset-top)] md:pt-0'
+                      : viewport.isKeyboardOpen
+                        ? 'w-full md:max-w-2xl h-[96%] max-h-full'
+                        : 'w-[calc(100%-1rem)] md:max-w-2xl h-[72%] min-h-[min(320px,100%)] max-h-[600px] mb-[max(0.5rem,env(safe-area-inset-bottom))]',
                   )
                 : 'w-full',
             )}

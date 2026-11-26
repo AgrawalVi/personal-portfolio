@@ -354,7 +354,7 @@ function TerminalWidgetInner({ initialLines }: TerminalWidgetProps = {}) {
           <DialogDescription className="sr-only">
             Fullscreen interactive portfolio terminal
           </DialogDescription>
-          <Card className="pointer-events-auto w-full h-full md:max-w-3xl md:mx-auto flex flex-col shadow-2xl border-0 md:border md:border-border rounded-none md:rounded-xl overflow-hidden py-0 gap-0 pt-[max(3.5rem,env(safe-area-inset-top))] md:pt-0 bg-card">
+          <Card className="pointer-events-auto w-full h-full md:max-w-3xl md:mx-auto flex flex-col shadow-2xl border-0 md:border md:border-border rounded-none md:rounded-xl overflow-hidden py-0 gap-0 pt-[env(safe-area-inset-top)] md:pt-0 bg-card">
             {terminalInner}
           </Card>
         </DialogContent>
