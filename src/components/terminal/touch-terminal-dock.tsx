@@ -271,9 +271,9 @@ export function TouchTerminalDock({
           e.preventDefault()
           onSubmit()
         }}
-        className="px-2.5 py-2 bg-background/50"
+        className="flex items-center gap-2 px-2.5 py-2 bg-background/50"
       >
-        <InputGroup className="h-10 rounded-lg border-border/70 bg-background/70 dark:bg-background/70 focus-within:border-terminal-accent/50 has-[[data-slot=input-group-control]:focus-visible]:ring-1 has-[[data-slot=input-group-control]:focus-visible]:ring-terminal-accent/30">
+        <InputGroup className="h-10 flex-1 rounded-lg border-border/70 bg-background/70 dark:bg-background/70 focus-within:border-terminal-accent/50 has-[[data-slot=input-group-control]:focus-visible]:ring-1 has-[[data-slot=input-group-control]:focus-visible]:ring-terminal-accent/30">
           <InputGroupAddon
             align="inline-start"
             onClick={() =>
@@ -321,15 +321,18 @@ export function TouchTerminalDock({
             )}
           </div>
 
-          <InputGroupAddon
-            align="inline-end"
-            onClick={(e) => {
-              if ((e.target as HTMLElement).closest('button')) return
-              focusInputWithoutViewportPan(inputRef.current, preventFocusScroll)
-            }}
-            className="pr-1.5 gap-1"
-          >
-            {input.length > 0 && !isDisabled && (
+          {input.length > 0 && !isDisabled && (
+            <InputGroupAddon
+              align="inline-end"
+              onClick={(e) => {
+                if ((e.target as HTMLElement).closest('button')) return
+                focusInputWithoutViewportPan(
+                  inputRef.current,
+                  preventFocusScroll,
+                )
+              }}
+              className="pr-1 has-[>button]:mr-0"
+            >
               <InputGroupButton
                 type="button"
                 variant="ghost"
@@ -341,26 +344,26 @@ export function TouchTerminalDock({
               >
                 <X className="size-4" />
               </InputGroupButton>
-            )}
-
-            <InputGroupButton
-              type="submit"
-              variant="outline"
-              size="icon-sm"
-              disabled={isDisabled}
-              onPointerDown={keepKeyboardOpen}
-              aria-label="Run command"
-              className={cn(
-                'cursor-pointer active:scale-95',
-                hasInput
-                  ? 'border-terminal-accent/40 bg-primary/20 text-terminal-accent hover:bg-primary/25 hover:text-terminal-accent'
-                  : 'border-border/60 bg-muted/40 text-muted-foreground hover:bg-muted/60',
-              )}
-            >
-              <CornerDownLeft className="size-4" />
-            </InputGroupButton>
-          </InputGroupAddon>
+            </InputGroupAddon>
+          )}
         </InputGroup>
+
+        <Button
+          type="submit"
+          variant="outline"
+          size="icon"
+          disabled={isDisabled}
+          onPointerDown={keepKeyboardOpen}
+          aria-label="Run command"
+          className={cn(
+            'size-10 shrink-0 rounded-lg cursor-pointer active:scale-95',
+            hasInput
+              ? 'border-terminal-accent/40 bg-primary/20 text-terminal-accent hover:bg-primary/25 hover:text-terminal-accent dark:border-terminal-accent/40 dark:bg-primary/20 dark:hover:bg-primary/25'
+              : 'border-border/70 bg-background/70 text-muted-foreground hover:bg-muted/60 dark:border-border/70 dark:bg-background/70 dark:hover:bg-muted/60',
+          )}
+        >
+          <CornerDownLeft className="size-4" />
+        </Button>
       </form>
     </div>
   )
