@@ -5,7 +5,7 @@ import { LinkedIn } from '../ui/icons/linkedin'
 
 export function SiteFooter() {
   return (
-    <footer>
+    <footer className="pb-[calc(4.5rem+env(safe-area-inset-bottom))] md:pb-0">
       <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
         <p className="text-xs text-muted-foreground font-(family-name:--font-jetbrains-mono)">
           © 2026 Vishrut Agrawal

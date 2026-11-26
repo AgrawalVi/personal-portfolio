@@ -323,50 +323,125 @@ export function useVisualViewport(enabled: boolean): VisualViewportState {
     if (!vv) return
 
     let restingHeight = Math.max(window.innerHeight, Math.round(vv.height))
+    let blurResetTimer: number | null = null
+
+    const clearBlurReset = () => {
+      if (blurResetTimer !== null) {
+        window.clearTimeout(blurResetTimer)
+        blurResetTimer = null
+      }
+    }
+
+    const updateViewport = (next: VisualViewportState) => {
+      setViewport((prev) => {
+        if (
+          prev.height === next.height &&
+          prev.offsetTop === next.offsetTop &&
+          prev.isKeyboardOpen === next.isKeyboardOpen
+        ) {
+          return prev
+        }
+        return next
+      })
+    }
 
     const sync = () => {
       const nextHeight = Math.round(vv.height)
       const nextOffsetTop = Math.max(0, Math.round(vv.offsetTop))
       const isZoomed = Math.abs(vv.scale - 1) > 0.01
+      const focused = isTextInputFocused()
 
-      if (!isZoomed && !isTextInputFocused()) {
+      if (!isZoomed && !focused) {
         restingHeight = Math.max(window.innerHeight, nextHeight)
       }
 
       const baseline = Math.max(window.innerHeight, restingHeight)
       const keyboardOpen = !isZoomed && baseline - nextHeight > 120
 
-      setViewport((prev) => {
-        if (
-          prev.height === nextHeight &&
-          prev.offsetTop === nextOffsetTop &&
-          prev.isKeyboardOpen === keyboardOpen
-        ) {
-          return prev
+      // When no input is focused and not pinch-zoomed, let CSS 100dvh own layout.
+      // If Safari left visualViewport height/offsetTop stale after keyboard dismissal
+      // or tab/app switching, clear it once the dismiss transition settles.
+      if (!focused && !isZoomed) {
+        if (!keyboardOpen && nextOffsetTop === 0) {
+          clearBlurReset()
+          updateViewport(EMPTY_VIEWPORT)
+          return
         }
-        return {
-          height: nextHeight,
-          offsetTop: nextOffsetTop,
-          isKeyboardOpen: keyboardOpen,
+        if (blurResetTimer === null) {
+          blurResetTimer = window.setTimeout(() => {
+            blurResetTimer = null
+            const stillZoomed = Math.abs(vv.scale - 1) > 0.01
+            if (!isTextInputFocused() && !stillZoomed) {
+              restingHeight = window.innerHeight
+              updateViewport(EMPTY_VIEWPORT)
+            }
+          }, 350)
         }
+        return
+      }
+
+      clearBlurReset()
+      updateViewport({
+        height: nextHeight,
+        offsetTop: nextOffsetTop,
+        isKeyboardOpen: keyboardOpen,
       })
     }
 
     const onOrientationChange = () => {
+      clearBlurReset()
       restingHeight = Math.max(window.innerHeight, Math.round(vv.height))
       sync()
+    }
+
+    const onFocusOut = () => {
+      clearBlurReset()
+      blurResetTimer = window.setTimeout(() => {
+        blurResetTimer = null
+        const stillZoomed = Math.abs(vv.scale - 1) > 0.01
+        if (!isTextInputFocused() && !stillZoomed) {
+          restingHeight = window.innerHeight
+          updateViewport(EMPTY_VIEWPORT)
+          return
+        }
+        sync()
+      }, 350)
+    }
+
+    const onVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        clearBlurReset()
+        if (!isTextInputFocused()) {
+          restingHeight = window.innerHeight
+          updateViewport(EMPTY_VIEWPORT)
+        }
+        sync()
+      }
     }
 
     const initRaf = requestAnimationFrame(sync)
     vv.addEventListener('resize', sync)
     vv.addEventListener('scroll', sync)
+    window.addEventListener('resize', sync)
+    window.addEventListener('focus', sync)
     window.addEventListener('orientationchange', onOrientationChange)
+    window.addEventListener('pageshow', onVisibilityChange)
+    document.addEventListener('visibilitychange', onVisibilityChange)
+    document.addEventListener('focusin', sync)
+    document.addEventListener('focusout', onFocusOut)
 
     return () => {
       cancelAnimationFrame(initRaf)
+      clearBlurReset()
       vv.removeEventListener('resize', sync)
       vv.removeEventListener('scroll', sync)
+      window.removeEventListener('resize', sync)
+      window.removeEventListener('focus', sync)
       window.removeEventListener('orientationchange', onOrientationChange)
+      window.removeEventListener('pageshow', onVisibilityChange)
+      document.removeEventListener('visibilitychange', onVisibilityChange)
+      document.removeEventListener('focusin', sync)
+      document.removeEventListener('focusout', onFocusOut)
     }
   }, [enabled])
 
