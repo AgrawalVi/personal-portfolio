@@ -6,7 +6,7 @@ import { AnimatePresence, motion, type Transition } from 'motion/react'
 
 import { useGame } from '@/contexts/game-context'
 import { TerminalActionProvider } from '@/contexts/terminal-action-context'
-import { HOME_QUICK_COMMANDS } from '@/constants/terminal'
+import { TOUCH_QUICK_COMMANDS } from '@/constants/terminal'
 import { useTerminal } from '@/hooks/use-terminal'
 import {
   focusInputWithoutViewportPan,
@@ -233,7 +233,7 @@ function TerminalWidgetInner({ initialLines }: TerminalWidgetProps = {}) {
           showHint={showHint}
           inputRef={inputRef}
           suggestions={suggestions}
-          quickCommands={HOME_QUICK_COMMANDS}
+          quickCommands={TOUCH_QUICK_COMMANDS}
           canHistoryPrev={canHistoryPrev}
           canHistoryNext={canHistoryNext}
           hasLines={lines.length > 0}

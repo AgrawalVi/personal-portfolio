@@ -24,39 +24,21 @@ export interface QuickCommand {
   prefillOnly?: boolean
 }
 
-export const HOME_QUICK_COMMANDS: readonly QuickCommand[] = [
+export const TOUCH_QUICK_COMMANDS: readonly QuickCommand[] = [
   { label: 'help', command: 'help' },
-  { label: 'projects', command: 'projects' },
-  { label: 'experience', command: 'experience' },
-  { label: 'blog', command: 'blog' },
-  { label: 'weather', command: 'weather' },
+  { label: 'ls', command: 'ls' },
   { label: 'nowplaying', command: 'nowplaying' },
+  { label: 'weather', command: 'weather' },
   { label: 'joke', command: 'joke' },
+  { label: 'date', command: 'date' },
   { label: 'price …', command: 'price ', prefillOnly: true },
   { label: 'define …', command: 'define ', prefillOnly: true },
+  { label: 'coffee', command: 'coffee' },
+  { label: 'matrix', command: 'matrix' },
+  { label: 'hack', command: 'hack' },
+  { label: 'whoami', command: 'whoami' },
+  { label: 'hello', command: 'hello' },
+  { label: 'ping', command: 'ping' },
+  { label: 'uname', command: 'uname' },
+  { label: 'sudo', command: 'sudo' },
 ]
-
-export function getGlobalQuickCommands(pathname: string): QuickCommand[] {
-  const navCommands: { path: string; item: QuickCommand }[] = [
-    { path: '/', item: { label: 'home', command: 'home' } },
-    { path: '/experience', item: { label: 'experience', command: 'experience' } },
-    { path: '/projects', item: { label: 'projects', command: 'projects' } },
-    { path: '/blog', item: { label: 'blog', command: 'blog' } },
-  ]
-
-  const activeNav = navCommands
-    .filter(({ path }) =>
-      path === '/' ? pathname !== '/' : !pathname.startsWith(path),
-    )
-    .map(({ item }) => item)
-
-  return [
-    ...activeNav,
-    { label: 'help', command: 'help' },
-    { label: 'weather', command: 'weather' },
-    { label: 'nowplaying', command: 'nowplaying' },
-    { label: 'joke', command: 'joke' },
-    { label: 'price …', command: 'price ', prefillOnly: true },
-    { label: 'define …', command: 'define ', prefillOnly: true },
-  ]
-}

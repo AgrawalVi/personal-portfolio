@@ -6,10 +6,7 @@ import { Maximize2, Minimize2, Terminal, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 
 import { TerminalActionProvider } from '@/contexts/terminal-action-context'
-import {
-  getGlobalQuickCommands,
-  HOME_QUICK_COMMANDS,
-} from '@/constants/terminal'
+import { TOUCH_QUICK_COMMANDS } from '@/constants/terminal'
 import { useTerminal } from '@/hooks/use-terminal'
 import {
   focusInputWithoutViewportPan,
@@ -145,14 +142,12 @@ function DesktopTerminalBody({
 }
 
 function TouchTerminalBody({
-  pathname,
   expanded,
   viewport,
   inputRef,
   onToggleExpanded,
   onClose,
 }: {
-  pathname: string
   expanded: boolean
   viewport: VisualViewportState
   inputRef: React.RefObject<HTMLInputElement | null>
@@ -217,9 +212,6 @@ function TouchTerminalBody({
     },
     [setInput, submitCommand, inputRef],
   )
-
-  const quickCommands =
-    pathname === '/' ? HOME_QUICK_COMMANDS : getGlobalQuickCommands(pathname)
 
   return (
     <TerminalActionProvider value={{ selectCommand }}>
@@ -291,7 +283,7 @@ function TouchTerminalBody({
           isLoading={isLoading}
           inputRef={inputRef}
           suggestions={suggestions}
-          quickCommands={quickCommands}
+          quickCommands={TOUCH_QUICK_COMMANDS}
           canHistoryPrev={canHistoryPrev}
           canHistoryNext={canHistoryNext}
           hasLines={lines.length > 0}
@@ -480,7 +472,6 @@ export function GlobalTerminalLauncher() {
             >
               {isTouchMode ? (
                 <TouchTerminalBody
-                  pathname={pathname}
                   expanded={expanded}
                   viewport={viewport}
                   inputRef={inputRef}
