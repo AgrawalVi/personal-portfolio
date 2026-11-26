@@ -1,15 +1,23 @@
-type Config = { subtitle: string; title: string }
+export type PageHeaderConfig = { subtitle: string; title: string }
 type Listener = () => void
 
-let override: Config | null = null
+let override: PageHeaderConfig | null = null
+let lastOverride: PageHeaderConfig | null = null
 const listeners = new Set<Listener>()
 
 export function getOverride() {
   return override
 }
 
-export function setOverride(config: Config | null) {
+export function getLastOverride() {
+  return lastOverride
+}
+
+export function setOverride(config: PageHeaderConfig | null) {
   override = config
+  if (config !== null) {
+    lastOverride = config
+  }
   listeners.forEach((fn) => fn())
 }
 
