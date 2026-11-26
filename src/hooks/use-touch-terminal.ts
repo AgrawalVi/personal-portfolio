@@ -177,7 +177,12 @@ function findScrollableAncestor(
   boundary: HTMLElement,
   axis: 'x' | 'y',
 ): HTMLElement | null {
-  let node = target instanceof HTMLElement ? target : null
+  let node: HTMLElement | null =
+    target instanceof HTMLElement
+      ? target
+      : target instanceof Node
+        ? target.parentElement
+        : null
   while (node && node !== boundary) {
     if (axis === 'x' && node instanceof HTMLInputElement) {
       return node

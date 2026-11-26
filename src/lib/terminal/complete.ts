@@ -101,7 +101,6 @@ export interface LiveSuggestion {
 export function getCompletionSuggestions(
   input: string,
   commands: Record<string, CommandDef>,
-  limit = 8,
 ): LiveSuggestion[] {
   if (!input.trim()) return []
 
@@ -131,7 +130,6 @@ export function getCompletionSuggestions(
           nextInput: needsArg ? `${name} ` : name,
           appendSpace: needsArg,
         })
-        if (results.length >= limit) break
       }
     }
 
@@ -164,7 +162,6 @@ export function getCompletionSuggestions(
         nextInput: `${prefix}${value}`,
         appendSpace: false,
       })
-      if (results.length >= limit) break
     }
   }
 
