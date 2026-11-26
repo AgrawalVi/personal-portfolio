@@ -163,7 +163,7 @@
     @apply bg-background text-foreground;
   }
   html {
-    @apply font-sans;
+    @apply bg-background font-sans;
   }
 }
 
@@ -184,6 +184,58 @@
     (pointer: coarse) and (max-height: 500px) {
     .phone-hidden {
       display: none;
+    }
+  }
+  .touch-only {
+    display: none;
+  }
+  .desktop-only {
+    display: inline-flex;
+  }
+  @media (hover: none), (pointer: coarse), (max-width: 1023px) {
+    .touch-only {
+      display: inline-flex;
+    }
+    .desktop-only {
+      display: none;
+    }
+  }
+}
+
+@layer components {
+  .launcher-viewport {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 2.5rem;
+    z-index: 50;
+    margin-inline: auto;
+    width: 100%;
+    max-width: 36rem;
+    padding-inline: 1rem;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+  }
+  @media (hover: none), (pointer: coarse), (max-width: 1023px) {
+    .launcher-viewport {
+      bottom: max(1.25rem, env(safe-area-inset-bottom));
+      max-width: none;
+    }
+  }
+  .launcher-viewport-open {
+    top: 0;
+    bottom: auto;
+    height: 100dvh;
+    max-width: none;
+    padding-inline: 0;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  @media (min-width: 768px) {
+    .launcher-viewport-open {
+      padding-inline: 1rem;
     }
   }
 }

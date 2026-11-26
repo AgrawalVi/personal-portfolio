@@ -136,7 +136,7 @@ export function TouchTerminalDock({
   return (
     <div
       className={cn(
-        'shrink-0 border-t border-border/70 bg-muted/25 backdrop-blur-sm',
+        'shrink-0 border-t border-border/70 bg-muted/25',
         safeAreaBottom && 'pb-[env(safe-area-inset-bottom)]',
       )}
     >
