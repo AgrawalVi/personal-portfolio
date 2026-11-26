@@ -67,7 +67,7 @@ export function TerminalTitleBar({
 
   return (
     <TitleBar
-      title="vish — visitor@vishrut.tech"
+      title="vsh — visitor@vishrut.tech"
       redAction={
         isFullscreen && onToggleFullscreen
           ? { onClick: onToggleFullscreen, ariaLabel: 'Exit fullscreen' }

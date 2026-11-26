@@ -282,7 +282,7 @@ export function TouchTerminalDock({
             className="pl-2.5 pr-1 font-(family-name:--font-jetbrains-mono) text-sm font-medium text-primary"
           >
             <span aria-hidden>
-              <span className="hidden md:inline">vish:</span>~$
+              <span className="hidden md:inline">vsh:</span>~$
             </span>
           </InputGroupAddon>
 
