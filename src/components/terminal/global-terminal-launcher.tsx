@@ -235,7 +235,7 @@ function TouchTerminalBody({
             <div className="flex items-center gap-2 min-w-0">
               <Terminal className="size-3.5 text-terminal-accent shrink-0" />
               <span className="text-xs font-normal font-(family-name:--font-jetbrains-mono) text-muted-foreground truncate">
-                vish — visitor@vishrut.tech
+                vsh — visitor@vishrut.tech
               </span>
             </div>
             <div className="flex items-center gap-1 shrink-0">
