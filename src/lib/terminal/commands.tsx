@@ -209,13 +209,12 @@ export const COMMANDS: Record<string, CommandDef> = {
         ...(!used.has('--verbose') && !used.has('-v') ? ['--verbose'] : []),
         ...(!used.has('--all') ? ['--all'] : []),
       ]
+      const mainCommands = Object.entries(COMMANDS)
+        .filter(([, def]) => !def.hiddenFromHelp)
+        .map(([name]) => name)
       const candidates =
         args.length === 0
-          ? [
-              ...remainingFlags,
-              ...Object.keys(COMMANDS),
-              ...Object.values(COMMANDS).flatMap(d => d.aliases ?? []),
-            ]
+          ? [...remainingFlags, ...mainCommands]
           : remainingFlags
       return candidates.filter(n => n.startsWith(partial.toLowerCase()))
     },
