@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { usePathname } from 'next/navigation'
 
-import { subscribe, getOverride } from '@/lib/page-header-store'
+import { getOverride, subscribe } from '@/lib/page-header-store'
+import { cn } from '@/lib/utils'
 
 type RouteConfig = {
   subtitle: string
@@ -19,9 +20,7 @@ const routes: Record<string, RouteConfig> = {
 
 function getRoute(pathname: string): RouteConfig {
   if (pathname === '/') return routes['/']
-  const match = Object.keys(routes).find(
-    (key) => key !== '/' && pathname.startsWith(key),
-  )
+  const match = Object.keys(routes).find((key) => key !== '/' && pathname.startsWith(key))
   return match ? routes[match] : routes['/']
 }
 
@@ -38,18 +37,26 @@ const ANIM_OUT: React.CSSProperties = {
 function TextLayer({
   config,
   style,
+  exiting = false,
 }: {
   config: RouteConfig
   style?: React.CSSProperties
+  exiting?: boolean
 }) {
+  const Title = exiting ? 'p' : 'h1'
+
   return (
-    <div className="absolute inset-0 px-8" style={style}>
+    <div
+      aria-hidden={exiting || undefined}
+      className={cn('px-8', exiting ? 'absolute inset-x-0 top-0 pointer-events-none select-none' : 'relative')}
+      style={style}
+    >
       <p className="text-xs text-muted-foreground tracking-widest font-(family-name:--font-jetbrains-mono) mb-2 uppercase">
         {config.subtitle}
       </p>
-      <h1 className="text-4xl tracking-tight font-(family-name:--font-josefin-sans)">
+      <Title className="text-4xl leading-tight tracking-tight text-balance wrap-break-word font-(family-name:--font-josefin-sans)">
         {config.title}
-      </h1>
+      </Title>
     </div>
   )
 }
@@ -83,26 +90,25 @@ export function PageHeader() {
     timerRef.current = setTimeout(() => {
       setExiting(null)
       setTransitioning(false)
+      timerRef.current = null
     }, ANIM_DURATION)
   }, [pathname, override])
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current)
+    }
+  }, [])
 
   return (
     <div className="mt-6 pb-2">
       {/* Animated subtitle + title */}
-      <div className="relative overflow-hidden">
-        {/* Spacer keeps the container at the right height */}
-        <div
-          aria-hidden
-          className="invisible pointer-events-none select-none px-8"
-        >
-          <p className="text-xs mb-2">x</p>
-          <h1 className="text-4xl tracking-tight font-(family-name:--font-josefin-sans)">
-            x
-          </h1>
-        </div>
-
-        {exiting && <TextLayer config={exiting} style={ANIM_OUT} />}
+      <div className={cn('relative', transitioning && 'overflow-hidden')}>
+        {exiting && (
+          <TextLayer key={`exiting:${exiting.subtitle}:${exiting.title}`} config={exiting} style={ANIM_OUT} exiting />
+        )}
         <TextLayer
+          key={`active:${current.subtitle}:${current.title}`}
           config={current}
           style={transitioning ? ANIM_IN : undefined}
         />
