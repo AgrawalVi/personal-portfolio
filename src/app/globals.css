@@ -64,16 +64,6 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@keyframes page-header-in {
-  from { transform: translateY(35%); opacity: 0; }
-  to   { transform: translateY(0);   opacity: 1; }
-}
-
-@keyframes page-header-out {
-  from { transform: translateY(0);    opacity: 1; }
-  to   { transform: translateY(-35%); opacity: 0; }
-}
-
 :root {
   /* ── Teal spectrum — shared across game UI, terminal, and any teal accent ── */
   /* chart-1 … chart-5 cover the full ramp from bright mint to dark teal.      */

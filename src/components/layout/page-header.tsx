@@ -1,117 +1,140 @@
 'use client'
 
-import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
+import { useEffect, useSyncExternalStore } from 'react'
 import { usePathname } from 'next/navigation'
+import { animate, motion, useMotionValue, useReducedMotion, useTransform, type MotionValue } from 'motion/react'
 
-import { getOverride, subscribe } from '@/lib/page-header-store'
-import { cn } from '@/lib/utils'
+import { getLastOverride, getOverride, subscribe, type PageHeaderConfig } from '@/lib/page-header-store'
 
-type RouteConfig = {
-  subtitle: string
-  title: string
+const BASE_ROUTES: { path: string; config: PageHeaderConfig }[] = [
+  { path: '/', config: { subtitle: 'Software Engineer', title: 'Vishrut Agrawal' } },
+  { path: '/experience', config: { subtitle: '01.', title: 'Experience' } },
+  { path: '/projects', config: { subtitle: '02.', title: 'Projects' } },
+  { path: '/blog', config: { subtitle: '03.', title: 'Blog' } },
+]
+
+const OVERRIDE_SLOT_INDEX = BASE_ROUTES.length
+
+const REEL_SPRING = {
+  type: 'spring' as const,
+  stiffness: 440,
+  damping: 36,
+  mass: 0.85,
+  restDelta: 0.001,
+  restSpeed: 0.01,
 }
 
-const routes: Record<string, RouteConfig> = {
-  '/': { subtitle: 'Software Engineer', title: 'Vishrut Agrawal' },
-  '/experience': { subtitle: '01.', title: 'Experience' },
-  '/projects': { subtitle: '02.', title: 'Projects' },
-  '/blog': { subtitle: '03.', title: 'Blog' },
+function getBaseRouteIndex(pathname: string): number | null {
+  if (pathname === '/') return 0
+  const idx = BASE_ROUTES.findIndex(
+    (route, i) => i > 0 && (pathname === route.path || pathname.startsWith(`${route.path}/`)),
+  )
+  return idx === -1 ? null : idx
 }
 
-function getRoute(pathname: string): RouteConfig {
-  if (pathname === '/') return routes['/']
-  const match = Object.keys(routes).find((key) => key !== '/' && pathname.startsWith(key))
-  return match ? routes[match] : routes['/']
-}
-
-const ANIM_DURATION = 300
-
-const ANIM_IN: React.CSSProperties = {
-  animation: `page-header-in ${ANIM_DURATION}ms ease both`,
-}
-
-const ANIM_OUT: React.CSSProperties = {
-  animation: `page-header-out ${ANIM_DURATION}ms ease both`,
-}
-
-function TextLayer({
+function ReelSlot({
   config,
-  style,
-  exiting = false,
+  index,
+  isActive,
+  reelPosition,
 }: {
-  config: RouteConfig
-  style?: React.CSSProperties
-  exiting?: boolean
+  config: PageHeaderConfig
+  index: number
+  isActive: boolean
+  reelPosition: MotionValue<number>
 }) {
-  const Title = exiting ? 'p' : 'h1'
+  const y = useTransform(reelPosition, (pos) => `${(index - pos) * 100}%`)
+  const rotateX = useTransform(reelPosition, [index - 1, index, index + 1], [-34, 0, 34])
+  const opacity = useTransform(
+    reelPosition,
+    [index - 0.92, index - 0.22, index, index + 0.22, index + 0.92],
+    [0, 1, 1, 1, 0],
+  )
+  const scale = useTransform(reelPosition, [index - 1, index, index + 1], [0.95, 1, 0.95])
+
+  const HeadingTag = isActive ? 'h1' : 'p'
 
   return (
-    <div
-      aria-hidden={exiting || undefined}
-      className={cn('px-8', exiting ? 'absolute inset-x-0 top-0 pointer-events-none select-none' : 'relative')}
-      style={style}
+    <motion.div
+      aria-hidden={!isActive || undefined}
+      className={
+        isActive
+          ? 'absolute inset-0 py-2 px-8 will-change-transform'
+          : 'pointer-events-none absolute inset-0 select-none py-2 px-8 will-change-transform'
+      }
+      style={{
+        y,
+        rotateX,
+        opacity,
+        scale,
+        transformOrigin: 'center center',
+      }}
     >
       <p className="text-xs text-muted-foreground tracking-widest font-(family-name:--font-jetbrains-mono) mb-2 uppercase">
         {config.subtitle}
       </p>
-      <Title className="text-4xl leading-tight tracking-tight text-balance wrap-break-word font-(family-name:--font-josefin-sans)">
+      <HeadingTag className="text-4xl leading-tight tracking-tight text-balance wrap-break-word font-(family-name:--font-josefin-sans)">
         {config.title}
-      </Title>
-    </div>
+      </HeadingTag>
+    </motion.div>
   )
 }
 
 export function PageHeader() {
   const pathname = usePathname()
   const override = useSyncExternalStore(subscribe, getOverride, () => null)
+  const lastOverride = useSyncExternalStore(subscribe, getLastOverride, () => null)
+  const shouldReduceMotion = useReducedMotion()
 
-  const effective = override ?? getRoute(pathname)
+  const baseIndex = getBaseRouteIndex(pathname)
+  const targetIndex = override !== null ? OVERRIDE_SLOT_INDEX : baseIndex
 
-  const [current, setCurrent] = useState(effective)
-  const [exiting, setExiting] = useState<RouteConfig | null>(null)
-  const [transitioning, setTransitioning] = useState(false)
-  const prevConfigRef = useRef(effective)
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-
-  useEffect(() => {
-    const prev = prevConfigRef.current
-    const next = override ?? getRoute(pathname)
-
-    if (prev.subtitle === next.subtitle && prev.title === next.title) return
-
-    prevConfigRef.current = next
-
-    if (timerRef.current) clearTimeout(timerRef.current)
-
-    setExiting(prev)
-    setCurrent(next)
-    setTransitioning(true)
-
-    timerRef.current = setTimeout(() => {
-      setExiting(null)
-      setTransitioning(false)
-      timerRef.current = null
-    }, ANIM_DURATION)
-  }, [pathname, override])
+  const reelPosition = useMotionValue(targetIndex ?? 0)
 
   useEffect(() => {
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current)
+    if (targetIndex === null) return
+
+    if (shouldReduceMotion) {
+      reelPosition.set(targetIndex)
+      return
     }
-  }, [])
+
+    const controls = animate(reelPosition, targetIndex, REEL_SPRING)
+    return () => controls.stop()
+  }, [targetIndex, shouldReduceMotion, reelPosition])
+
+  const activeIndex = targetIndex ?? 0
+  const activeConfig = override ?? (baseIndex !== null ? BASE_ROUTES[baseIndex].config : BASE_ROUTES[0].config)
+
+  const dynamicSlotConfig = override ?? lastOverride
+  const slots = [
+    ...BASE_ROUTES.map((route) => ({ key: route.path, config: route.config })),
+    ...(dynamicSlotConfig ? [{ key: '__override__', config: dynamicSlotConfig }] : []),
+  ]
 
   return (
     <div className="mt-6 pb-2">
-      {/* Animated subtitle + title */}
-      <div className={cn('relative', transitioning && 'overflow-hidden')}>
-        {exiting && (
-          <TextLayer key={`exiting:${exiting.subtitle}:${exiting.title}`} config={exiting} style={ANIM_OUT} exiting />
-        )}
-        <TextLayer
-          key={`active:${current.subtitle}:${current.title}`}
-          config={current}
-          style={transitioning ? ANIM_IN : undefined}
-        />
+      {/* Physical rolling reel viewport */}
+      <div className="relative -my-2 overflow-hidden py-2 [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)] [perspective:700px]">
+        {/* Spacer keeps the container sized to the active heading */}
+        <div aria-hidden className="pointer-events-none invisible select-none px-8">
+          <p className="text-xs tracking-widest font-(family-name:--font-jetbrains-mono) mb-2 uppercase">
+            {activeConfig.subtitle}
+          </p>
+          <p className="text-4xl leading-tight tracking-tight text-balance wrap-break-word font-(family-name:--font-josefin-sans)">
+            {activeConfig.title}
+          </p>
+        </div>
+
+        {slots.map((slot, index) => (
+          <ReelSlot
+            key={slot.key}
+            config={slot.config}
+            index={index}
+            isActive={index === activeIndex}
+            reelPosition={reelPosition}
+          />
+        ))}
       </div>
     </div>
   )
