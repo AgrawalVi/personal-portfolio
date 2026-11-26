@@ -11,6 +11,7 @@ import { siteMetadata } from '@/lib/metadata'
 import { cn } from '@/lib/utils'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { PageHeader } from '@/components/layout/page-header'
+import { PageTransition } from '@/components/layout/page-transition'
 import { SiteFooter } from '@/components/layout/site-footer'
 import { SiteHeader } from '@/components/layout/site-header'
 import { ThemeProvider } from '@/components/layout/theme-provider'
@@ -83,7 +84,7 @@ export default function RootLayout({
                 <SiteHeader />
                 <main className="pt-4 w-full min-w-0 px-3 sm:px-4 max-w-3xl mx-auto">
                   <PageHeader />
-                  <div className="px-2 min-w-0">{children}</div>
+                  <PageTransition>{children}</PageTransition>
                 </main>
                 <SiteFooter />
               </div>
